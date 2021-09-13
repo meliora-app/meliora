@@ -1,5 +1,5 @@
 {
 	"scripts": {
-		"build": "node meliora-backend/src/index.js"
+		"build": "npm install --force && node meliora-backend/src/index.js"
 	}
 }
