@@ -5,5 +5,3 @@ npm start &
 cd ../meliora-backend
 npm install
 npm start &
-
-cd ..
