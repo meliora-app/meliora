@@ -1,0 +1,5 @@
+{
+	"scripts": {
+		"build": "node meliora-backend/src/index.js"
+	}
+}
