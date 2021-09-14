@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel=icon type=image/x-icon href=assets/lotus.png>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+
+    <!-- Learned Bootstrap From -->
+    <!-- https://getbootstrap.com/-->
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/25ed10730a.js" crossorigin="anonymous"></script>
+
+    <!-- Personalized CSS -->
+    <link rel="stylesheet" href="landing.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <title>Meliora</title>
+
+    <script type="text/javascript" src="./loading/loading.js"></script>
+    <script>
+        window.onload = function () {
+            pageload();
+        };
+
+        window.onclick = function () {
+            pageclick();
+        };
+
+    </script>
+
+<body>
+    <!-- Navbar Component -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
+        <a class="navbar-brand" href="#">
+            <img src="/landing-page/assets/lotus.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            Meliora
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">About <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Features <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Community <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <a class="btn btn-dark my-2 my-sm-0" style="margin-right: 1em; background-color: #D4E1F1; border: none;
+                border-radius: 40px; width: 6em; font-size: 1em; color: #0B3D77" type="submit">Login</a>
+            </form>
+        </div>
+    </nav>
+
+    <!-- Jumbotron Component -->
+    <section>
+        <div class="jumbotron jumbotron-hero" style="background-color: #fff;">
+            <h1 class="animate__animated animate__backInLeft display-4 text-center heading txt-primary">Meliora</h1>
+            <p class="lead text-center display-5">Good Today, Better Tomorrow</p>
+            <hr class="my-4" style="width: 70%;">
+            <p class="lead text-center">
+                <a class="btn btn-learn btn-lg" href="#about-section" role="button">Learn more</a>
+                <a class="btn btn-signup btn-lg" href="signup/signup.html" role="button">Try Now</a>
+            </p>
+        </div>
+
+    </section>
+
+    <!-- About Component -->
+    <div id="about-section" class="jumbotron jumbotron-about ">
+        <h1 class="display-5 text-center heading section-head jumbotron-about">About Us</h1>
+        <div class="row">
+            <div class="col-lg-4  text-center">
+                <i class="health-icon"><img src="/landing-page/assets/papyrus.png" alt=""></i>
+            </div>
+            <div class="col-lg-8">
+                <h5 class="about-us-descript">
+                    Exercise is an essential component for a healthy mind and body. However, working out today, given
+                    the
+                    current
+                    pandemic, has become hard and lackluster. This is because physical and social isolation can cause
+                    lethargy and
+                    a lack of motivation. People seeking to improve their physical fitness have varying ranges of
+                    experience
+                    when
+                    it comes to exercise, and tracking one’s exercise goals has become tedious and cumbersome.
+                    <p></p>
+                    <p></p>
+                    Tech companies like Apple and Google have created apps such as Apple HealthKit and Fitbit, which
+                    track
+                    and
+                    monitor health data. These technologies, while great for collecting data such as calories burned or
+                    steps
+                    taken, don’t have the option of creating and tracking workouts. One of major motivational elements
+                    of
+                    exercise
+                    is being to see progress, and to be able to share it with friends.
+                    <p></p>
+                    This is why our team built <span class="badge bg-secondary">Werk It: </span> a cross-platform
+                    application that
+                    makes working out from anywhere easy.
+
+
+                </h5>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
