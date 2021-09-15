@@ -1,0 +1,130 @@
+/* Color Pallete */
+/* 
+#A6CDFC
+#9DCDFF
+#56A1F6
+#1C63B7
+#0B3D77
+#041B35
+#5A6572
+#A0B1C6
+#D4E1F1
+#FFFFFF */
+
+/* General */
+body {
+    font-family: 'Raleway', sans-serif;
+    height: 100%;
+}
+
+html { 
+    scroll-behavior: smooth; 
+    margin:0;
+    padding:0;
+    /* overflow:hidden; */
+}
+
+
+/* Navbar Component Styles */
+
+.navbar .navbar-nav .nav-link:hover {
+  color: #ffffff;
+}
+@media only screen and (min-width: 960px) {
+  .navbar .navbar-nav .nav-link {
+    padding: 1em 0.7em;
+  }
+  .navbar {
+    padding: 0;
+  }
+  .navbar .navbar-brand {
+    padding: 0 0.7em;
+  }
+}
+.navbar .navbar-nav .nav-link {
+  position: relative;
+}
+.navbar .navbar-nav .nav-link::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: #E3F2FD;
+  color: transparent;
+  width: 0%;
+  content: '';
+  height: 3px;
+  transition: all 0.3s;
+}
+.navbar .navbar-nav .nav-link:hover::after {
+  width: 100%;
+}
+
+.btn-login{        
+    font-size: 16px;
+    margin-left: 1em;
+    font-weight: bold;
+    border: none;
+    color: #0B3D77;
+    min-width: 140px;
+    border-radius: 40px;
+}
+
+.btn-login:hover {
+    background-color: #0B3D77;
+    border-color: #0B3D77;
+    color: #0B3D77;
+}
+
+
+/* Modify the background color */
+.bg-custom {
+    background-color: #56A1F6;
+}
+
+/* login Component Styles */
+.jumbotron-login {
+    margin-top: 2.5%;
+    color: #041B35;
+}
+
+.login-form {
+    margin: 0 35%;
+    margin-top: 2%;
+    background-color: #9DCDFF;
+    padding: 3%;
+    border-radius: 40px;
+    color: #041B35;
+    font-size: 1.5em;
+
+}
+
+.form-control {
+    border-radius: 40px;
+}
+
+.login-submit {
+    background-color: #0B3D77;
+    color: #9DCDFF;
+    font-size: 1em;
+    border-radius: 25px;
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.login-submit:hover {
+    background-color: #A0B1C6;
+    color: #0B3D77;
+    border-color: #0B3D77;
+    font-size: 1em;
+    border-radius: 25px;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#login-link {
+    color: #0B3D77;
+}
