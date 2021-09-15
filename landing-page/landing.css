@@ -163,7 +163,7 @@ html {
     width: 25em;
     border-radius: 30px;
     margin: 5%;
-    margin-bottom: -5%;
+
 }
 
 .card {
@@ -187,6 +187,15 @@ html {
     border-radius: 40px;
 }
 
+.community-text {
+    margin-top: 4%;
+    line-height: 1.7em;
+    font-size: 1.3em;
+}
+
+#hospital-text {
+    margin-top: 6%;
+}
 /* Go Back Up */
 
 .btn-goback{        
