@@ -1,0 +1,99 @@
+/* Color Pallete */
+/* 
+#A6CDFC
+#9DCDFF
+#56A1F6
+#1C63B7
+#0B3D77
+#041B35
+#5A6572
+#A0B1C6
+#D4E1F1
+#FFFFFF */
+
+/* General */
+body {
+    font-family: 'Raleway', sans-serif;
+    height: 100%;
+}
+
+html { 
+    scroll-behavior: smooth; 
+    margin:0;
+    padding:0;
+    /* overflow:hidden; */
+}
+
+
+/* Navbar Component Styles */
+
+.navbar .navbar-nav .nav-link:hover {
+  color: #ffffff;
+}
+@media only screen and (min-width: 960px) {
+  .navbar .navbar-nav .nav-link {
+    padding: 1em 0.7em;
+  }
+  .navbar {
+    padding: 0;
+  }
+  .navbar .navbar-brand {
+    padding: 0 0.7em;
+  }
+}
+.navbar .navbar-nav .nav-link {
+  position: relative;
+}
+.navbar .navbar-nav .nav-link::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: #E3F2FD;
+  color: transparent;
+  width: 0%;
+  content: '';
+  height: 3px;
+  transition: all 0.3s;
+}
+.navbar .navbar-nav .nav-link:hover::after {
+  width: 100%;
+}
+
+.btn-login{        
+    font-size: 16px;
+    margin-left: 1em;
+    font-weight: bold;
+    border: none;
+    color: #fff;
+    background-color: #9DCDFF;
+    min-width: 140px;
+    border-radius: 10px;
+}
+
+.btn-login:hover {
+    background-color: #0B3D77;
+    border-color: #0B3D77;
+    color: #0B3D77;
+}
+
+
+/* Modify the background color */
+.bg-custom {
+    background-color: #4276b6;
+}
+
+#search {
+    border-radius: 20px;
+    background-color: #b5c0cd;
+    border: none;
+    margin-right: 400% !important;
+    width: -400px;
+}
+
+.navbar-center {
+    display:flex;
+    justify-content:center;
+    width: 100%;
+}
