@@ -160,8 +160,10 @@ html {
 
 .features-icon  img{
     color: #fff;
-    width: 15em;
+    width: 25em;
+    border-radius: 30px;
     margin: 5%;
+    margin-bottom: -5%;
 }
 
 .card {
