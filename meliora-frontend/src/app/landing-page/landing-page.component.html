@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/lotus.png" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Learned Bootstrap From -->
+    <!-- https://getbootstrap.com/-->
+
+    <!-- Font Awesome -->
+    <script
+      src="https://kit.fontawesome.com/25ed10730a.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Personalized CSS -->
+    <!-- <link rel="stylesheet" href="landing.css" /> -->
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Animate.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <title>Meliora</title>
+
+    <script type="text/javascript" src="./loading/loading.js"></script>
+  </head>
+  <body>
+    <!-- Navbar Component -->
+    <app-landing-navbar></app-landing-navbar>
+
+    <!-- Jumbotron Component -->
+    <section>
+      <div class="jumbotron jumbotron-hero" style="background-color: #fff">
+        <h1
+          class="
+            animate__animated animate__fadeIn
+            display-4
+            text-center
+            heading
+            txt-primary
+          "
+        >
+          Meliora
+        </h1>
+        <p class="lead text-center display-5">Good Today, Better Tomorrow</p>
+        <hr class="my-4" style="width: 70%" />
+        <p class="lead text-center">
+          <a class="btn btn-learn btn-lg" href="#about-section" role="button"
+            >Learn more</a
+          >
+          <a class="btn btn-signup btn-lg" routerLink="/signup" role="button"
+            >Sign Up</a
+          >
+        </p>
+      </div>
+    </section>
+
+    <!-- About Component -->
+    <section>
+      <div id="about-section" class="jumbotron jumbotron-about">
+        <h1 class="display-5 text-center heading section-head jumbotron-about">
+          About Us
+        </h1>
+        <div class="row">
+          <div class="col-lg-4 text-center">
+            <i class="health-icon"
+              ><img src="../../assets/papyrus.png" alt=""
+            /></i>
+          </div>
+          <div class="col-lg-8">
+            <h5 class="about-us-descript">
+              In the midst of a pandemic where people — old and young alike —
+              are constantly navigating through challenges, mental health has
+              become a major concern. In fact, mental health issues are
+              beginning to deteriorate an individual’s value system. Nowadays,
+              in a distressing situation, People are more likely to act in an
+              unethical and unprofessional manner.
+
+              <p></p>
+              <p></p>
+              While several existing products like Vent and Therapy Buddy
+              attempt at improving mental intelligence, they have a major
+              shortcoming. Users cannot share their thoughts and experiences,
+              expecting to hear positive feedback. Mainstream apps like these do
+              not aim to filter out negative behavior, and don’t necessarily
+              encourage a positive mindset within the original blogger. In
+              addition, members cannot interact with their communities either
+              through a written method or a visual method.
+              <p></p>
+              This is why our team built
+              <span class="badge bg-sec-custom">Meliora: </span> a blogging app
+              that never ceases to inspire and motivate you.
+            </h5>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Component -->
+    <div id="features-section" class="jumbotron jumbotron-features">
+      <h1 class="display-5 text-center heading section-head jumbotron-features">
+        Features
+      </h1>
+
+      <div class="row">
+        <div class="col-lg-4 text-center">
+          <i class="features-icon"
+            ><img src="../../assets/purpose.jpg" alt=""
+          /></i>
+        </div>
+        <div class="col-lg-4 text-center">
+          <i class="features-icon"
+            ><img src="../../assets/follow.png" alt=""
+          /></i>
+        </div>
+        <div class="col-lg-4 text-center">
+          <i class="features-icon"
+            ><img src="../../assets/report.jpeg" alt=""
+          /></i>
+        </div>
+      </div>
+      <div class="card-group">
+        <div class="card">
+          <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+          <div class="card-body">
+            <h5 class="card-title text-center">Find Purpose</h5>
+            <p class="card-text">
+              Share your thoughts and emotions by creating social posts
+              describing your experiences and how you overcame it. Be the person
+              promote positivity and good values in others.
+            </p>
+            <p>
+              In Meliora, you can also react to the posts of others through
+              captivating emojis (hearts, smiley faces, thumbs up, etc.)
+            </p>
+            <p>
+              In Meliora, you can also post anonymously to protect your privacy.
+            </p>
+          </div>
+        </div>
+        <div class="card">
+          <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+          <div class="card-body">
+            <h5 class="card-title text-center">Follow the Good</h5>
+            <p class="card-text">
+              Meliora provides a follow feature to enables users to follow other
+              members in their community . You can also follow broader
+              categories like exam-motivation through the homepage of the app.
+            </p>
+            <p>
+              In addition, as a complementary feature, Meliora also displays the
+              most popular posts for a given week in the homepage based on the
+              number of reactions made by users on a given post.
+            </p>
+          </div>
+        </div>
+        <div class="card">
+          <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+          <div class="card-body">
+            <h5 class="card-title text-center">Flag the Bad</h5>
+            <p class="card-text">
+              See something disturbing? Flag it and we will ensure that the rest
+              of the Meliora community does not see it. Any negative or
+              disheartening posts can be reported using the flagging link
+              attached to every post in the Meliora app.
+            </p>
+            <p>
+              We, the developers of Meliora want to ensure that every user has a
+              positive experience and through our software we give you the
+              freedom to help us in achieving this mission.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Community Component -->
+    <section>
+      <div id="community-section" class="jumbotron jumbotron-community">
+        <h1
+          class="display-5 text-center heading section-head jumbotron-community"
+        >
+          Community
+        </h1>
+        <div class="row">
+          <div class="col-lg-6 text-center">
+            <i class="features-icon ml-auto"
+              ><img src="../../assets/college.jpeg" alt=""
+            /></i>
+          </div>
+          <div class="col-lg-6 community-text">
+            <p>
+              As a college student you may be facing various problems. Starting
+              from roommate issues and ending with graduating problems, Meliora
+              can be your best friend. Reading about how other students overcame
+              such problems or writing a new post by yourself can help boost
+              your confidence.
+            </p>
+
+            <p>
+              Who knows? Maybe the person you follow on Meliora could end up
+              being your future roommate
+            </p>
+          </div>
+          <div class="col-lg-6 text-center">
+            <i class="features-icon"
+              ><img src="../../assets/hospital.png" alt=""
+            /></i>
+          </div>
+          <div class="col-lg-6 community-text hospital-text">
+            <p>
+              You may be a medical patient with a chronic illness or you could
+              be recovering from pain. If this is the case, Meliora is the pill
+              for you.
+            </p>
+
+            <p>
+              Studies by psychologists have shown that sharing your experience
+              helps reduce pain. Especially, during this pandemic, Meliora can
+              be your source of comfort.
+            </p>
+          </div>
+          <div class="col-lg-6 text-center">
+            <i class="features-icon"
+              ><img src="../../assets/relationships.png" alt=""
+            /></i>
+          </div>
+          <div class="col-lg-6 community-text">
+            <p>
+              Having relationship problems? Want to discuss them with someone?
+              Then, the community in Meliora can help Whether it is personal
+              issues or professional issues, you can write about them in
+              Meliora.
+            </p>
+            <p>
+              Everyone has gone through some kind of relationship issue or the
+              other. You can benefit from others in the Meliora community.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Go Back Up -->
+    <section id="end" class="text-center">
+      <a class="btn btn-goback btn-lg text-center" href="#" role="button"
+        >Go Back Up <i class="fas fa-arrow-up"></i>
+      </a>
+    </section>
+  </body>
+</html>
