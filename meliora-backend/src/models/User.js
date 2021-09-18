@@ -14,6 +14,10 @@ const UserSchema = new Schema({
 	password: {
 		type: SchemaTypes.String,
 		required: true
+	},
+	authorList: {
+		type: [SchemaTypes.ObjectId],
+		default: [],
 	}
 });
 
