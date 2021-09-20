@@ -28,7 +28,7 @@ describe('Unit Tests for Post Router:', () => {
 
 	test('Create: Server should return a 200 when a post is made with correct format', async () => {
 		let res = await request(server)
-			.post(`api/posts/create`)
+			.post(`/api/posts/create`)
 			.set('Content-Type', 'application/json')
 			.send({
 				title: 'Test2 Title',
@@ -38,7 +38,7 @@ describe('Unit Tests for Post Router:', () => {
 
 		let status = res.status;
 
-		res = await res.json();
+		res = await Post.findOne({ flags: 0 }).exec();
 
 		testPostID = res._id;
 
@@ -47,10 +47,10 @@ describe('Unit Tests for Post Router:', () => {
 
 	test('Flag: Server should return a 400 when trying to flag a post that doesn\'t exist', async () => {
 		let res = await request(server)
-			.patch(`api/posts/flag`)
+			.patch(`/api/posts/flag`)
 			.set('Content-Type', 'application/json')
 			.send({
-				post: 'bogus',
+				post: process.env.TEST_BOGUS_POST_ID,
 				flagger: process.env.TEST_USER_ID_2,
 			});
 
@@ -59,7 +59,7 @@ describe('Unit Tests for Post Router:', () => {
 
 	test('Flag: Server should return a 200 when flagging a post that exists', async () => {
 		let res = await request(server)
-			.patch(`api/posts/flag`)
+			.patch(`/api/posts/flag`)
 			.set('Content-Type', 'application/json')
 			.send({
 				post: testPostID,
@@ -70,9 +70,9 @@ describe('Unit Tests for Post Router:', () => {
 	});
 
 	afterAll(done => {
-		Post.deleteMany({});
+		Post.findByIdAndDelete(testPostID).exec();
 		disconnect();
 
 		done();
-	})
+})
 });

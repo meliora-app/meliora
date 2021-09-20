@@ -62,6 +62,48 @@ postRouter.post('/create', async (req, res) => {
 });
 
 /**
+ * Endpoint to flag a post
+ */
+postRouter.patch('/flag', async (req, res) => {
+
+	let { post, flagger } = req.body;
+
+	if (!post || !flagger) {
+		res.status(400).send('You must send in a post ID and a user ID for the user flagging!');
+		return;
+	}
+
+	let postDoc;
+	try {
+
+		postDoc = await Post.findById(post).exec();
+
+		if (!postDoc) {
+			res.status(400).send('This post doesn\'t exist!');
+			return;
+		}
+
+		let userDoc = await User.findById(flagger).exec();
+
+		if (!userDoc) {
+			res.status(400).send('This user doesn\'t exist!');
+			return;
+		}
+
+		postDoc.flags = postDoc.flags + 1;
+
+		await postDoc.save();
+
+	} catch (e) {
+		res.status(500).send('An error occurred on the backend.');
+		return;
+	}
+
+	res.status(200).send('Post Flagged Successfully.');
+	return;
+});
+
+/**
  * Endpoint to delete a post
  */
 postRouter.delete('/delete', async (req, res) => {

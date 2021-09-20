@@ -18,6 +18,10 @@ const PostSchema = new Schema({
 	author: {
 		type: SchemaTypes.ObjectId,
 		required: true
+	},
+	flags: {
+		type: SchemaTypes.Number,
+		default: 0,
 	}
 });
 
