@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { UserSchema } from './User.js';
 
 const { SchemaTypes, Schema, model } = mongoose;
 
@@ -17,7 +16,7 @@ const PostSchema = new Schema({
 		required: true
 	},
 	author: {
-		type: UserSchema,
+		type: SchemaTypes.ObjectId,
 		required: true
 	}
 });
