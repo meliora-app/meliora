@@ -51,12 +51,12 @@
 
 /* Modify the background color */
 .bg-custom {
-  background-color: #4276b6;
+  background-color: #57a1f6;
 }
 
 #search {
   border-radius: 20px;
-  background-color: #b5c0cd;
+  background-color: #a6cdfc;
   border: none;
   margin-right: 400% !important;
   width: -400px;
