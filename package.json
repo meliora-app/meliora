@@ -7,7 +7,7 @@
   "scripts": {
     "start": "(cd meliora-backend;npm start)",
     "test": "(cd meliora-backend;npm test)",
-	  "build": "node meliora-backend/src/index.js"
+	  "build": "(cd meliora-backend;babel src -d build)"
   },
   "repository": {
     "type": "git",
