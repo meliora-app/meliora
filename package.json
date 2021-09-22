@@ -5,9 +5,9 @@
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "start": "node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-	"build": "npm install --force && node meliora-backend/src/index.js"
+    "start": "(cd meliora-backend;npm start)",
+    "test": "(cd meliora-backend;npm test)",
+	  "build": "node meliora-backend/src/index.js"
   },
   "repository": {
     "type": "git",
