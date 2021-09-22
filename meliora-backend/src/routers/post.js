@@ -92,6 +92,8 @@ postRouter.patch('/flag', async (req, res) => {
 
 		postDoc.flags = postDoc.flags + 1;
 
+		if (postDoc.flags >= 5) { postDoc.delinquent = true; }
+
 		await postDoc.save();
 
 	} catch (e) {

@@ -22,6 +22,14 @@ const PostSchema = new Schema({
 	flags: {
 		type: SchemaTypes.Number,
 		default: 0,
+	},
+	delinquent: {
+		type: SchemaTypes.Boolean,
+		default: false,
+	},
+	anonymous: {
+		type: SchemaTypes.Boolean,
+		required: true,
 	}
 });
 
