@@ -18,6 +18,10 @@ const UserSchema = new Schema({
 	authorList: {
 		type: [SchemaTypes.ObjectId],
 		default: [],
+	},
+	bio: {
+		type: SchemaTypes.String,
+		default: ""
 	}
 });
 
