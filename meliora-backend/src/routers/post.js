@@ -15,7 +15,7 @@ const postRouter = new Router();
  * Util Function to validate a new post
  */
 const isValidPost = (post) => {
-	return (post.author && post.title && post.content);
+	return (post.author && post.title && post.content && post.anonymous);
 }
 
 /**

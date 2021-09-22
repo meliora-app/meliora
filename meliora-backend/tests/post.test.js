@@ -33,7 +33,8 @@ describe('Unit Tests for Post Router:', () => {
 			.send({
 				title: 'Test2 Title',
 				content: 'Test2 Content',
-				author: process.env.TEST_USER_ID
+				author: process.env.TEST_USER_ID,
+				anonymous: true
 			});
 
 		let status = res.status;
