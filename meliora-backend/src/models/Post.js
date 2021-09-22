@@ -18,6 +18,18 @@ const PostSchema = new Schema({
 	author: {
 		type: SchemaTypes.ObjectId,
 		required: true
+	},
+	flags: {
+		type: SchemaTypes.Number,
+		default: 0,
+	},
+	delinquent: {
+		type: SchemaTypes.Boolean,
+		default: false,
+	},
+	anonymous: {
+		type: SchemaTypes.Boolean,
+		required: true,
 	}
 });
 
