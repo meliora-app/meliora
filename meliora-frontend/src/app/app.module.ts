@@ -18,6 +18,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
+// Firebase services + enviorment module
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { environment } from '../environments/environment';
+import { SettingsComponent } from './settings/settings.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,11 +39,15 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     PostCardComponent,
     CategoryPillComponent,
     EditProfileComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
     MatIconModule,
     MatButtonModule,
   ],
