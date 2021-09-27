@@ -84,14 +84,29 @@
             >
           </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
+        <!-- <form class="form-inline my-2 my-lg-0">
           <a
             routerLink="/profile"
             class="btn btn-login my-2 my-sm-0"
             style="margin-right: 1em; background-color: #a6cdfc; color: #fff"
             >Vidit</a
           >
-        </form>
+        </form> -->
+        <mat-menu #profileMenu="matMenu">
+          <button mat-menu-item routerLink="/profile">My Profile</button>
+          <button mat-menu-item routerLink="/edit-profile">
+            Profile Settings
+          </button>
+          <button mat-menu-item (click)="onLogoutClicked()">Logout</button>
+        </mat-menu>
+
+        <button
+          [mat-menu-trigger-for]="profileMenu"
+          class="btn btn-login dropdown-toggle my-2 my-sm-0"
+          style="margin-right: 1em; background-color: #a6cdfc; color: #fff"
+        >
+          Vidit
+        </button>
       </div>
     </nav>
   </body>

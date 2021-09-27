@@ -14,10 +14,13 @@ import { ProfileComponent } from './profile/profile.component';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { PostCardComponent } from './post-card/post-card.component';
 import { CategoryPillComponent } from './category-pill/category-pill.component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+
+// Material imports
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 
 // Firebase services + enviorment module
 import { AngularFireModule } from '@angular/fire';
@@ -52,6 +55,7 @@ import { SettingsComponent } from './settings/settings.component';
     AngularFirestoreModule,
     MatIconModule,
     MatButtonModule,
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
