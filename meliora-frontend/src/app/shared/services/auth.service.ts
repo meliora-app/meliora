@@ -23,8 +23,11 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
         this.ngZone.run(() => {
-          this.router.navigate(['homepage']);
+          this.router.navigate(['/home']);
         });
+      })
+      .catch((err) => {
+        console.log('err is ', err);
       });
   }
 
@@ -33,9 +36,22 @@ export class AuthService {
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
         this.ngZone.run(() => {
-          this.router.navigate(['login']);
+          this.router.navigate(['/login']);
           this.emailService.sendVerificationEmail();
         });
+      })
+      .catch((err) => {
+        console.log(err);
       });
+  }
+
+  async logout() {
+    console.log('current user before', this.firebaseAuth.currentUser);
+    await this.firebaseAuth.signOut().then((result) => {
+      this.ngZone.run(() => {
+        this.router.navigate(['/landing-page']);
+      });
+    });
+    console.log('current user after', this.firebaseAuth.currentUser);
   }
 }
