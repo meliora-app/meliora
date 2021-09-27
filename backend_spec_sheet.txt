@@ -1,0 +1,81 @@
+-- Meliora Backend REST API Spec Sheet
+
+* You can use the following code snippet to send
+* HTTP requests with the node-fetch API:
+
+let res = await fetch(<url>, {
+	method: "<Method>",
+	headers: {
+		'Content-Type': 'application/json'
+	},
+	body: JSON.stringify({
+		<request body...>
+	})
+});
+
+use await res.json(); to get response body as a JavaScript Object
+
+* Status
+
+	- Ping
+	- Make a GET request to <host>/ping
+	- No body is required
+	- Used to tell if a server is online (postman/insomnia)
+
+* User Router
+
+	- Signup
+	- Make a POST request to <host>/api/users/signup
+	- Body should look like the following
+	- {
+	- 	email: 'example@example.com',
+	-	username: 'Example',
+	- 	password: 'example'
+	- }
+	- Firebase handles auth, but we need this
+	- endpoint to make an entry in the DB so that
+	- we can get a unique identifier for the user that
+	- we can attach to posts/comments
+	- Response body looks like the following:
+	- {
+	-	_id: <ID of new user from Mongo>,
+	-	msg: 'User signup Successful!'
+	- }
+
+	- Login
+	- Make a GET request to <host>/api/users/login
+	- Body should look like the following
+	- {
+	- 	username: 'Example'
+	- }
+	- There is no password because firebase handles auth.
+	- We need this endpoint to get the user's dark mode
+	- preference.
+	- This route returns the user's dark mode preference
+	- as a boolean
+
+* Post Router
+
+	- Post Creation
+	- Make a POST request to <host>/api/posts/create
+	- Body should look like the following
+	- {
+	- 	author: "<ObjectID of author from Mongo>",
+	-	title: "Example",
+	-	content: "Example",
+	-	anonymous: <boolean>
+	- }
+	- Return body looks like the following
+	- {
+	- 	_id: <ID of new post from Mongo>,
+	-	msg: 'Post created successfully'
+	- }
+
+	- Post Flagging
+	- Make a PATCH request to <host>/api/posts/flag
+	- Body should look like the following
+	- {
+	- 	post: <ID of post from Mongo>,
+	- 	flagger: <ID of user from Mongo>
+	- }
+	- Response body is just a message saying the post was flagged
