@@ -40,13 +40,13 @@ describe('Unit Tests for Post Router:', () => {
 
 		res = await User.findOne({ authorList: [] }).exec();
 
+		testUserID = res._id;
+
 		expect(status).toBe(200);
 	});
 
-	afterAll(done => {
-		User.findByIdAndDelete(testUserID).exec();
-		disconnect();
-
-		done();
+	afterAll(async () => {
+		await User.findByIdAndDelete(testUserID).exec();
+		await disconnect();
 	})
 });
