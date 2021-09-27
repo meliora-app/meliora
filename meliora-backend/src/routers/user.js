@@ -81,6 +81,79 @@ userRouter.get('/login', async (req, res) => {
 		_id: userDoc._id,
 		darkModeStatus: userDoc.darkModeStatus
 	});
+
 });
+
+/**
+ * Update user account after editing
+ * Garrett Lee
+ */
+ userRouter.post('/updateUser', async (req, res) => {
+
+    let user = req.body;
+  
+    // validate user
+    if (!isValidUser(user)) {
+        res.status(400).send("The object structure of the user was invalid");
+        return;
+    }
+  
+    let userDocument;
+  
+    try {
+
+        // todo: find and update by ID incase username changes
+        // todo: make sure new username doesn't already exist
+        // todo: find and update?
+        await User.updateOne({username: user.username}, {bio: user.bio});
+
+        userDocument = await User.findOne({username: user.username})
+        
+    } catch (e) {
+        console.error(e);
+        res.status(400).send("Error updating user");
+        return;
+    }
+  }); 
+  
+  /**
+   * Retrieve user information
+   * Garrett Lee
+   */
+  userRouter.get('/getUser', async (req, res) => {
+    let user = req.body;
+
+    if (!user || !username) {
+        res.status(400).send('User does not exist');
+        return;
+    }
+
+    let userDoc;
+
+    try {
+        userDoc = await User.findOne({username: user.username}).exec();
+
+    } catch (e) {
+        console.error(e);
+        res.status(400).send('Error fetching user');
+    }
+
+    res.status(200).send({
+		_id: userDoc._id,
+        username: userDoc.username,
+        bio: userDoc.bio,
+		darkModeStatus: userDoc.darkModeStatus
+	});
+
+
+  });
+  
+  /**
+   * Endpoint to delete account/all posts and references
+   * Garrett Lee
+   */
+  userRouter.delete('/deleteAccount', async (req, res) => {
+  
+  });
 
 export { userRouter };
