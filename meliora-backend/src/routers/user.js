@@ -78,6 +78,7 @@ userRouter.get('/login', async (req, res) => {
 	}
 
 	res.status(200).send({
+		_id: userDoc._id,
 		darkModeStatus: userDoc.darkModeStatus
 	});
 });
