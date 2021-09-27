@@ -1,1 +1,145 @@
-<p>settings works!</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../assets/lotus.png" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Learned Bootstrap From -->
+    <!-- https://getbootstrap.com/-->
+
+    <!-- Font Awesome -->
+    <script
+      src="https://kit.fontawesome.com/25ed10730a.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Animate.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <title>Meliora</title>
+
+    <script type="text/javascript" src="./loading/loading.js"></script>
+  </head>
+  <body>
+    <!-- Navbar Component -->
+    <app-landing-navbar></app-landing-navbar>
+
+    <!-- Signup Component -->
+    <section>
+      <h1 class="display-5 text-center heading section-head jumbotron-signup settings-header">
+        Settings
+      </h1>
+      <div class="signup-form">
+        <form>
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <p class="user-name"> Vidit S Shah</p>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              aria-describedby="emailHelp"
+              value="viditshah@gmail.com"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="uname">Phone Number:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="uname"
+              aria-describedby="emailHelp"
+              value="765-494-9298"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Date of Birth:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="password"
+              value="09/22/2001"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Sex:</label>
+            <input type="radio" value="male" name="gender" ngModel checked> Male
+            <input type="radio" value="female" name="gender" ngModel> Female
+          </div>
+          <div class="form-group">
+            <label for="dMode" id="lFName">Dark Mode </label>
+            <label class="switch">
+                <input type="checkbox" id="switch">
+                <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-lg signup-submit text-center">
+              Save
+            </button>
+          </div>
+          <div class="">
+            <label for="password">Member Since:</label>
+            <p class="user-name text-center"> August 8, 2020</p>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-lg signup-submit text-center" routerLink="/login">
+              Log Out
+            </button>
+          </div>
+          <div class="text-center">
+            <button type="submit" onclick="return confirm('Are you sure you want to delete your account?')" class="btn btn-lg delete-submit text-center">
+              Delete Account
+            </button>
+            
+          </div>
+        </form>
+
+      </div>
+
+    </section>
+  </body>
+</html>
