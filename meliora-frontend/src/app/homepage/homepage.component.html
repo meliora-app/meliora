@@ -58,7 +58,35 @@
     <script type="text/javascript" src="./loading/loading.js"></script>
   </head>
   <body>
-    <!-- Navbar Component -->
-    <app-home-navbar></app-home-navbar>
+    <div>
+      <!-- Navbar Component -->
+      <app-home-navbar></app-home-navbar>
+
+      <div class="wrapper column justify-content-between mt-3 pl-5">
+        <div class="general">
+          <h2>Your Favorites</h2>
+          <div class="category-grid">
+            <app-category-pill
+              class="mt-3"
+              *ngFor="let category of categories"
+              [categoryName]="category"
+            ></app-category-pill>
+          </div>
+        </div>
+        <div class="general">
+          <h2>My Feed</h2>
+          <app-post-card></app-post-card><br />
+          <app-post-card></app-post-card>
+        </div>
+        <div class="general">
+          <h2>Discover</h2>
+          <div class="big-card text-center">Togetherness</div>
+          <div class="wrapper text-center mt-3">
+            <div class="small-card mr-3">Love</div>
+            <div class="small-card">Travel</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

@@ -1,0 +1,32 @@
+.wrapper {
+  display: flex;
+}
+
+.general {
+  height: 100%;
+  width: 33.33%;
+}
+
+.category-grid {
+  width: 60%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  column-gap: 10px;
+}
+
+.big-card {
+  width: 80%;
+  height: 250px;
+  border-radius: 30px;
+  background-image: url("../../assets/togetherness.jpeg");
+  font-weight: bold;
+  font-size: 24px;
+  color: white;
+}
+
+.small-card {
+  width: 38%;
+  height: 100px;
+  border-radius: 30px;
+  background-color: lightblue;
+}

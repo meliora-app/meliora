@@ -77,8 +77,12 @@
               placeholder=""
               required
               ngModel
+              #name="ngModel"
               name="name"
             />
+            <span class="help-block" *ngIf="!name.valid && name.touched"
+              >Please enter a valid name!</span
+            >
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
@@ -89,9 +93,14 @@
               aria-describedby="emailHelp"
               placeholder=""
               required
+              email
               ngModel
+              #email="ngModel"
               name="email"
             />
+            <span class="help-block" *ngIf="!email.valid && email.touched"
+              >Please enter a valid email!</span
+            >
           </div>
           <div class="form-group">
             <label for="uname">Username:</label>
@@ -103,8 +112,12 @@
               placeholder=""
               required
               ngModel
+              #username="ngModel"
               name="username"
             />
+            <span class="help-block" *ngIf="!username.valid && username.touched"
+              >Please enter a valid username!</span
+            >
           </div>
           <div class="form-group">
             <label for="password">Password:</label>
@@ -115,12 +128,20 @@
               placeholder=""
               required
               ngModel
+              #password="ngModel"
               name="password"
             />
+            <span class="help-block" *ngIf="!password.valid && password.touched"
+              >Please enter a valid password!</span
+            >
           </div>
 
           <div class="text-center">
-            <button type="submit" class="btn btn-lg signup-submit text-center">
+            <button
+              type="submit"
+              [disabled]="!f.valid"
+              class="btn btn-lg signup-submit text-center"
+            >
               Sign Up
             </button>
           </div>

@@ -68,3 +68,12 @@ html {
 #login-link {
   color: #0b3d77;
 }
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+span {
+  font-size: 12px;
+  color: red;
+}

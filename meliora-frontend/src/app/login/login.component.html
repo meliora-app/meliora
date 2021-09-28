@@ -77,8 +77,12 @@
               placeholder=""
               required
               ngModel
+              #email="ngModel"
               name="email"
             />
+            <span class="help-block" *ngIf="!email.valid && email.touched"
+              >Please enter a valid email!</span
+            >
           </div>
           <div class="form-group">
             <label for="password">Password:</label>
@@ -89,12 +93,20 @@
               placeholder=""
               required
               ngModel
+              #password="ngModel"
               name="password"
             />
+            <span class="help-block" *ngIf="!password.valid && password.touched"
+              >Please enter a valid password!</span
+            >
           </div>
 
           <div class="text-center">
-            <button type="submit" class="btn btn-lg login-submit text-center">
+            <button
+              type="submit"
+              [disabled]="!f.valid && f.touched"
+              class="btn btn-lg login-submit text-center"
+            >
               Login
             </button>
           </div>

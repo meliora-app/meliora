@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { EmailVerification } from './email-verification.service';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,8 @@ export class AuthService {
     public firebaseAuth: AngularFireAuth,
     public router: Router,
     public ngZone: NgZone,
-    public emailService: EmailVerification
+    public emailService: EmailVerification,
+    public toastService: ToastService
   ) {}
 
   async signIn(email: string, password: string) {
@@ -28,6 +30,7 @@ export class AuthService {
       })
       .catch((err) => {
         console.log('err is ', err);
+        this.toastService.showErrorMessage(err.message, 'Login error');
       });
   }
 
@@ -37,11 +40,16 @@ export class AuthService {
       .then((result) => {
         this.ngZone.run(() => {
           this.router.navigate(['/login']);
+          this.toastService.showSuccessMessage(
+            'Sign up successful!',
+            'Sign Up'
+          );
           this.emailService.sendVerificationEmail();
         });
       })
       .catch((err) => {
         console.log(err);
+        this.toastService.showErrorMessage(err.message, 'Sign up error');
       });
   }
 
