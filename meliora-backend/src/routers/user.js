@@ -2,6 +2,8 @@ import { Router } from 'express';
 
 import { User } from '../models/User.js';
 
+import { Post } from '../models/Post.js';
+
 const userRouter = Router();
 
 /**
@@ -101,19 +103,21 @@ userRouter.get('/login', async (req, res) => {
     let userDocument;
   
     try {
-
-        // todo: find and update by ID incase username changes
-        // todo: make sure new username doesn't already exist
-        // todo: find and update?
-        await User.updateOne({username: user.username}, {bio: user.bio});
-
-        userDocument = await User.findOne({username: user.username})
-        
+		userDocument = await User.findOne({ username: user.username})
+		userDocument.bio = user.bio;
+		userDocument.save();
     } catch (e) {
         console.error(e);
         res.status(400).send("Error updating user");
         return;
     }
+
+	res.status(200).send({
+		_id: userDocument._id,
+        username: userDocument.username,
+        bio: userDocument.bio,
+		darkModeStatus: userDocument.darkModeStatus
+	});
   }); 
   
   /**
@@ -123,19 +127,29 @@ userRouter.get('/login', async (req, res) => {
   userRouter.get('/getUser', async (req, res) => {
     let user = req.body;
 
-    if (!user || !username) {
-        res.status(400).send('User does not exist');
+    if (!user.username && !user._id && !user.email) {
+        res.status(400).send('Must request user with id, username, or email');
         return;
     }
 
     let userDoc;
 
     try {
-        userDoc = await User.findOne({username: user.username}).exec();
+		// search by id, username or email for now
+        userDoc = await User.findOne({
+			$or: [ 
+				{ _id: user._id }, 
+				{ username: user.username }, 
+				{ email: user.email }]}).exec();
+
+		if (!userDoc) {
+			res.status(500).send("User not found in database");
+			return;
+		}
 
     } catch (e) {
         console.error(e);
-        res.status(400).send('Error fetching user');
+        res.status(500).send('Error fetching user');
     }
 
     res.status(200).send({
@@ -150,10 +164,34 @@ userRouter.get('/login', async (req, res) => {
   
   /**
    * Endpoint to delete account/all posts and references
+   * TODO: Also needs to delete from firebase... Frontend?
    * Garrett Lee
    */
   userRouter.delete('/deleteAccount', async (req, res) => {
-  
+	
+	let user = req.body;
+    // delete all posts with user as author
+	Post.deleteMany( { author: user._id }, function (err) {
+		if (err) {
+			res.status(500).send("Error deleting user's posts: " + err);
+			console.log("Post deletion failure: " + err);
+			return;
+		} else {
+			console.log("User's posts deletion successful");
+		}
+	} );
+
+	// delete account
+	aUser.deleteOne({ _id: user._id }, function (err) {
+		if (err) {
+			res.status(500).send("Error deleting user: " + err);
+			console.log(err);
+			return;
+		} else {
+			console.log("Account Delete Successful");
+		}
+	})
+
   });
 
 export { userRouter };

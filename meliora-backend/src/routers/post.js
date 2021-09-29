@@ -106,9 +106,17 @@ postRouter.patch('/flag', async (req, res) => {
 });
 
 /**
- * Endpoint to delete a post
+ * Endpoint to delete a post by _id
  */
 postRouter.delete('/delete', async (req, res) => {
+	let post = req.body;
+
+	let postDocument;
+	try {
+		await Post.deleteOne({ _id: post._id }).exec();
+	} catch (e) {
+		res.status(500).send("Error deleting post: " + e);
+	}
 
 });
 
