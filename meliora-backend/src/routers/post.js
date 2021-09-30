@@ -22,6 +22,25 @@ const isValidPost = (post) => {
  * Endpoint to get all posts
  */
 postRouter.get('/getAll', async (req, res) => {
+	
+	let allPosts = [];
+
+	try { 
+
+		allPosts = await Post.find({}).exec();
+
+		if (!allPosts || allPosts.length == 0) {
+			res.status(400).send('There are no posts!');
+			return;
+		}
+
+	} catch (e) {
+		console.error(e);
+		res.status(500).send('An error occured on the backend.');
+		return;
+	}
+
+	res.status(200).send(allPosts);
 
 });
 
@@ -137,6 +156,30 @@ postRouter.delete('/deletePost', async (req, res) => {
  */
 postRouter.get('/getPostsBy', async (req, res) => {
 
+	let { userID } = req.body;
+
+	if (!userID) {
+		res.status(400).send('You need to send in a user ID!');
+		return;
+	}
+
+	let postsByUser = [];
+	try {
+
+		postsByUser = await Post.find({ author: userID }).exec();
+
+		if (!postsByUser || postsByUser.length == 0) {
+			res.status(400).send('This user has no posts.');
+			return;
+		}
+
+	} catch (e) {
+		console.error(e);
+		res.status(500).send('An error occurred on the backend.');
+		return;
+	}
+
+	res.status(200).send(postsByUser);
 });
 
 export { postRouter };

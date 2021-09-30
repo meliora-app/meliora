@@ -14,7 +14,7 @@ describe('Unit Tests for Post Router:', () => {
 		await connectToDB(process.env.TEST_DB_STRING);
 	});
 
-	test('US-4: Server should return 400 when request body has incorrect format.', async () => {
+	test('US-3: Server should return 400 when request body has incorrect format.', async () => {
 		let res = await request(server)
 			.post('/api/users/signup')
 			.set('Content-Type', 'application/json')
@@ -26,7 +26,7 @@ describe('Unit Tests for Post Router:', () => {
 		expect(res.status).toBe(400);
 	});
 
-	test('US-4: Server should return 200 when request body has correct format.', async () => {
+	test('US-3: Server should return 200 when request body has correct format.', async () => {
 		let res = await request(server)
 			.post('/api/users/signup')
 			.set('Content-Type', 'application/json')
@@ -43,6 +43,25 @@ describe('Unit Tests for Post Router:', () => {
 		testUserID = res._id;
 
 		expect(status).toBe(200);
+	});
+
+	test('US-4: Server should return 400 when body has no username', async () => {
+		let res = await request(server)
+			.get('/api/users/login')
+			.set('Content-Type', 'application/json');
+
+		expect(res.status).toBe(400);
+	});
+
+	test('US-4: Server should return 200 when a correct username is provided', async () => {
+		let res = await request(server)
+			.get('/api/users/login')
+			.set('Content-Type', 'application/json')
+			.send({
+				username: 'Test User 1'
+			});
+
+		expect(res.status).toBe(200);
 	});
 
 	afterAll(async () => {
