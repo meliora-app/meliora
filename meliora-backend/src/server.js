@@ -4,6 +4,7 @@ import { pingRouter } from './routers/ping.js';
 import { postRouter } from './routers/post.js';
 import { userRouter } from './routers/user.js';
 import { decodeIDToken } from './util/decodeIDToken.js';
+import cors from 'cors';
 
 config();
 
@@ -12,6 +13,8 @@ let server = express();
 server.use(express.json({
 	limit: '50mb',
 }));
+
+server.use(cors());
 
 server.use(decodeIDToken);
 
