@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'create-post', component: CreatePostComponent },
   { path: 'edit-profile', component: EditProfileComponent },
-  { path: 'settings', component: SettingsComponent}
+  { path: 'settings', component: SettingsComponent},
 ];
 
 @NgModule({

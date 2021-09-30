@@ -62,4 +62,25 @@ export class AuthService {
     });
     console.log('current user after', this.firebaseAuth.currentUser);
   }
+
+  async changePasswordEmail() {
+    await this.firebaseAuth.sendPasswordResetEmail((await this.firebaseAuth.currentUser).email, null);
+  }
+
+  async confirmChangePassword(code: string, newPassword: string) {
+    this.firebaseAuth.confirmPasswordReset(code, newPassword)
+    .then((result) => {
+      this.toastService.showSuccessMessage(
+        'Your password was changed!',
+        'Password Change'
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+      this.toastService.showErrorMessage(
+        'There was an error changing your password!',
+        'Password Change'
+      );
+    });
+  }
 }
