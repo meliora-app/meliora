@@ -53,11 +53,6 @@
           >Notifications <span class="sr-only">(current)</span></a
         >
       </li>
-      <li class="nav-item active">
-        <a class="nav-link btn" (click)="onLogoutClicked()"
-          >Logout <span class="sr-only">(current)</span></a
-        >
-      </li>
     </ul>
     <!-- <form class="form-inline my-2 my-lg-0">
           <a
@@ -69,7 +64,7 @@
         </form> -->
     <mat-menu #profileMenu="matMenu">
       <button mat-menu-item routerLink="/profile">My Profile</button>
-      <button mat-menu-item routerLink="/edit-profile">Profile Settings</button>
+      <button mat-menu-item routerLink="/settings">Settings</button>
       <button mat-menu-item (click)="onLogoutClicked()">Logout</button>
     </mat-menu>
 
