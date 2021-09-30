@@ -87,23 +87,30 @@ userRouter.get('/login', async (req, res) => {
 });
 
 /**
- * Update user account after editing
+ * Update user profile after editing
+ * Update with either username or _id
  * Garrett Lee
  */
- userRouter.post('/updateUser', async (req, res) => {
+ userRouter.post('/updateProfile', async (req, res) => {
 
     let user = req.body;
   
-    // validate user
-    if (!isValidUser(user)) {
-        res.status(400).send("The object structure of the user was invalid");
-        return;
-    }
-  
+	if (!user.username && !user._id || !user.bio) {
+		res.status(400).send("Bad request. Include bio and userID/username");
+		return;
+	}
     let userDocument;
   
     try {
-		userDocument = await User.findOne({ username: user.username})
+		userDocument = await User.findOne({
+			$or: [ 
+				{ _id: user._id }, 
+				{ username: user.username }
+		    ]}).exec();
+		if (!userDocument) {
+			res.status(500).send("User not found");
+			return;
+		}
 		userDocument.bio = user.bio;
 		userDocument.save();
     } catch (e) {
@@ -116,19 +123,30 @@ userRouter.get('/login', async (req, res) => {
 		_id: userDocument._id,
         username: userDocument.username,
         bio: userDocument.bio,
-		darkModeStatus: userDocument.darkModeStatus
+		darkModeStatus: userDocument.darkModeStatus,
+		authorList: userDocument.authorList
 	});
-  }); 
+  });
+
+  /** 
+   * Update user settings after editing
+   * Update using _id
+   * Garrett Lee 
+   */
+  userRouter.post('updateSettings', async (req, res) => {
+
+  });
   
   /**
    * Retrieve user information
+   * retrieve with either username or _id
    * Garrett Lee
    */
   userRouter.get('/getUser', async (req, res) => {
     let user = req.body;
 
-    if (!user.username && !user._id && !user.email) {
-        res.status(400).send('Must request user with id, username, or email');
+    if (!user._id && !user.username) {
+        res.status(400).send('Must request user with id or username');
         return;
     }
 
@@ -139,8 +157,8 @@ userRouter.get('/login', async (req, res) => {
         userDoc = await User.findOne({
 			$or: [ 
 				{ _id: user._id }, 
-				{ username: user.username }, 
-				{ email: user.email }]}).exec();
+				{ username: user.username }
+		    ]}).exec();
 
 		if (!userDoc) {
 			res.status(500).send("User not found in database");
@@ -156,7 +174,8 @@ userRouter.get('/login', async (req, res) => {
 		_id: userDoc._id,
         username: userDoc.username,
         bio: userDoc.bio,
-		darkModeStatus: userDoc.darkModeStatus
+		darkModeStatus: userDoc.darkModeStatus,
+		authorList: userDoc.authorList
 	});
 
 
@@ -164,6 +183,7 @@ userRouter.get('/login', async (req, res) => {
   
   /**
    * Endpoint to delete account/all posts and references
+   * delete account with _id
    * TODO: Also needs to delete from firebase... Frontend?
    * Garrett Lee
    */
@@ -179,10 +199,10 @@ userRouter.get('/login', async (req, res) => {
 		} else {
 			console.log("User's posts deletion successful");
 		}
-	} );
+	});
 
 	// delete account
-	aUser.deleteOne({ _id: user._id }, function (err) {
+	User.deleteOne({ _id: user._id }, function (err) {
 		if (err) {
 			res.status(500).send("Error deleting user: " + err);
 			console.log(err);
@@ -190,7 +210,12 @@ userRouter.get('/login', async (req, res) => {
 		} else {
 			console.log("Account Delete Successful");
 		}
-	})
+	});
+
+	res.status(200).send({
+		_id: user._id,
+		msg: 'Account Deletion Successful or user not found'
+	});
 
   });
 

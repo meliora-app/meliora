@@ -107,16 +107,27 @@ postRouter.patch('/flag', async (req, res) => {
 
 /**
  * Endpoint to delete a post by _id
+ * Garrett Lee
  */
-postRouter.delete('/delete', async (req, res) => {
+postRouter.delete('/deletePost', async (req, res) => {
 	let post = req.body;
 
-	let postDocument;
+	if (!post._id || !post.author) {
+		res.status(400).send("Request needs post ID and author ID");
+	}
 	try {
+		// remove post id from authorList of author
+		await User.findOneAndUpdate( { _id: post.author }, { $pull: { authorList: post._id }}).exec();
+		// remaove post from database
 		await Post.deleteOne({ _id: post._id }).exec();
 	} catch (e) {
-		res.status(500).send("Error deleting post: " + e);
+		res.status(500).send("Error deleting post: ");
+		return;
 	}
+	res.status(200).send({
+		_id: post._id,
+		msg: 'Post Deletion Successful'
+	});
 
 });
 
