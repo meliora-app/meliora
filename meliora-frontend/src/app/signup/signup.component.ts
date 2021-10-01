@@ -36,6 +36,7 @@ export class SignupComponent implements OnInit {
     if (res.status == 200) {
       let resBody = await res.json();
       localStorage.setItem('userID', resBody._id);
+      localStorage.setItem('darkModeStatus', 'false');
     }
   }
 }

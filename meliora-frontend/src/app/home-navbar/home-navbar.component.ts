@@ -13,5 +13,7 @@ export class HomeNavbarComponent implements OnInit {
 
   async onLogoutClicked() {
     await this.authService.logout();
+    localStorage.removeItem('userID');
+    localStorage.removeItem('darkModeStatus');
   }
 }
