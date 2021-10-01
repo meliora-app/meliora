@@ -20,5 +20,22 @@ export class SignupComponent implements OnInit {
 
   async signUp(email: string, password: string) {
     await this.authService.signUp(email, password);
+
+    let res = await fetch('https://meliora-backend.herokuapp.com/api/users/signup', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email,
+        username: 'Placeholder',
+        password
+      })
+    });
+
+    if (res.status == 200) {
+      let resBody = await res.json();
+      localStorage.setItem('userID', resBody._id);
+    }
   }
 }

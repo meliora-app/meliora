@@ -19,7 +19,26 @@ export class LoginComponent implements OnInit {
     this.signIn(String(form.value.email), String(form.value.password));
   }
 
-  signIn(email: string, password: string) {
+  async signIn(email: string, password: string) {
     this.authService.signIn(email, password);
+
+    let res = await fetch('https://meliora-backend.herokuapp.com/api/users/login', {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: 'xmadera2'
+      })
+    });
+
+    if (res.status == 200) {
+      let resBody = await res.json();
+
+      console.log(resBody);
+
+      localStorage.setItem('userID', resBody._id);
+      localStorage.setItem('darkModeStatus', resBody.darkModeStatus);
+    }
   }
 }
