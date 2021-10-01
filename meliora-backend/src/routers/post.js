@@ -154,7 +154,7 @@ postRouter.delete('/deletePost', async (req, res) => {
  * Endpoint to get posts
  * from a specified author
  */
-postRouter.get('/getPostsBy', async (req, res) => {
+postRouter.put('/getPostsBy', async (req, res) => {
 
 	let { userID } = req.body;
 

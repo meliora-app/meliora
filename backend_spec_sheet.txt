@@ -43,7 +43,7 @@ use await res.json(); to get response body as a JavaScript Object
 	- }
 
 	- Login
-	- Make a GET request to <host>/api/users/login
+	- Make a PUT request to <host>/api/users/login
 	- Body should look like the following
 	- {
 	- 	username: 'Example'
@@ -79,3 +79,17 @@ use await res.json(); to get response body as a JavaScript Object
 	- 	flagger: <ID of user from Mongo>
 	- }
 	- Response body is just a message saying the post was flagged
+
+	- Get All Posts
+	- Make a GET request to <host>/api/posts/getAll
+	- No Body is required
+	- Response body contains a list of all posts
+	- from Mongo complete with IDs
+
+	- Get Posts By a User
+	- Make a PUT request to <host>/api/posts/getPostsBy
+	- Body should look like the following
+	- {
+	- 	userID: <ID of user from Mongo>
+	- }
+	- Response Body is all posts by the specified user

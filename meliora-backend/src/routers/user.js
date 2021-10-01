@@ -55,7 +55,7 @@ userRouter.post('/signup', async (req, res) => {
 /**
  * Login
  */
-userRouter.get('/login', async (req, res) => {
+userRouter.put('/login', async (req, res) => {
 	let user = req.body;
 
 	if (!user || !user.username) {
@@ -142,7 +142,7 @@ userRouter.get('/login', async (req, res) => {
    * retrieve with either username or _id
    * Garrett Lee
    */
-  userRouter.get('/getUser', async (req, res) => {
+  userRouter.put('/getUser', async (req, res) => {
     let user = req.body;
 
     if (!user._id && !user.username) {
