@@ -14,7 +14,10 @@ server.use(express.json({
 	limit: '50mb',
 }));
 
-server.use(cors());
+server.use(cors({
+	origin: '*',
+	methods: ["GET", "POST", "PUT", "PATCH", "DELETE"]
+}));
 
 server.use(decodeIDToken);
 
