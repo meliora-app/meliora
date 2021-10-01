@@ -6,6 +6,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import { QuotePageComponent } from './quote-page/quote-page.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SignupComponent } from './signup/signup.component';
 
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'create-post', component: CreatePostComponent },
   { path: 'edit-profile', component: EditProfileComponent },
-  { path: 'settings', component: SettingsComponent}
+  { path: 'settings', component: SettingsComponent },
+  { path: 'quote', component: QuotePageComponent },
 ];
 
 @NgModule({

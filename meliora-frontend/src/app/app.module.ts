@@ -29,6 +29,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { SettingsComponent } from './settings/settings.component';
 import { ToastrModule } from 'ngx-toastr';
+import { QuotePageComponent } from './quote-page/quote-page.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ToastrModule } from 'ngx-toastr';
     CategoryPillComponent,
     EditProfileComponent,
     SettingsComponent,
+    QuotePageComponent,
   ],
   imports: [
     BrowserModule,

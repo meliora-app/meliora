@@ -81,10 +81,18 @@
           </div>
 
           <div class="post-options">
-            <button mat-icon-button>
+            <button
+              mat-icon-button
+              (click)="onImageClicked()"
+              [ngStyle]="{ color: imageClicked ? 'red' : '#0b3d77' }"
+            >
               <mat-icon>image</mat-icon>
             </button>
-            <button mat-icon-button>
+            <button
+              mat-icon-button
+              (click)="onVisibilityClicked()"
+              [ngStyle]="{ color: visibilityClicked ? 'red' : '#0b3d77' }"
+            >
               <mat-icon>visibility</mat-icon>
             </button>
           </div>
