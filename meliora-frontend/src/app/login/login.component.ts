@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     this.authService.signIn(email, password);
 
     let res = await fetch('https://meliora-backend.herokuapp.com/api/users/login', {
-      method: "GET",
+      method: "PUT",
       headers: {
         'Content-Type': 'application/json',
       },
