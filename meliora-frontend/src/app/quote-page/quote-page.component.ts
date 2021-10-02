@@ -13,7 +13,7 @@ export class QuotePageComponent implements OnInit {
   authorText: string;
   quoteText: string;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   async ngOnInit(): Promise<void> {
     await this.getQuote();
@@ -29,14 +29,24 @@ export class QuotePageComponent implements OnInit {
     try {
       const response = await fetch(proxyUrl + apiUrl);
       const data = await response.json();
+      // const data = null;
       // If Author is blank, add 'Unknown'
-      if (data.quoteAuthor === '') {
-        this.authorText = 'Unknown';
-      } else {
-        this.authorText = data.quoteAuthor;
-      }
+      if (data == null) {
+        this.quoteText = 'Good Today, Better Tomorrow';
+        this.authorText = 'Meliora';
 
-      this.quoteText = data.quoteText;
+      } else {
+        if (data.quoteText === '' || data.quoteText === null) {
+          this.quoteText = 'Good Today, Better Tomorrow';
+          this.authorText = 'Meliora';
+        }
+        if (data.quoteAuthor === '') {
+          this.authorText = 'Unknown';
+        } else {
+          this.authorText = data.quoteAuthor;
+        }
+        this.quoteText = data.quoteText;
+      }
       // Reduce font size for long quotes
       // if (data.quoteText.length > 120) {
       //     quoteText.classList.add('long-quote');
