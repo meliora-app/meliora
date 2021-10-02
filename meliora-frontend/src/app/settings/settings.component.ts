@@ -34,7 +34,7 @@ export class SettingsComponent implements OnInit {
 
     if (res.status == 200) {
       let resBody = await res.json();
-      localStorage.setItem('darkModeStatus', 'true');
+      localStorage.setItem('darkModeStatus', resBody.darkModeStatus);
     } else {
       let resBody = await res.json();
       console.log(resBody);
