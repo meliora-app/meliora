@@ -23,6 +23,10 @@ body {
     padding: 0;
     /* overflow:hidden; */
   }
+
+  .dark-mode {
+    filter: invert(1) hue-rotate(180deg);
+}
   
   /* Signup Component Styles */
   .jumbotron-signup {
@@ -91,6 +95,10 @@ body {
       color:#0b3d77;
   }
 
+  .label-spacing {
+    margin-left: 10px;
+  }
+
   .heading-name {
     font-size: 23px;
     font-weight: bold;
@@ -106,7 +114,10 @@ body {
 
   }
 
-
+  .center-saved {
+    color: #c22525;
+    font-weight: bold;
+  }
   
 .slider.round {
     border-radius: 34px;
