@@ -22,7 +22,7 @@
         </div>
         <div class="pl-3">
           <div class="wrapper">
-            <input type="text" class="mt-3 pl-3 profile-name" id="edit-name" value="Vidit S Shah">
+            <input type="text" class="mt-3 pl-3 profile-name" id="edit-name" [value]="username">
           </div>
           <div class="wrapper">
             <div class="pl-3 text-center user-stats">
@@ -48,16 +48,15 @@
           <!-- About Section -->
           <div class="container mr-5">
             <p class="profile-heading mt-3 pl-2">About</p>
-            <div id="edit-about" class="profile-about py-3 pl-3" contenteditable="true">
-              I am a motivated individual looking forward to inspiring everyone
-              I meet. I hope my experiences of life come of some use to the
-              community at Meliora!
+            <div #bioInput id="edit-about" class="profile-about py-3 pl-3" contenteditable="true">
+              {{bio}}
             </div>
           </div>
         </div>
       </div>
       <div class="center">
         <button class="category-pill py-2 px-2 text-center" 
+        (click)="onSaveProfileClicked(bioInput.innerHTML)"
         onclick="getElementById('saved').innerHTML='Changes Saved!'"
         >Save Changes</button>
         <p class="center-saved" id="saved"></p>
@@ -68,7 +67,7 @@
           <button
             mat-icon-button
             class="py-3 px-3 "
-            routerLink="/profile"
+            (click)="returnToProfile()"
             style="top: 60px;left: 10px;position:fixed"
           >
             <mat-icon>arrow_back</mat-icon>

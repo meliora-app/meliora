@@ -63,7 +63,8 @@
           >
         </form> -->
     <mat-menu #profileMenu="matMenu">
-      <button mat-menu-item routerLink="/profile">My Profile</button>
+      <!--<button mat-menu-item routerLink="/profile">My Profile</button>-->
+      <button mat-menu-item (click)="onMyProfileClicked()">My Profile</button>
       <button mat-menu-item routerLink="/settings">Settings</button>
       <button mat-menu-item (click)="onLogoutClicked()">Logout</button>
     </mat-menu>

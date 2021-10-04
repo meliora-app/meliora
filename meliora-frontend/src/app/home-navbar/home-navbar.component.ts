@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../shared/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-navbar',
@@ -7,7 +8,7 @@ import { AuthService } from '../shared/services/auth.service';
   styleUrls: ['./home-navbar.component.css'],
 })
 export class HomeNavbarComponent implements OnInit {
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, private route: Router) {}
 
   ngOnInit(): void {}
 
@@ -15,5 +16,9 @@ export class HomeNavbarComponent implements OnInit {
     await this.authService.logout();
     localStorage.removeItem('userID');
     localStorage.removeItem('darkModeStatus');
+  }
+
+  onMyProfileClicked() {
+    this.route.navigate(['/profile'], { queryParams: {"_id": localStorage.getItem('userID')}});
   }
 }
