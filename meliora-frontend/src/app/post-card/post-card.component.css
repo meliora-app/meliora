@@ -61,3 +61,7 @@ img {
 hr {
   height: 2px;
 }
+
+.trash-icon {
+  color:red
+}

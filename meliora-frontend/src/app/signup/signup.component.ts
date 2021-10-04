@@ -15,10 +15,10 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(form: NgForm) {
-    this.signUp(form.value.email, form.value.password);
+    this.signUp(form.value.email, form.value.username, form.value.password);
   }
 
-  async signUp(email: string, password: string) {
+  async signUp(email: string, username: string, password: string) {
     await this.authService.signUp(email, password);
 
     let res = await fetch(
@@ -30,7 +30,7 @@ export class SignupComponent implements OnInit {
         },
         body: JSON.stringify({
           email,
-          username: 'Placeholder',
+          username,
           password,
         }),
       }
@@ -39,6 +39,10 @@ export class SignupComponent implements OnInit {
     if (res.status == 200) {
       let resBody = await res.json();
       localStorage.setItem('userID', resBody._id);
+      localStorage.setItem('darkModeStatus', 'false');
+    } else {
+      let resBody = await res.json();
+      console.log(resBody);
     }
   }
 }
