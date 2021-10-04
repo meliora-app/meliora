@@ -7,7 +7,7 @@
     <title>Your Profile</title>
   </head>
 
-  <body>
+  <body [ngClass]="darkModeStatus ? 'dark-mode' : ''">
     <div>
       <!-- Navbar -->
       <app-home-navbar></app-home-navbar>

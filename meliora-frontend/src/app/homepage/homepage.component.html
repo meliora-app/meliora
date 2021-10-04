@@ -57,7 +57,7 @@
 
     <script type="text/javascript" src="./loading/loading.js"></script>
   </head>
-  <body>
+  <body [ngClass]="darkModeStatus ? 'dark-mode' : ''">
     <div>
       <!-- Navbar Component -->
       <app-home-navbar></app-home-navbar>

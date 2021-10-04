@@ -17,6 +17,11 @@ body {
   height: 100%;
 }
 
+.dark-mode {
+  filter: invert(1) hue-rotate(180deg);
+  
+}
+
 html {
   scroll-behavior: smooth;
   margin: 0;

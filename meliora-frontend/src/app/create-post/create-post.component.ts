@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-post.component.css'],
 })
 export class CreatePostComponent implements OnInit {
+  darkModeStatus = true;
+  //localStorage.getItem("darkModeStatus");
   visibilityClicked: boolean = false;
   imageClicked: boolean = false;
 
