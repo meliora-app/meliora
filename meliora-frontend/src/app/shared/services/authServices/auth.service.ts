@@ -4,6 +4,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { EmailVerification } from './email-verification.service';
 import { ToastService } from '../toast.service';
+import { FormControl, Validators } from '@angular/forms';
+import { UserService } from '../userServices/user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,14 +19,33 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone,
     public emailService: EmailVerification,
-    public toastService: ToastService
+    public toastService: ToastService,
+    public userService: UserService
   ) {}
 
+  isEmail(email: string) {
+    var formControl = new FormControl(email, Validators.email);
+    return formControl.valid;
+  }
+
   async signIn(email: string, password: string) {
+    var isEmail = this.isEmail(email);
+    var username = email;
+    var userData;
+    // var userEmail = email;
+
+    if (isEmail) {
+      this.userService.getUserInfo(email).then((userData) => {
+        username = userData.username;
+      });
+      console.log(username);
+    }
+
+    await this.userService.userLogin(username);
     this.firebaseAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
-        this.ngZone.run(() => {
+        this.ngZone.run(async () => {
           this.router.navigate(['/quote']);
         });
       })
