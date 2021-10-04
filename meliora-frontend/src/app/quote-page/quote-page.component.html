@@ -17,7 +17,7 @@
       <div class="quote-text">
         <i class="fas fa-quote-left"></i>
         <span
-          [ngStyle]="{ fontSize: quoteText.length > 120 ? '0.8rem' : '1rem' }"
+          [ngStyle]="{ fontSize: quoteText.length > 120 ? '1rem' : '1.5rem' }"
           id="quote"
           >{{ quoteText }}</span
         >
@@ -25,16 +25,9 @@
       </div>
       <!-- Author -->
       <div class="quote-author">
-        <span id="author" [ngStyle]="{ fontSize: '0.8rem' }">{{
+        <span id="author" [ngStyle]="{ fontSize: '1rem' }">{{
           authorText
         }}</span>
-      </div>
-      <!-- Buttons -->
-      <div class="button-container">
-        <button class="twitter-button" id="twitter" title="Tweet This!" hidden>
-          <i class="fab fa-twitter"></i>
-        </button>
-        <button id="new-quote" hidden>New Quote</button>
       </div>
     </div>
 

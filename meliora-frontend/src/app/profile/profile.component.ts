@@ -9,6 +9,8 @@ import { PostCardComponent, Post } from '../post-card/post-card.component';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  darkModeStatus = true;
+  //localStorage.getItem("darkModeStatus");
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {  }
 
