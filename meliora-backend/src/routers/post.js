@@ -18,10 +18,16 @@ const isValidPost = (post) => {
   console.log("post:", post);
   console.log(
     "and result: ",
-    author in post && title in post && content in post && anonymous in post
+    "author" in post &&
+      "title" in post &&
+      "content" in post &&
+      "anonymous" in post
   );
   return (
-    author in post && title in post && content in post && anonymous in post
+    "author" in post &&
+    "title" in post &&
+    "content" in post &&
+    "anonymous" in post
   );
 };
 
