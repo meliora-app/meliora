@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { PostService } from '../shared/services/post.service';
 
 @Component({
   selector: 'app-create-post',
@@ -9,11 +11,20 @@ export class CreatePostComponent implements OnInit {
   visibilityClicked: boolean = false;
   imageClicked: boolean = false;
 
-  constructor() {}
+  constructor(private postService: PostService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(localStorage.getItem('userID'));
+  }
 
-  onSubmitPost() {}
+  async onSubmitPost(form: NgForm) {
+    await this.postService.createPost(
+      form.value.title,
+      form.value.content,
+      localStorage.getItem('userID'),
+      this.visibilityClicked
+    );
+  }
 
   onVisibilityClicked() {
     this.visibilityClicked = !this.visibilityClicked;
