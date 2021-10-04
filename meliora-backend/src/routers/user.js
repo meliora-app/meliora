@@ -53,14 +53,16 @@ userRouter.post("/signup", async (req, res) => {
 userRouter.put("/login", async (req, res) => {
   let user = req.body;
 
-  if (!user || !user.username) {
-    res.status(400).send("You must send in the username!");
+  if (!user || (!user.username && !user.email)) {
+    res.status(400).send("You must send in the username or email!");
     return;
   }
 
   let userDoc;
   try {
-    userDoc = await User.findOne({ username: user.username }).exec();
+    userDoc = await User.findOne({
+      $or: [{ username: user.username }, { email: user.email }],
+    }).exec();
 
     if (!userDoc) {
       res.status(400).send("This user does not exist!");
@@ -122,7 +124,7 @@ userRouter.post("/updateProfile", async (req, res) => {
  * Update using _id
  * Garrett Lee
  */
-userRouter.post("updateSettings", async (req, res) => { });
+userRouter.post("updateSettings", async (req, res) => {});
 
 /**
  * Retrieve user information
@@ -164,7 +166,7 @@ userRouter.put("/getUser", async (req, res) => {
     bio: userDoc.bio,
     darkModeStatus: userDoc.darkModeStatus,
     authorList: userDoc.authorList,
-    email: userDoc.email
+    email: userDoc.email,
   });
 });
 
