@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../shared/services/auth.service';
+import { AuthService } from '../shared/services/authServices/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -22,15 +22,18 @@ export class LoginComponent implements OnInit {
   async signIn(email: string, password: string) {
     this.authService.signIn(email, password);
 
-    let res = await fetch('https://meliora-backend.herokuapp.com/api/users/login', {
-      method: "PUT",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: 'xmadera2'
-      })
-    });
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/users/login',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: 'xmadera2',
+        }),
+      }
+    );
 
     if (res.status == 200) {
       let resBody = await res.json();
