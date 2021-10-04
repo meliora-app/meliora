@@ -122,7 +122,7 @@ userRouter.post("/updateProfile", async (req, res) => {
  * Update using _id
  * Garrett Lee
  */
-userRouter.post("updateSettings", async (req, res) => {});
+userRouter.post("updateSettings", async (req, res) => { });
 
 /**
  * Retrieve user information
@@ -164,6 +164,7 @@ userRouter.put("/getUser", async (req, res) => {
     bio: userDoc.bio,
     darkModeStatus: userDoc.darkModeStatus,
     authorList: userDoc.authorList,
+    email: userDoc.email
   });
 });
 
