@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { EmailVerification } from './email-verification.service';
-import { ToastService } from './toast.service';
+import { ToastService } from '../toast.service';
 
 @Injectable({
   providedIn: 'root',
@@ -64,23 +64,29 @@ export class AuthService {
   }
 
   async changePasswordEmail() {
-    await this.firebaseAuth.sendPasswordResetEmail((await this.firebaseAuth.currentUser).email, null);
+    await this.firebaseAuth.sendPasswordResetEmail(
+      (
+        await this.firebaseAuth.currentUser
+      ).email,
+      null
+    );
   }
 
   async confirmChangePassword(code: string, newPassword: string) {
-    this.firebaseAuth.confirmPasswordReset(code, newPassword)
-    .then((result) => {
-      this.toastService.showSuccessMessage(
-        'Your password was changed!',
-        'Password Change'
-      );
-    })
-    .catch((err) => {
-      console.log(err);
-      this.toastService.showErrorMessage(
-        'There was an error changing your password!',
-        'Password Change'
-      );
-    });
+    this.firebaseAuth
+      .confirmPasswordReset(code, newPassword)
+      .then((result) => {
+        this.toastService.showSuccessMessage(
+          'Your password was changed!',
+          'Password Change'
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+        this.toastService.showErrorMessage(
+          'There was an error changing your password!',
+          'Password Change'
+        );
+      });
   }
 }

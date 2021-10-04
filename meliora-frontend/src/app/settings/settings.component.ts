@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../shared/services/auth.service'
+import { AuthService } from '../shared/services/authServices/auth.service';
 import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+  styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent implements OnInit {
   displayConfirmBox = false;
@@ -14,9 +14,7 @@ export class SettingsComponent implements OnInit {
   //localStorage.getItem("darkModeStatus");
   constructor(public authService: AuthService, public router: Router) {}
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
   async onLogoutClicked() {
     await this.authService.logout();
@@ -25,7 +23,7 @@ export class SettingsComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    console.log('Inside submit form')
+    console.log('Inside submit form');
     this.darkModeCheck(form.value.darkmode);
   }
 
@@ -50,13 +48,9 @@ export class SettingsComponent implements OnInit {
   }
 
   changePasswordEmail(): void {
-    console.log('Inside Change Password')
+    console.log('Inside Change Password');
     this.authService.changePasswordEmail();
   }
 
-  deleteFunction() {
-    
-  }
-
-
+  deleteFunction() {}
 }
