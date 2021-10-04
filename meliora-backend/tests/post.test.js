@@ -33,7 +33,8 @@ describe('Unit Tests for Post Router:', () => {
 			.send({
 				title: 'Test2 Title',
 				content: 'Test2 Content',
-				author: process.env.TEST_USER_ID
+				author: process.env.TEST_USER_ID,
+				anonymous: true
 			});
 
 		let status = res.status;
@@ -69,10 +70,35 @@ describe('Unit Tests for Post Router:', () => {
 		expect(res.status).toBe(200);
 	});
 
+	test('Get All: Server should return 200 unless there is an issue with the server.', async () => {
+		let res = await request(server)
+			.get(`/api/posts/getAll`);
+		
+		expect(res.status).toBe(200);
+	});
+
+	test('Get Posts By User: Server should return 400 when no ID is provided.', async () => {
+		let res = await request(server)
+			.get(`/api/posts/getPostsBy`);
+
+		expect(res.status).toBe(400);
+	});
+
+	test('Get Posts By User: Server should return 200 when an ID is provided.', async () => {
+		let res = await request(server)
+			.get(`/api/posts/getPostsBy`)
+			.set('Content-Type', 'application/json')
+			.send({
+				userID: '61489001f5cbecf2074c5244',
+			});
+
+		expect(res.status).toBe(200);
+	});
+
 	afterAll(done => {
 		Post.findByIdAndDelete(testPostID).exec();
 		disconnect();
 
 		done();
-})
+	})
 });

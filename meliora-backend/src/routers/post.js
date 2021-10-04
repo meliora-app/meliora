@@ -15,13 +15,32 @@ const postRouter = new Router();
  * Util Function to validate a new post
  */
 const isValidPost = (post) => {
-	return (post.author && post.title && post.content);
+	return (post.author && post.title && post.content && post.anonymous);
 }
 
 /**
  * Endpoint to get all posts
  */
 postRouter.get('/getAll', async (req, res) => {
+	
+	let allPosts = [];
+
+	try { 
+
+		allPosts = await Post.find({}).exec();
+
+		if (!allPosts || allPosts.length == 0) {
+			res.status(400).send('There are no posts!');
+			return;
+		}
+
+	} catch (e) {
+		console.error(e);
+		res.status(500).send('An error occured on the backend.');
+		return;
+	}
+
+	res.status(200).send(allPosts);
 
 });
 
@@ -106,9 +125,28 @@ postRouter.patch('/flag', async (req, res) => {
 });
 
 /**
- * Endpoint to delete a post
+ * Endpoint to delete a post by _id
+ * Garrett Lee
  */
-postRouter.delete('/delete', async (req, res) => {
+postRouter.delete('/deletePost', async (req, res) => {
+	let post = req.body;
+
+	if (!post._id || !post.author) {
+		res.status(400).send("Request needs post ID and author ID");
+	}
+	try {
+		// remove post id from authorList of author
+		await User.findOneAndUpdate( { _id: post.author }, { $pull: { authorList: post._id }}).exec();
+		// remaove post from database
+		await Post.deleteOne({ _id: post._id }).exec();
+	} catch (e) {
+		res.status(500).send("Error deleting post: ");
+		return;
+	}
+	res.status(200).send({
+		_id: post._id,
+		msg: 'Post Deletion Successful'
+	});
 
 });
 
@@ -116,8 +154,32 @@ postRouter.delete('/delete', async (req, res) => {
  * Endpoint to get posts
  * from a specified author
  */
-postRouter.get('/getPostsBy', async (req, res) => {
+postRouter.put('/getPostsBy', async (req, res) => {
 
+	let { userID } = req.body;
+
+	if (!userID) {
+		res.status(400).send('You need to send in a user ID!');
+		return;
+	}
+
+	let postsByUser = [];
+	try {
+
+		postsByUser = await Post.find({ author: userID }).exec();
+
+		if (!postsByUser || postsByUser.length == 0) {
+			res.status(400).send('This user has no posts.');
+			return;
+		}
+
+	} catch (e) {
+		console.error(e);
+		res.status(500).send('An error occurred on the backend.');
+		return;
+	}
+
+	res.status(200).send(postsByUser);
 });
 
 export { postRouter };

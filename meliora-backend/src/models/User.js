@@ -22,6 +22,10 @@ const UserSchema = new Schema({
 	bio: {
 		type: SchemaTypes.String,
 		default: ""
+	},
+	darkModeStatus: {
+		type: SchemaTypes.Boolean,
+		default: false
 	}
 });
 
