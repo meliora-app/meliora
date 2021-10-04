@@ -3,4 +3,5 @@ export interface User {
   email: string;
   displayName: string;
   verifiedEmail: boolean;
+  darkModeStatus: boolean;
 }
