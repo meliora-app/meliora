@@ -7,9 +7,25 @@ const UserSchema = new Schema({
 		type: SchemaTypes.String,
 		required: true
 	},
+	name: {
+		type: SchemaTypes.String,
+		default: '',
+	},
+	phone: {
+		type: SchemaTypes.String,
+		default: '',
+	},
+	sex: {
+		type: SchemaTypes.String,
+		default: '',
+	},
 	email: {
 		type: SchemaTypes.String,
 		required: true
+	},
+	dateOfBirth: {
+		type: SchemaTypes.String,
+		default: '',
 	},
 	password: {
 		type: SchemaTypes.String,
@@ -21,7 +37,7 @@ const UserSchema = new Schema({
 	},
 	bio: {
 		type: SchemaTypes.String,
-		default: ""
+		default: "",
 	},
 	darkModeStatus: {
 		type: SchemaTypes.Boolean,

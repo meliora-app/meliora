@@ -19,6 +19,10 @@ const PostSchema = new Schema({
 		type: SchemaTypes.ObjectId,
 		required: true
 	},
+	authorName: {
+		type: SchemaTypes.String,
+		default: '',
+	},
 	flags: {
 		type: SchemaTypes.Number,
 		default: 0,

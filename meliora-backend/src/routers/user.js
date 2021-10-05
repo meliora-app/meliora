@@ -120,6 +120,43 @@ userRouter.post("/updateProfile", async (req, res) => {
 });
 
 /**
+ * Load up a user profile
+ */
+userRouter.put("/getUserProfile", async (req, res) => {
+
+  let { userID } = req.body;
+
+  if (!userID) {
+    res.status(400).send('You must send in a user ID!');
+    return;
+  }
+
+  let completeUserProfile = {};
+  try {
+
+    let user = await User.findById(userID).exec();
+
+    if (!user) {
+      res.status(400).send('This user does not exist!');
+      return;
+    }
+
+    let posts = await Post.findMany({ author: userID }).exec();
+
+    completeUserProfile = user;
+    completeUserProfile.posts = posts;
+    completeUserProfile.numPosts = posts.length;
+
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('There was an error on the backend.');
+    return;
+  }
+
+  res.status(200).send(completeUserProfile);
+});
+
+/**
  * Update user settings after editing
  * Update using _id
  * Garrett Lee
@@ -173,7 +210,6 @@ userRouter.put("/getUser", async (req, res) => {
 /**
  * Endpoint to delete account/all posts and references
  * delete account with _id
- * TODO: Also needs to delete from firebase... Frontend?
  * Garrett Lee
  */
 userRouter.delete("/deleteAccount", async (req, res) => {
