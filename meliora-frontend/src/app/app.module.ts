@@ -27,10 +27,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 import { SettingsComponent } from './settings/settings.component';
 import { ToastrModule } from 'ngx-toastr';
 import { QuotePageComponent } from './quote-page/quote-page.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { QuotePageComponent } from './quote-page/quote-page.component';
     EditProfileComponent,
     SettingsComponent,
     QuotePageComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,7 @@ import { QuotePageComponent } from './quote-page/quote-page.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    AngularFireStorageModule,
     MatIconModule,
     MatButtonModule,
     MatMenuModule,

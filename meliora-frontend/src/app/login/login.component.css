@@ -77,3 +77,13 @@ span {
   font-size: 12px;
   color: red;
 }
+
+.forgot-pass {
+  font-size: 15px;
+  text-decoration: underline;
+  color: #0b3d77;
+}
+
+.forgot-pass:hover {
+  cursor: pointer;
+}

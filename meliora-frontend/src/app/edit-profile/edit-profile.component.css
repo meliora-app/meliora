@@ -1,92 +1,101 @@
 .wrapper {
-    display: flex;
+  display: flex;
 }
 
 .profile-circle {
-    width: 163px;
-    height: 163px;
-    border-radius: 50%;
-    background-color: lightblue;
-    overflow: hidden;
-    position: relative;
+  width: 163px;
+  height: 163px;
+  border-radius: 50%;
+  background-color: lightblue;
+  overflow: hidden;
+  position: relative;
 }
 
 .profile-name {
-    font-size: 30px;
-    font-weight: bolder;
-  }
+  font-size: 30px;
+  font-weight: bolder;
+}
 
 img {
-    width: 100%;
-    height: auto;
-  }
-.profile-heading {
-    font-size: 20px;
-    font-weight: bold;
-    text-decoration: underline;
-  }
-  
-  .profile-about {
-    width: 465.01px;
-    height: auto;
-    background-color: #d3e1f1;
-    border-radius: 20px;
-  }
-  
-  .profile-post {
-    width: 467px;
-    height: auto;
-    background-color: #a6cdfc;
-    border-radius: 20px;
-  }
-  
-  .categories {
-    width: auto;
-    height: auto;
-    border-radius: 20px;
-    background-color: #d3e1f1;
-  }
+  width: 100%;
+  height: auto;
+}
 
-  .category-pill {
-    width: auto;
-    height: auto;
-    background-color: #007bff;
-    opacity: 50%;
-    color: #ffffff;
-    font-weight: bold;
-    border: 1px solid #041b35;
-  }
-  .edit-pen {
-    font-size: 1em;
-    position: relative;
-    top: 5px;
-    cursor: pointer;
+.profile-heading {
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.profile-about {
+  width: 465.01px;
+  height: auto;
+  background-color: #d3e1f1;
+  border-radius: 20px;
+}
+
+.profile-post {
+  width: 467px;
+  height: auto;
+  background-color: #a6cdfc;
+  border-radius: 20px;
+}
+
+.categories {
+  width: auto;
+  height: auto;
+  border-radius: 20px;
+  background-color: #d3e1f1;
+}
+
+.category-pill {
+  width: auto;
+  height: auto;
+  background-color: #007bff;
+  opacity: 50%;
+  color: #ffffff;
+  font-weight: bold;
+  border: 1px solid #041b35;
+}
+.edit-pen {
+  font-size: 1em;
+  position: relative;
+  top: 5px;
+  cursor: pointer;
 }
 
 .center {
-    margin: 0;
-    position: absolute;
-    top: 54%;
-    left: 52%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-  }
+  margin: 0;
+  position: absolute;
+  top: 54%;
+  left: 52%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
 
-  .center-saved {
-    position: absolute;
-    bottom: -50px;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    white-space: nowrap;
-    color: #c22525;
-    font-weight: bold;
-    
-  }
+.center-saved {
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  color: #c22525;
+  font-weight: bold;
+}
 
-  .back-profile {
-    position: absolute;
-    top: 83px;
-    left: 65px;
-    font-size: 18px;
-  }
+.back-profile {
+  position: absolute;
+  top: 83px;
+  left: 65px;
+  font-size: 18px;
+}
+
+.edit-profile-pic {
+  font-size: 10px;
+  text-decoration: underline;
+}
+
+.edit-profile-pic:hover {
+  cursor: pointer;
+}

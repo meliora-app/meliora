@@ -19,12 +19,22 @@
       <div class="container mt-5 mr-5 wrapper">
         <div>
           <div class="profile-circle">
-            <img src="../../assets/nature.jpeg" alt="" />
+            <img
+              [src]="
+                downloadURL != '' ? downloadURL : '../../assets/nature.jpeg'
+              "
+              alt=""
+            />
           </div>
+          <input
+            style="display: none"
+            type="file"
+            (change)="editProfilePic($event)"
+            #fileInput
+          />
           <p
-            class="text-center mt-2"
-            style="font-size: 10px; text-decoration: underline"
-            (click)="editProfilePic()"
+            class="edit-profile-pic text-center mt-2"
+            (click)="fileInput.click()"
           >
             Edit profile picture
           </p>

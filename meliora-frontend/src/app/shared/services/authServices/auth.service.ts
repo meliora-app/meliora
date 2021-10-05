@@ -90,12 +90,15 @@ export class AuthService {
     console.log('current user after', this.firebaseAuth.currentUser);
   }
 
-  async changePasswordEmail() {
+  async passwordResetEmail(email: string) {
+    await this.firebaseAuth.sendPasswordResetEmail(email);
+  }
+
+  async passwordResetInsideApp() {
     await this.firebaseAuth.sendPasswordResetEmail(
       (
         await this.firebaseAuth.currentUser
-      ).email,
-      null
+      ).email
     );
   }
 
