@@ -18,11 +18,7 @@ export class ProfileComponent implements OnInit {
   // timestamp;
   downloadURL: string;
   userId: string = localStorage.getItem('userID');
-  darkModeStatus = false;
-  //localStorage.getItem("darkModeStatus");
-
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private fireStorage: AngularFireStorage) {  }
-
+  darkModeStatus = localStorage.getItem("darkModeStatus");
   loggedInUser: string = localStorage.getItem('userID');
   viewedUserID: string;
   viewedUsername: string;
@@ -31,6 +27,7 @@ export class ProfileComponent implements OnInit {
   isSelf: boolean = true;
   viewedUserNumPosts: number = this.posts.length;
 
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private fireStorage: AngularFireStorage) {  }
 
   async loadProfile(username: String) {
     

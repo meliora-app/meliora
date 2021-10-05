@@ -10,12 +10,42 @@ import { NgForm } from '@angular/forms';
 })
 export class SettingsComponent implements OnInit {
   displayConfirmBox = false;
-  darkModeStatus = true;
-  //localStorage.getItem("darkModeStatus");
+  darkModeStatus = localStorage.getItem("darkModeStatus");
+  userID = localStorage.getItem("userID");
+  email: string;
+  phone: string;
+  dateOfBirth: string;
+  sex: string;
+  name: string;
+
   constructor(public authService: AuthService, public router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadSettings();
+  }
 
+  async loadSettings() {
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/users/getUserProfile',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userID: this.userID
+        }),
+      }
+    );
+    if (res.status == 200) {
+      let resBody = await res.json();
+      this.email = resBody.email;
+      this.phone = resBody.phone;
+      this.dateOfBirth = resBody.dateOfBirth;
+      this.sex = resBody.sex;
+      this.name = resBody.name;
+    }
+  }
   async onLogoutClicked() {
     await this.authService.logout();
     localStorage.removeItem('userID');
