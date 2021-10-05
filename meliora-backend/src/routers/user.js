@@ -161,7 +161,35 @@ userRouter.put("/getUserProfile", async (req, res) => {
  * Update using _id
  * Garrett Lee
  */
-userRouter.post("updateSettings", async (req, res) => {});
+userRouter.post("/updateSettings", async (req, res) => {
+  let user = req.body;
+
+  if (!user._id) {
+    res.status(400).send("Request needs a userID");
+  }
+
+  let userDoc;
+  try {
+    userDoc = await User.findOne({_id: user._id}).exec();
+    
+    if (!userDoc) {
+      res.status(500).send("Error finding user with ID: " + user._id);
+    }
+    if (user.darkModeStatus) userDoc.darkModeStatus = user.darkModeStatus;
+    if (user.sex) userDoc.sex = user.sex;
+    if (user.dateOfBirth) userDoc.dateOfBirth = user.dateOfBirth;
+    if (user.name) userDoc.name = user.name;
+    if (user.phone) userDoc.phone = user.phone;
+    userDoc.save();
+
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("Error fetching and updating user");
+  }
+
+  res.status(200).send("Successful update");
+
+});
 
 /**
  * Retrieve user information
