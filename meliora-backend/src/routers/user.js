@@ -234,7 +234,8 @@ userRouter.put("/getUser", async (req, res) => {
     email: userDoc.email,
     phone: userDoc.phone,
     sex: userDoc.sex,
-    name: userDoc.name
+    name: userDoc.name,
+    dateOfBirth: userDoc.dateOfBirth
     
   });
 });
