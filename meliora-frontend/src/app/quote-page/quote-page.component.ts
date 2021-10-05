@@ -13,7 +13,7 @@ export class QuotePageComponent implements OnInit {
   authorText: string;
   quoteText: string;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   async ngOnInit(): Promise<void> {
     await this.getQuote();
@@ -34,7 +34,6 @@ export class QuotePageComponent implements OnInit {
       if (data == null) {
         this.quoteText = 'Good Today, Better Tomorrow';
         this.authorText = 'Meliora';
-
       } else {
         if (data.quoteText === '' || data.quoteText === null) {
           this.quoteText = 'Good Today, Better Tomorrow';
