@@ -232,6 +232,10 @@ userRouter.put("/getUser", async (req, res) => {
     darkModeStatus: userDoc.darkModeStatus,
     authorList: userDoc.authorList,
     email: userDoc.email,
+    phone: userDoc.phone,
+    sex: userDoc.sex,
+    name: userDoc.name
+    
   });
 });
 
