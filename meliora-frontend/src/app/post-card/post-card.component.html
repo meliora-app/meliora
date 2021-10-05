@@ -16,7 +16,7 @@
     <div class="post-card py-3 px-3">
       <div class="wrapper">
         <div class="profile-pic">
-          <img src="../../assets/nature.jpeg" alt="" />
+          <img [src]="downloadURL" alt="" />
         </div>
         <div class="pl-3">
           <p *ngIf="!post.anon" class="post-heading pt-2" (click)="userClicked()">{{post.authorUsername}}</p>

@@ -31,6 +31,7 @@ export class ProfileComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private fireStorage: AngularFireStorage) {  }
 
   async loadProfile() {
+    this.getProfilePic();
     this.darkModeStatus = (localStorage.getItem("darkModeStatus") == "true");
     let res = await fetch('https://meliora-backend.herokuapp.com/api/users/getUser', {
       method: "PUT",
@@ -98,7 +99,7 @@ export class ProfileComponent implements OnInit {
   // }
 
   getProfilePic() {
-    this.ref = this.fireStorage.ref('profilePictures/' + this.userId);
+    this.ref = this.fireStorage.ref('profilePictures/' + this.viewedUserID);
     this.ref.getDownloadURL().subscribe((url) => {
       this.downloadURL = url;
       // this.timestamp = new Date().getTime();

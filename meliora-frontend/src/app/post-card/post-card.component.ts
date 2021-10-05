@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { AngularFireStorage, AngularFireStorageReference } from '@angular/fire/storage';
 import { Router } from '@angular/router'
 
 export class Post {
@@ -28,11 +29,15 @@ export class PostCardComponent implements OnInit {
   @Input() post: Post; // Post used as input for template
   @Output() postDeleted: EventEmitter<string> = new EventEmitter();
 
+  ref: AngularFireStorageReference;
+  // timestamp;
+  downloadURL: string;
   belongsToUser: boolean;
-  constructor(private route: Router) {
+  constructor(private route: Router, private fireStorage: AngularFireStorage) {
   }
 
   ngOnInit(): void {
+    this.getProfilePic();
     this.belongsToUser = localStorage.getItem('userID') == this.post.authorID;
   }
 
@@ -61,6 +66,14 @@ export class PostCardComponent implements OnInit {
 // route to profile with clicked user
 userClicked() {
   this.route.navigate(['/profile'], { queryParams: {"_id": this.post.authorID}});
+}
+
+getProfilePic() {
+  this.ref = this.fireStorage.ref('profilePictures/' + this.post.authorID);
+  this.ref.getDownloadURL().subscribe((url) => {
+    this.downloadURL = url;
+    // this.timestamp = new Date().getTime();
+  });
 }
 
 }
