@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
   // timestamp;
   downloadURL: string;
   userId: string = localStorage.getItem('userID');
-  darkModeStatus = localStorage.getItem("darkModeStatus");
+  darkModeStatus: boolean = localStorage.getItem("darkModeStatus") == 'true';
   loggedInUser: string = localStorage.getItem('userID');
   viewedUserID: string;
   viewedUsername: string;
@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private fireStorage: AngularFireStorage) {  }
 
   async loadProfile(username: String) {
-    
+    this.darkModeStatus = (localStorage.getItem("darkModeStatus") == "true");
     let res = await fetch('https://meliora-backend.herokuapp.com/api/users/getUser', {
       method: "PUT",
       headers: {

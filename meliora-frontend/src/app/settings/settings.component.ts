@@ -1,8 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/authServices/auth.service';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormsModule } from '@angular/forms';
 
+export class Settings {
+  username: string;
+  email: string;
+  phone: string;
+  dateOfBirth: string;
+  sex: string;
+  darkModeStatus: boolean;
+
+  constructor(username: string, email: string, phone: string, dateOfBirth: string, sex: string, darkModeStatus: boolean) {
+    this.username = username;
+    this.email = email;
+    this.phone = phone;
+    this.dateOfBirth = dateOfBirth;
+    this.sex = sex;
+    this.darkModeStatus = darkModeStatus;
+  }
+}
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -10,14 +27,10 @@ import { NgForm } from '@angular/forms';
 })
 export class SettingsComponent implements OnInit {
   displayConfirmBox = false;
-  darkModeStatus = localStorage.getItem("darkModeStatus");
+  darkModeStatus: boolean = localStorage.getItem("darkModeStatus") == 'true';
   userID = localStorage.getItem("userID");
-  email: string;
-  phone: string;
-  dateOfBirth: string;
-  sex: string;
-  name: string;
-
+  settings: Settings;
+  
   constructor(public authService: AuthService, public router: Router) {}
 
   ngOnInit(): void {
@@ -39,11 +52,13 @@ export class SettingsComponent implements OnInit {
     );
     if (res.status == 200) {
       let resBody = await res.json();
-      this.email = resBody.email;
-      this.phone = resBody.phone;
-      this.dateOfBirth = resBody.dateOfBirth;
-      this.sex = resBody.sex;
-      this.name = resBody.name;
+      this.settings = new Settings(
+        resBody.username, 
+        resBody.email, 
+        resBody.phone,
+        resBody.dateOfBirth, 
+        resBody.sex, 
+        resBody.darkModeStatus);
     }
   }
   async onLogoutClicked() {
@@ -52,11 +67,37 @@ export class SettingsComponent implements OnInit {
     localStorage.removeItem('darkModeStatus');
   }
 
-  onSubmit(form: NgForm) {
+ async onSubmit(form: NgForm) {
     console.log('Inside submit form');
-    this.darkModeCheck(form.value.darkmode);
+    console.log("checked?: " + this.settings.darkModeStatus);
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/users/updateSettings',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          _id: this.userID,
+          phone: this.settings.phone,
+          dateOfBirth: this.settings.dateOfBirth,
+          darkModeStatus: localStorage.getItem("darkModeStatus")
+        }),
+      }
+    );
+    if (res.status == 200) {
+      // on successful update
+    }
   }
 
+  checkDarkMode(event: any) {
+    console.log(event.target.checked);
+    localStorage.setItem('darkModeStatus', ''+ event.target.checked);
+    this.darkModeStatus = event.target.checked;
+    this.settings.darkModeStatus = event.target.checked;
+  }
+
+  /*
   async darkModeCheck(darkmode: boolean) {
     let res = await fetch(
       'https://meliora-backend.herokuapp.com/api/users/login',
@@ -79,11 +120,29 @@ export class SettingsComponent implements OnInit {
       console.log(resBody);
     }
   }
+  */
 
   changePasswordEmail(): void {
     console.log('Inside Change Password');
     this.authService.passwordResetInsideApp();
   }
 
-  deleteFunction() {}
+  async onDeleteAccountClicked() {
+    if (confirm('Are you sure you want to delete your account?')) {
+      await this.authService.logout();
+      let res = await fetch('https://meliora-backend.herokuapp.com/api/users/deleteAccount', {
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          _id: this.userID,
+        })
+        });
+      if (res.status == 200) {
+        let resBody = await res.json();
+        console.log(resBody.msg);
+      }
+    }
+  }
 }

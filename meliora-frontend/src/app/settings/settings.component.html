@@ -68,8 +68,8 @@
       <div class="signup-form">
         <form (ngSubmit)="onSubmit(f)" #f="ngForm">
           <div class="form-group row">
-            <label for="name inlineFormInputName2">Name:</label>
-            <p class="user-name label-spacing" id="inlineFormInputName2">Vidit S Shah</p>
+            <label for="name inlineFormInputName2">Username:</label>
+            <p class="user-name label-spacing" id="inlineFormInputName2">{{settings.username}}</p>
           </div>
           <div class="form-group row">
             <label for="email">Email:</label>
@@ -78,7 +78,8 @@
               class="form-control"
               id="email"
               aria-describedby="emailHelp"
-              [value]="email"
+              [(ngModel)]="settings.email"
+              name="email"
               required
             />
           </div>
@@ -89,7 +90,8 @@
               class="form-control"
               id="uname"
               aria-describedby="emailHelp"
-              [value]="phone"
+              [(ngModel)]="settings.phone"
+              name="phone"
               required
             />
           </div>
@@ -99,7 +101,8 @@
               type="text"
               class="form-control"
               id="password"
-              [value]="dateOfBirth"
+              [(ngModel)]="settings.dateOfBirth"
+              name="dateOfBirth"
               required
             />
           </div>
@@ -118,7 +121,7 @@
             <input type="radio" value="female" name="gender" ngModel> Female -->
           </div>
           <div class="form-group row">
-                <input class="form-check" type="checkbox" value="" ngModel #darkmode="ngModel" id="flexCheckChecked" [checked]="darkModeStatus">
+                <input class="form-check" type="checkbox" [(ngModel)]="settings.darkModeStatus" name="darkModeStatus" (change)="checkDarkMode($event)" id="flexCheckChecked" [checked]="settings.darkModeStatus">
                 <label class="form-check" for="flexCheckChecked">
                   Dark Mode
             </label>
@@ -143,7 +146,7 @@
           </button>
         </div>
         <div class="text-center">
-          <button type="button" onclick="return confirm('Are you sure you want to delete your account?')" class="btn btn-lg delete-submit text-center">
+          <button type="button" (click)="onDeleteAccountClicked()" class="btn btn-lg delete-submit text-center">
             Delete Account
           </button>
         </div>

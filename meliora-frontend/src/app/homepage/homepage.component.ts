@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./homepage.component.css'],
 })
 export class HomepageComponent implements OnInit {
-  darkModeStatus = true;
+  darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
   //localStorage.getItem("darkModeStatus");
   categories = [
     'Friendship',
