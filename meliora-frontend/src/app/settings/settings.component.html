@@ -118,7 +118,7 @@
             <input type="radio" value="female" name="gender" ngModel> Female -->
           </div>
           <div class="form-group row">
-                <input class="form-check" type="checkbox" value="" ngModel #darkmode="ngModel" id="flexCheckChecked">
+                <input class="form-check" type="checkbox" value="" ngModel #darkmode="ngModel" id="flexCheckChecked" [checked]="darkModeStatus">
                 <label class="form-check" for="flexCheckChecked">
                   Dark Mode
             </label>

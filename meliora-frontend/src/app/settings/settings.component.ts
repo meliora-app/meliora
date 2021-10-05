@@ -26,14 +26,14 @@ export class SettingsComponent implements OnInit {
 
   async loadSettings() {
     let res = await fetch(
-      'https://meliora-backend.herokuapp.com/api/users/getUserProfile',
+      'https://meliora-backend.herokuapp.com/api/users/getUser',
       {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userID: this.userID
+          _id: this.userID
         }),
       }
     );
