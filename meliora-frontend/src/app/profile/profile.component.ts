@@ -2,25 +2,35 @@ import { Component, NgModule, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PostCardComponent, Post } from '../post-card/post-card.component';
 
+import {
+  AngularFireStorage,
+  AngularFireStorageReference,
+} from '@angular/fire/storage';
+import { PostService } from '../shared/services/post.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
-  darkModeStatus = true;
+  ref: AngularFireStorageReference;
+  // timestamp;
+  downloadURL: string;
+  userId: string = localStorage.getItem('userID');
+  darkModeStatus = false;
   //localStorage.getItem("darkModeStatus");
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) {  }
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private fireStorage: AngularFireStorage) {  }
 
   loggedInUser: string = localStorage.getItem('userID');
   viewedUserID: string;
   viewedUsername: string;
-  viewedUserNumPosts: any;
   bio: String;
   posts: Post[] = [];
   isSelf: boolean = true;
+  viewedUserNumPosts: number = this.posts.length;
+
 
   async loadProfile(username: String) {
     
@@ -67,6 +77,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getProfilePic();
     this.activatedRoute.queryParams.subscribe(params => {
       this.viewedUserID = params._id;
       console.log("Viewed user: " + this.viewedUserID);
@@ -78,4 +89,18 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['/edit-profile'], { queryParams: {"username": this.viewedUsername, "bio": this.bio}});
   }
 
+  // displayProfilePic() {
+  //   if (this.timestamp) {
+  //     return this.downloadURL + '?' + this.timestamp;
+  //   }
+  //   return this.downloadURL;
+  // }
+
+  getProfilePic() {
+    this.ref = this.fireStorage.ref('profilePictures/' + this.userId);
+    this.ref.getDownloadURL().subscribe((url) => {
+      this.downloadURL = url;
+      // this.timestamp = new Date().getTime();
+    });
+  }
 }

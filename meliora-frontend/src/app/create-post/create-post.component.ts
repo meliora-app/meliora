@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { PostService } from '../shared/services/post.service';
+import { ToastService } from '../shared/services/toast.service';
 
 @Component({
   selector: 'app-create-post',
@@ -13,7 +15,11 @@ export class CreatePostComponent implements OnInit {
   visibilityClicked: boolean = false;
   imageClicked: boolean = false;
 
-  constructor(private postService: PostService) {}
+  constructor(
+    private postService: PostService,
+    private router: Router,
+    private toast: ToastService
+  ) {}
 
   ngOnInit(): void {
     console.log(localStorage.getItem('userID'));
@@ -26,6 +32,9 @@ export class CreatePostComponent implements OnInit {
       localStorage.getItem('userID'),
       this.visibilityClicked
     );
+
+    this.router.navigate(['/home']);
+    this.toast.showSuccessMessage('Post created successfully', 'Post');
   }
 
   onVisibilityClicked() {

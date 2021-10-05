@@ -9,18 +9,18 @@ import { User } from '../../models/user.model';
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  getUserInfo(email: string) {
-    var userData;
+  getUserInfo(userData: {}) {
+    var userInfo;
     return new Promise<User>((resolve, reject) => {
       this.http
         .put(
           'https://meliora-backend.herokuapp.com/api/users/getUser',
-          { email: email },
+          userData,
           { headers: { 'Content-Type': 'application/json' } }
         )
         .subscribe((responseData) => {
           userData = responseData;
-          resolve(userData);
+          resolve(userInfo);
           console.log(userData);
         });
     });
@@ -28,21 +28,20 @@ export class UserService {
     // return userData;
   }
 
-  async userLogin(username: string) {
-    console.log(username);
-    var response;
+  async userLogin(userData: {}) {
+    // var response;
     this.http
-      .put(
-        'https://meliora-backend.herokuapp.com/api/users/login',
-        { username: username },
-        { headers: { 'Content-Type': 'application/json' } }
-      )
+      .put('https://meliora-backend.herokuapp.com/api/users/login', userData, {
+        headers: { 'Content-Type': 'application/json' },
+      })
       .subscribe((responseData) => {
-        response = responseData;
-        console.log(response);
+        // response = responseData;
+        console.log(responseData);
+        localStorage.setItem('userID', (<any>responseData)._id);
+        localStorage.setItem(
+          'darkModeStatus',
+          (<any>responseData).darkModeStatus
+        );
       });
-
-    localStorage.setItem('userID', response._id);
-    localStorage.setItem('darkModeStatus', response.darkModeStatus);
   }
 }

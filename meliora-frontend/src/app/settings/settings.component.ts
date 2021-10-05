@@ -28,19 +28,22 @@ export class SettingsComponent implements OnInit {
   }
 
   async darkModeCheck(darkmode: boolean) {
-    let res = await fetch('https://meliora-backend.herokuapp.com/api/users/login', {
-      method: "PUT",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        darkmode
-      })
-    });
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/users/login',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          darkmode,
+        }),
+      }
+    );
 
     if (res.status == 200) {
       let resBody = await res.json();
-      localStorage.setItem('darkModeStatus', "" + darkmode);
+      localStorage.setItem('darkModeStatus', '' + darkmode);
     } else {
       let resBody = await res.json();
       console.log(resBody);
@@ -49,7 +52,7 @@ export class SettingsComponent implements OnInit {
 
   changePasswordEmail(): void {
     console.log('Inside Change Password');
-    this.authService.changePasswordEmail();
+    this.authService.passwordResetInsideApp();
   }
 
   deleteFunction() {}

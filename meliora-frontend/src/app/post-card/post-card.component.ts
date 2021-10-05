@@ -24,8 +24,6 @@ export class Post {
 export class PostCardComponent implements OnInit {
   @Input() post: Post; // Post used as input for template
   @Output() postDeleted: EventEmitter<string> = new EventEmitter();
- constructor() {
- }
 
   ngOnInit(): void {
   }

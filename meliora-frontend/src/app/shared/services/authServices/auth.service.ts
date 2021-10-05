@@ -32,16 +32,22 @@ export class AuthService {
     var isEmail = this.isEmail(email);
     var username = email;
     var userData;
-    // var userEmail = email;
 
     if (isEmail) {
-      this.userService.getUserInfo(email).then((userData) => {
-        username = userData.username;
+      userData = {
+        email: email,
+      };
+    } else {
+      userData = {
+        username: username,
+      };
+      this.userService.getUserInfo(userData).then((user) => {
+        email = user.email;
       });
-      console.log(username);
     }
 
-    await this.userService.userLogin(username);
+    await this.userService.userLogin(userData);
+
     this.firebaseAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
@@ -84,12 +90,15 @@ export class AuthService {
     console.log('current user after', this.firebaseAuth.currentUser);
   }
 
-  async changePasswordEmail() {
+  async passwordResetEmail(email: string) {
+    await this.firebaseAuth.sendPasswordResetEmail(email);
+  }
+
+  async passwordResetInsideApp() {
     await this.firebaseAuth.sendPasswordResetEmail(
       (
         await this.firebaseAuth.currentUser
-      ).email,
-      null
+      ).email
     );
   }
 

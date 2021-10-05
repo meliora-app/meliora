@@ -18,11 +18,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  isEmail(email: string) {
-    var formControl = new FormControl(email, Validators.email);
-    return formControl.valid;
-  }
-
   async onSubmit(form: NgForm) {
     console.log('email', form.value.unameOrEmail);
     console.log('pass', form.value.password);

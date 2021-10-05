@@ -13,21 +13,27 @@ export class PostService {
     author: string,
     anonymous: boolean
   ) {
-    var postData = JSON.stringify({
-      postTitle: postTitle,
-      postContent: postContent,
+    var postData = {
+      title: postTitle,
+      content: postContent,
       author: author,
       anonymous: anonymous,
-    });
+    };
 
-    this.http.post(
-      'https://meliora-backend.herokuapp.com/api/posts/create',
-      postData,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    console.log(postData);
+
+    this.http
+      .post(
+        'https://meliora-backend.herokuapp.com/api/posts/create',
+        postData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .subscribe((responseData) => {
+        console.log(responseData);
+      });
   }
 }

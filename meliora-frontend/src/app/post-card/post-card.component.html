@@ -31,13 +31,25 @@
           {{post.content}}
         </p>
       </div>
+    <button  mat-icon-button
+    class="trash-icon"
+    (click)="deletePostClicked(post.postID)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <mat-menu #flagMenu="matMenu">
+        <button mat-menu-item>Harmful</button>
+        <button mat-menu-item>Vulgar</button>
+        <button mat-menu-item>Offensive</button>
+      </mat-menu>
+
       <button
-      mat-icon-button
-      class="trash-icon"
-      (click)="deletePostClicked(post.postID)"
+        [mat-menu-trigger-for]="flagMenu"
+        mat-icon-button
+        class="btn btn-login my-2 my-sm-0"
+        style="margin-right: 1em; background-color: #a6cdfc; color: #fff"
       >
-      <mat-icon>delete</mat-icon>
-    </button>
-    </div> 
+        <mat-icon>flag</mat-icon>
+      </button>
+    </div>
   </body>
 </html>

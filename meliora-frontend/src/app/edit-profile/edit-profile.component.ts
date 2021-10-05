@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import {
+  AngularFireStorage,
+  AngularFireStorageReference,
+  AngularFireUploadTask,
+} from '@angular/fire/storage';
 
 @Component({
   selector: 'app-edit-profile',
@@ -8,14 +13,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class EditProfileComponent implements OnInit {
 
-  constructor(private route: Router, private activatedRoute: ActivatedRoute) {}
-
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
+  userId = localStorage.getItem('userID');
+  downloadURL: string;
   bio: string = "test";
   username: string;
   userID: string = localStorage.getItem('userID');
 
+  constructor(private route: Router, private activatedRoute: ActivatedRoute, private fireStorage: AngularFireStorage) {}
 
   ngOnInit(): void {
+    this.getProfilePic();
     this.activatedRoute.queryParams.subscribe(params => {
       this.bio = params.bio;
       this.username = params.username;
@@ -41,5 +50,17 @@ export class EditProfileComponent implements OnInit {
       console.log("Successful account update");      
     }
 
+  }
+
+  getProfilePic() {
+    this.ref = this.fireStorage.ref('profilePictures/' + this.userId);
+    this.ref.getDownloadURL().subscribe((url) => {
+      this.downloadURL = url;
+    });
+  }
+
+  editProfilePic(event) {
+    this.ref = this.fireStorage.ref('profilePictures/' + this.userId);
+    this.task = this.ref.put(event.target.files[0]);
   }
 }
