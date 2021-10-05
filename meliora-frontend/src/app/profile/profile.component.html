@@ -21,7 +21,7 @@
           <div class="wrapper">
             <p class="mt-3 pl-3 profile-name">{{viewedUsername}}</p>
             <button
-              *ngIf="isSelf"
+              *ngIf="belongsToUser"
               mat-icon-button
               class="ml-3 mt-3"
               (click)="onEditProfileClick()"

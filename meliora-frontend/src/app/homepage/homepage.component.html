@@ -75,8 +75,10 @@
         </div>
         <div class="general">
           <h2>My Feed</h2>
-          <app-post-card></app-post-card><br />
-          <app-post-card></app-post-card>
+          <ng-container *ngIf="posts.length > 0">
+            <app-post-card *ngFor="let post of posts" [post]="post" style="margin: 10px;"></app-post-card>
+          </ng-container>
+          <ng-container *ngIf="posts.length == 0"><app-no-posts-card></app-no-posts-card></ng-container>
         </div>
         <div class="general">
           <h2>Discover</h2>

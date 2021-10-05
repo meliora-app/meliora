@@ -20,6 +20,7 @@ export class EditProfileComponent implements OnInit {
   bio: string = "test";
   username: string;
   userID: string = localStorage.getItem('userID');
+  numPosts: number;
 
   constructor(private route: Router, private activatedRoute: ActivatedRoute, private fireStorage: AngularFireStorage) {}
 
@@ -28,6 +29,7 @@ export class EditProfileComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.bio = params.bio;
       this.username = params.username;
+      this.numPosts = params.numPosts;
     })
   }
 

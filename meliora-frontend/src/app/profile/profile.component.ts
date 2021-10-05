@@ -26,10 +26,11 @@ export class ProfileComponent implements OnInit {
   posts: Post[] = [];
   isSelf: boolean = true;
   viewedUserNumPosts: number = this.posts.length;
+  belongsToUser: boolean;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private fireStorage: AngularFireStorage) {  }
 
-  async loadProfile(username: String) {
+  async loadProfile() {
     this.darkModeStatus = (localStorage.getItem("darkModeStatus") == "true");
     let res = await fetch('https://meliora-backend.herokuapp.com/api/users/getUser', {
       method: "PUT",
@@ -59,7 +60,9 @@ export class ProfileComponent implements OnInit {
         let postResBody = await postRes.json();
         this.viewedUserNumPosts = postResBody.length;
         for (let i = 0; i < postResBody.length; i++) {
-          this.posts.push(new Post(postResBody[i]._id, postResBody[i].title, postResBody[i].content, this.viewedUsername));
+          if (!postResBody[i].anonymous || this.belongsToUser) {
+            this.posts.push(new Post(postResBody[i]._id, postResBody[i].title, postResBody[i].content, postResBody[i].author, postResBody[i].anonymous, this.viewedUsername));
+          }
         }
         console.log("SUCCESS");
       }
@@ -78,12 +81,13 @@ export class ProfileComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.viewedUserID = params._id;
       console.log("Viewed user: " + this.viewedUserID);
-    })
-    this.loadProfile(this.viewedUserID);
+    });
+    this.belongsToUser = this.viewedUserID == this.userId;
+    this.loadProfile();
   }
 
   onEditProfileClick() {
-    this.router.navigate(['/edit-profile'], { queryParams: {"username": this.viewedUsername, "bio": this.bio}});
+    this.router.navigate(['/edit-profile'], { queryParams: {"username": this.viewedUsername, "bio": this.bio, "numPosts": this.viewedUserNumPosts}});
   }
 
   // displayProfilePic() {

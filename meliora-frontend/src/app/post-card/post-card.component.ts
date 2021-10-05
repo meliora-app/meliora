@@ -5,14 +5,17 @@ export class Post {
   public title: string;
   public content: string;
   public authorUsername: string;
+  public authorID: string;
   public postID: string;
   public anon: boolean;
 
-  constructor(postID: string, title: string, content: string, authorUsername: string) {
+  constructor(postID: string, title: string, content: string, authorID: string, anon: boolean, authorUsername: string) {
     this.postID = postID;
     this.title = title;
     this.content = content;
     this.authorUsername = authorUsername;
+    this.authorID = authorID;
+    this.anon = anon;
   }
 }
 
@@ -25,7 +28,12 @@ export class PostCardComponent implements OnInit {
   @Input() post: Post; // Post used as input for template
   @Output() postDeleted: EventEmitter<string> = new EventEmitter();
 
+  belongsToUser: boolean;
+  constructor(private route: Router) {
+  }
+
   ngOnInit(): void {
+    this.belongsToUser = localStorage.getItem('userID') == this.post.authorID;
   }
 
   async deletePostClicked(postID: string) {
@@ -45,8 +53,14 @@ export class PostCardComponent implements OnInit {
       console.log(resBody.msg);
       // TODO RELOAD PROFILE PAGE
       this.postDeleted.emit("deleted: " + resBody._id);
+      window.location.reload();
     }
   }
+}
+
+// route to profile with clicked user
+userClicked() {
+  this.route.navigate(['/profile'], { queryParams: {"_id": this.post.authorID}});
 }
 
 }
