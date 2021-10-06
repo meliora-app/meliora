@@ -29,6 +29,7 @@ export class PostCardComponent implements OnInit {
   @Input() post: Post; // Post used as input for template
   @Output() postDeleted: EventEmitter<string> = new EventEmitter();
 
+  darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
   ref: AngularFireStorageReference;
   // timestamp;
   downloadURL: string;

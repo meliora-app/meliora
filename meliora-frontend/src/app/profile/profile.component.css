@@ -11,13 +11,17 @@
   position: relative;
 }
 
+body {
+  height: 1500px;
+}
+
 .profile-name {
   font-size: 30px;
   font-weight: bolder;
 }
 
 .dark-mode {
-  filter: invert(1) hue-rotate(180deg); 
+  filter: invert(1) hue-rotate(180deg);
 }
 
 .user-stats {

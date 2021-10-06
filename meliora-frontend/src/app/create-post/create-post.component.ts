@@ -10,8 +10,7 @@ import { ToastService } from '../shared/services/toast.service';
   styleUrls: ['./create-post.component.css'],
 })
 export class CreatePostComponent implements OnInit {
-  darkModeStatus = true;
-  //localStorage.getItem("darkModeStatus");
+  darkModeStatus = localStorage.getItem("darkModeStatus") == 'true';
   visibilityClicked: boolean = false;
   imageClicked: boolean = false;
 
