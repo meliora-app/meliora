@@ -99,3 +99,7 @@ img {
 .edit-profile-pic:hover {
   cursor: pointer;
 }
+
+.dark-mode {
+  filter: invert(1) hue-rotate(180deg);
+}

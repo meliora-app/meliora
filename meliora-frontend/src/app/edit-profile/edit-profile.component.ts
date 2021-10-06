@@ -12,46 +12,54 @@ import {
   styleUrls: ['./edit-profile.component.css'],
 })
 export class EditProfileComponent implements OnInit {
-
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
   userId = localStorage.getItem('userID');
   downloadURL: string;
-  bio: string = "test";
+  bio: string = 'test';
   username: string;
   userID: string = localStorage.getItem('userID');
   numPosts: number;
+  darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
 
-  constructor(private route: Router, private activatedRoute: ActivatedRoute, private fireStorage: AngularFireStorage) {}
+  constructor(
+    private route: Router,
+    private activatedRoute: ActivatedRoute,
+    private fireStorage: AngularFireStorage
+  ) {}
 
   ngOnInit(): void {
     this.getProfilePic();
-    this.activatedRoute.queryParams.subscribe(params => {
+    this.activatedRoute.queryParams.subscribe((params) => {
       this.bio = params.bio;
       this.username = params.username;
       this.numPosts = params.numPosts;
-    })
+    });
   }
 
   returnToProfile() {
-    this.route.navigate(['/profile'], { queryParams: {"_id": localStorage.getItem('userID')}});
+    this.route.navigate(['/profile'], {
+      queryParams: { _id: localStorage.getItem('userID') },
+    });
   }
 
   async onSaveProfileClicked(newBio: string) {
-    let res = await fetch('https://meliora-backend.herokuapp.com/api/users/updateProfile', {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        _id: this.userID,
-        bio: newBio
-      })
-    });
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/users/updateProfile',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          _id: this.userID,
+          bio: newBio,
+        }),
+      }
+    );
     if (res.status == 200) {
-      console.log("Successful account update");      
+      console.log('Successful account update');
     }
-
   }
 
   getProfilePic() {
