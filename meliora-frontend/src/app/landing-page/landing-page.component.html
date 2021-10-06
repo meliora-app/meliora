@@ -61,7 +61,60 @@
   </head>
   <body>
     <!-- Navbar Component -->
-    <app-landing-navbar></app-landing-navbar>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
+      <a class="navbar-brand" routerLink="/landing-page">
+        <img
+          src="../../assets/lotus.png"
+          width="30"
+          height="30"
+          class="d-inline-block align-top"
+          alt=""
+        />
+        Meliora
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a
+              class="nav-link"
+              href="#about-section"
+              (click)="onSectionClicked('about-section')"
+              >About <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" (click)="onSectionClicked('features-section')"
+              >Features <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" (click)="onSectionClicked('community-section')"
+              >Community <span class="sr-only">(current)</span></a
+            >
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <a
+            routerLink="/login"
+            class="btn btn-login my-2 my-sm-0"
+            style="margin-right: 1em; background-color: #d4e1f1; color: #0b3d77"
+            >Login</a
+          >
+        </form>
+      </div>
+    </nav>
 
     <!-- Jumbotron Component -->
     <section>
@@ -80,7 +133,11 @@
         <p class="lead text-center display-5">Good Today, Better Tomorrow</p>
         <hr class="my-4" style="width: 70%" />
         <p class="lead text-center">
-          <a class="btn btn-learn btn-lg" href="#about-section" role="button"
+          <a
+            class="btn btn-learn btn-lg"
+            id="about-section"
+            (click)="onSectionClicked('about-section')"
+            role="button"
             >Learn more</a
           >
           <a class="btn btn-signup btn-lg" routerLink="/signup" role="button"
