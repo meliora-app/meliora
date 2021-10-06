@@ -15,7 +15,7 @@
   <body>
     <div class="post-card py-3 px-3">
       <div class="wrapper">
-        <div class="profile-pic">
+        <div [ngClass]="darkModeStatus ? 'dark-mode' : ''" class="profile-pic">
           <img [src]="downloadURL" alt="" />
         </div>
         <div class="pl-3">

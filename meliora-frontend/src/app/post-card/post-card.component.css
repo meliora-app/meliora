@@ -2,6 +2,10 @@ body {
   line-height: 0rem;
 }
 
+.dark-mode {
+  filter: invert(1) hue-rotate(180deg);
+}
+
 .wrapper {
   display: flex;
 }
@@ -63,5 +67,5 @@ hr {
 }
 
 .trash-icon {
-  color:red
+  color: red;
 }

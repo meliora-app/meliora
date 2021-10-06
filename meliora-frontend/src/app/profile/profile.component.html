@@ -14,7 +14,7 @@
 
       <!-- Profile picture and associated user stats -->
       <div class="container mt-5 mr-5 wrapper">
-        <div class="profile-circle">
+        <div [ngClass]="darkModeStatus ? 'dark-mode' : ''" class="profile-circle">
           <img [src]="downloadURL" alt="" />
         </div>
         <div class="pl-3">
