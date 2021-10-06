@@ -1,7 +1,0 @@
-cd meliora-frontend
-npm install
-npm start &
-
-cd ../meliora-backend
-npm install
-npm start &
