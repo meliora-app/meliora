@@ -64,6 +64,29 @@ describe('Unit Tests for Post Router:', () => {
 		expect(res.status).toBe(200);
 	});
 
+	test('US-8: Server should return 200 when a correct username and a bio is provided', async () => {
+		let res = await request(server)
+			.post('/api/users/updateProfile')
+			.set('Content-Type', 'application/json')
+			.send({
+				username: 'Test User 1',
+				bio: 'Test Bio'
+			});
+
+		expect(res.status).toBe(200);
+	});
+
+	test('US-8: Server should return 400 when no bio is provided', async () => {
+		let res = await request(server)
+			.post('/api/users/updateProfile')
+			.set('Content-Type', 'application/json')
+			.send({
+				username: 'Test User 1'
+			});
+
+		expect(res.status).toBe(400);
+	});
+
 	afterAll(async () => {
 		await User.findByIdAndDelete(testUserID).exec();
 		await disconnect();
