@@ -79,14 +79,14 @@ describe('Unit Tests for Post Router:', () => {
 
 	test('Get Posts By User: Server should return 400 when no ID is provided.', async () => {
 		let res = await request(server)
-			.get(`/api/posts/getPostsBy`);
+			.put(`/api/posts/getPostsBy`);
 
 		expect(res.status).toBe(400);
 	});
 
 	test('Get Posts By User: Server should return 200 when an ID is provided.', async () => {
 		let res = await request(server)
-			.get(`/api/posts/getPostsBy`)
+			.put(`/api/posts/getPostsBy`)
 			.set('Content-Type', 'application/json')
 			.send({
 				userID: '61489001f5cbecf2074c5244',
