@@ -11,7 +11,14 @@ export class Settings {
   sex: string;
   darkModeStatus: boolean;
 
-  constructor(username: string, email: string, phone: string, dateOfBirth: string, sex: string, darkModeStatus: boolean) {
+  constructor(
+    username: string,
+    email: string,
+    phone: string,
+    dateOfBirth: string,
+    sex: string,
+    darkModeStatus: boolean
+  ) {
     this.username = username;
     this.email = email;
     this.phone = phone;
@@ -27,10 +34,10 @@ export class Settings {
 })
 export class SettingsComponent implements OnInit {
   displayConfirmBox = false;
-  darkModeStatus: boolean = localStorage.getItem("darkModeStatus") == 'true';
-  userID = localStorage.getItem("userID");
+  darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
+  userID = localStorage.getItem('userID');
   settings: Settings;
-  
+
   constructor(public authService: AuthService, public router: Router) {}
 
   ngOnInit(): void {
@@ -46,19 +53,20 @@ export class SettingsComponent implements OnInit {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          _id: this.userID
+          _id: this.userID,
         }),
       }
     );
     if (res.status == 200) {
       let resBody = await res.json();
       this.settings = new Settings(
-        resBody.username, 
-        resBody.email, 
+        resBody.username,
+        resBody.email,
         resBody.phone,
-        resBody.dateOfBirth, 
-        resBody.sex, 
-        resBody.darkModeStatus);
+        resBody.dateOfBirth,
+        resBody.sex,
+        resBody.darkModeStatus
+      );
     }
   }
   async onLogoutClicked() {
@@ -67,9 +75,9 @@ export class SettingsComponent implements OnInit {
     localStorage.removeItem('darkModeStatus');
   }
 
- async onSubmit(form: NgForm) {
+  async onSubmit(form: NgForm) {
     console.log('Inside submit form');
-    console.log("checked?: " + this.settings.darkModeStatus);
+    console.log('checked?: ' + this.settings.darkModeStatus);
     let res = await fetch(
       'https://meliora-backend.herokuapp.com/api/users/updateSettings',
       {
@@ -81,7 +89,7 @@ export class SettingsComponent implements OnInit {
           _id: this.userID,
           phone: this.settings.phone,
           dateOfBirth: this.settings.dateOfBirth,
-          darkModeStatus: localStorage.getItem("darkModeStatus")
+          darkModeStatus: localStorage.getItem('darkModeStatus'),
         }),
       }
     );
@@ -92,7 +100,7 @@ export class SettingsComponent implements OnInit {
 
   checkDarkMode(event: any) {
     console.log(event.target.checked);
-    localStorage.setItem('darkModeStatus', ''+ event.target.checked);
+    localStorage.setItem('darkModeStatus', '' + event.target.checked);
     this.darkModeStatus = event.target.checked;
     this.settings.darkModeStatus = event.target.checked;
   }
@@ -129,16 +137,19 @@ export class SettingsComponent implements OnInit {
 
   async onDeleteAccountClicked() {
     if (confirm('Are you sure you want to delete your account?')) {
-      await this.authService.logout();
-      let res = await fetch('https://meliora-backend.herokuapp.com/api/users/deleteAccount', {
-        method: "DELETE",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          _id: this.userID,
-        })
-        });
+      await this.authService.deleteUser();
+      let res = await fetch(
+        'https://meliora-backend.herokuapp.com/api/users/deleteAccount',
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            _id: this.userID,
+          }),
+        }
+      );
       if (res.status == 200) {
         let resBody = await res.json();
         console.log(resBody.msg);

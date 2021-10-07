@@ -119,4 +119,14 @@ export class AuthService {
         );
       });
   }
+
+  async deleteUser() {
+    (await this.firebaseAuth.currentUser).delete().then((result) => {
+      this.router.navigate(['/landing-page']);
+      this.toastService.showSuccessMessage(
+        'User deleted successfully!',
+        'Account'
+      );
+    });
+  }
 }
