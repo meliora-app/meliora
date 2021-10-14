@@ -3,7 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyDuYA8CTKU7-ulOS2nEnxArMLeNEEzX3N0',
+    authDomain: 'meliora-83a4c.firebaseapp.com',
+    projectId: 'meliora-83a4c',
+    storageBucket: 'meliora-83a4c.appspot.com',
+    messagingSenderId: '800257733247',
+    appId: '1:800257733247:web:e9e1666b0aa5d49292c54a',
+    measurementId: 'G-T0VDHZ4463',
+  },
 };
 
 /*

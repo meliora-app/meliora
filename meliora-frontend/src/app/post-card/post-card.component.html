@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <title>Post Card</title>
+  </head>
+  <body>
+    <div class="post-card py-3 px-3">
+      <div class="wrapper">
+        <div [ngClass]="darkModeStatus ? 'dark-mode' : ''" class="profile-pic">
+          <img [src]="downloadURL" alt="" />
+        </div>
+        <div class="pl-3">
+          <p *ngIf="!post.anon" class="post-heading pt-2" (click)="userClicked()">{{post.authorUsername}}</p>
+          <p *ngIf="post.anon" class="post-heading pt-2">Anonymous</p>
+          <p class="post-subheading pt-2">Purdue University</p>
+        </div>
+        <div class="category-pill text-center pt-4 px-4">Nature</div>
+      </div>
+      <hr width="98%" color="#A0B1C6" />
+      <div>
+        <h2>{{post.title}}</h2>
+        <p class="post-text">
+          {{post.content}}
+        </p>
+      </div>
+    <button  *ngIf="belongsToUser" mat-icon-button
+    class="trash-icon"
+    (click)="deletePostClicked(post.postID)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <mat-menu #flagMenu="matMenu">
+        <button mat-menu-item>Harmful</button>
+        <button mat-menu-item>Vulgar</button>
+        <button mat-menu-item>Offensive</button>
+      </mat-menu>
+
+      <button
+        [mat-menu-trigger-for]="flagMenu"
+        mat-icon-button
+        class="btn btn-login my-2 my-sm-0"
+        style="margin-right: 1em; background-color: #a6cdfc; color: #fff"
+      >
+        <mat-icon>flag</mat-icon>
+      </button>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../assets/lotus.png" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Learned Bootstrap From -->
+    <!-- https://getbootstrap.com/-->
+
+    <!-- Font Awesome -->
+    <script
+      src="https://kit.fontawesome.com/25ed10730a.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Animate.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <title>Meliora</title>
+
+    <script type="text/javascript" src="./loading/loading.js"></script>
+  </head>
+  <body>
+    <!-- Navbar Component -->
+    <app-landing-navbar></app-landing-navbar>
+
+    <!-- Signup Component -->
+    <section>
+      <h1 class="display-5 text-center heading section-head jumbotron-signup">
+        Create An Account
+      </h1>
+      <div class="signup-form">
+        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              aria-describedby="emailHelp"
+              placeholder=""
+              required
+              ngModel
+              #name="ngModel"
+              name="name"
+            />
+            <span class="help-block" *ngIf="!name.valid && name.touched"
+              >Please enter a valid name!</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              aria-describedby="emailHelp"
+              placeholder=""
+              required
+              email
+              ngModel
+              #email="ngModel"
+              name="email"
+            />
+            <span class="help-block" *ngIf="!email.valid && email.touched"
+              >Please enter a valid email!</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="uname">Username:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="uname"
+              aria-describedby="emailHelp"
+              placeholder=""
+              required
+              ngModel
+              #username="ngModel"
+              name="username"
+            />
+            <span class="help-block" *ngIf="!username.valid && username.touched"
+              >Please enter a valid username!</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder=""
+              required
+              ngModel
+              #password="ngModel"
+              name="password"
+            />
+            <span class="help-block" *ngIf="!password.valid && password.touched"
+              >Please enter a valid password!</span
+            >
+          </div>
+
+          <div class="text-center">
+            <button
+              type="submit"
+              [disabled]="!f.valid"
+              class="btn btn-lg signup-submit text-center"
+            >
+              Sign Up
+            </button>
+          </div>
+
+          <div class="form-group form-check text-center">
+            <a type="checkbox" class="form-check-input" id="exampleCheck1"></a>
+            <label class="form-check-label" for="exampleCheck1"
+              >Already Have An Account?
+              <a id="login-link" routerLink="/login">Login</a></label
+            >
+          </div>
+        </form>
+      </div>
+    </section>
+  </body>
+</html>

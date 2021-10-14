@@ -47,7 +47,7 @@ describe('Unit Tests for Post Router:', () => {
 
 	test('US-4: Server should return 400 when body has no username', async () => {
 		let res = await request(server)
-			.get('/api/users/login')
+			.put('/api/users/login')
 			.set('Content-Type', 'application/json');
 
 		expect(res.status).toBe(400);
@@ -55,7 +55,7 @@ describe('Unit Tests for Post Router:', () => {
 
 	test('US-4: Server should return 200 when a correct username is provided', async () => {
 		let res = await request(server)
-			.get('/api/users/login')
+			.put('/api/users/login')
 			.set('Content-Type', 'application/json')
 			.send({
 				username: 'Test User 1'
