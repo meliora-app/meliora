@@ -34,6 +34,24 @@ const PostSchema = new Schema({
 	anonymous: {
 		type: SchemaTypes.Boolean,
 		required: true,
+	},
+	reactions: {
+		hearts: {
+			type: SchemaTypes.Number,
+			default: 0
+		},
+		thumbs: {
+			type: SchemaTypes.Number,
+			default: 0
+		},
+		smileys: {
+			type: SchemaTypes.Number,
+			default: 0
+		},
+		hugs: {
+			type: SchemaTypes.Number,
+			default: 0
+		}
 	}
 });
 
