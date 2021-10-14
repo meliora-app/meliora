@@ -64,6 +64,14 @@ describe('Unit Tests for Post Router:', () => {
 		expect(res.status).toBe(200);
 	});
 
+	test('SP-2, US-11:', async () => {});
+
+	test('SP-2, US-11:', async () => {});
+
+	test('SP-2, US-12:', async () => {});
+
+	test('SP-2, US-12:', async () => {});
+
 	afterAll(async () => {
 		await User.findByIdAndDelete(testUserID).exec();
 		await disconnect();

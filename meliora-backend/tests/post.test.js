@@ -95,6 +95,46 @@ describe('Unit Tests for Post Router:', () => {
 		expect(res.status).toBe(200);
 	});
 
+	test('SP-2, US-2:', async () => {});
+
+	test('SP-2, US-2:', async () => {});
+
+	test('SP-2, US-3:', async () => {});
+
+	test('SP-2, US-3:', async () => {});
+
+	test('SP-2, US-4:', async () => {});
+
+	test('SP-2, US-4:', async () => {});
+
+	test('SP-2, US-5:', async () => {});
+
+	test('SP-2, US-5:', async () => {});
+
+	test('SP-2, US-6:', async () => {});
+
+	test('SP-2, US-6:', async () => {});
+
+	test('SP-2, US-9:', async () => {});
+
+	test('SP-2, US-9:', async () => {});
+
+	test('SP-2, US-10:', async () => {});
+
+	test('SP-2, US-10:', async () => {});
+
+	test('SP-2, US-13:', async () => {});
+
+	test('SP-2, US-13:', async () => {});
+
+	test('SP-2, US-14:', async () => {});
+
+	test('SP-2, US-14:', async () => {});
+
+	test('SP-2, US-15:', async () => {});
+
+	test('SP-2, US-15:', async () => {});
+
 	afterAll(done => {
 		Post.findByIdAndDelete(testPostID).exec();
 		disconnect();
