@@ -91,6 +91,7 @@
             </div>
             <div class="post-options mb-3">
               <button
+                type="button"
                 mat-icon-button
                 (click)="onImageClicked()"
                 [ngStyle]="{ color: imageClicked ? 'red' : '#0b3d77' }"
@@ -99,6 +100,7 @@
               </button>
               <button
                 mat-icon-button
+                type="button"
                 (click)="onVisibilityClicked()"
                 [ngStyle]="{ color: visibilityClicked ? 'red' : '#0b3d77' }"
               >
