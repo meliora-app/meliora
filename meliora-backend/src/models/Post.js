@@ -35,6 +35,24 @@ const PostSchema = new Schema({
 		type: SchemaTypes.Boolean,
 		required: true,
 	},
+	hidden: {
+		type: SchemaTypes.Boolean,
+		required: true,
+	},
+	commentsAllowed: {
+		type: SchemaTypes.Boolean,
+		default: true
+	},
+	location: {
+		latitude: {
+			type: SchemaTypes.Number,
+			required: false
+		},
+		longitude: {
+			type: SchemaTypes.Number,
+			required: false
+		}
+	},
 	reactions: {
 		hearts: {
 			type: SchemaTypes.Number,
@@ -57,4 +75,4 @@ const PostSchema = new Schema({
 
 const Post = new model('Post', PostSchema);
 
-export { Post };
+export { Post, PostSchema };

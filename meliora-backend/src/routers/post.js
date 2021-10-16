@@ -21,13 +21,15 @@ const isValidPost = (post) => {
     "author" in post &&
       "title" in post &&
       "content" in post &&
-      "anonymous" in post
+      "anonymous" in post &&
+      "hidden" in post
   );
   return (
     "author" in post &&
     "title" in post &&
     "content" in post &&
-    "anonymous" in post
+    "anonymous" in post &&
+    "hidden" in post
   );
 };
 
