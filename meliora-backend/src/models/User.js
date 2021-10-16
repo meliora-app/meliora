@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { PostSchema } from './Post.js';
 
 const { SchemaTypes, Schema, model } = mongoose;
 
@@ -34,6 +35,18 @@ const UserSchema = new Schema({
 	authorList: {
 		type: [SchemaTypes.ObjectId],
 		default: [],
+	},
+	blocked: {
+		type: [SchemaTypes.ObjectId],
+		default: [],
+	},
+	private: {
+		type: SchemaTypes.Boolean,
+		default: false,
+	},
+	bookmarks: {
+		type: [PostSchema],
+		default: []	
 	},
 	bio: {
 		type: SchemaTypes.String,

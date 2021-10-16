@@ -21,13 +21,15 @@ const isValidPost = (post) => {
     "author" in post &&
       "title" in post &&
       "content" in post &&
-      "anonymous" in post
+      "anonymous" in post &&
+      "hidden" in post
   );
   return (
     "author" in post &&
     "title" in post &&
     "content" in post &&
-    "anonymous" in post
+    "anonymous" in post &&
+    "hidden" in post
   );
 };
 
@@ -51,6 +53,29 @@ postRouter.get("/getAll", async (req, res) => {
   }
 
   res.status(200).send(allPosts);
+});
+
+/**
+ * Get a single post
+ * Xavier Madera
+ */
+postRouter.put("/:postId", async (req, res) => {
+  let post;
+  try {
+    post = await Post.findById(req.params.postId).exec();
+
+    if (!post) {
+      res.status(400).send('There is no post with this ID.');
+      return;
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend.');
+    return;
+  }
+
+  res.status(200).send(post);
+  return;
 });
 
 /**
