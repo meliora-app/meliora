@@ -213,4 +213,43 @@ postRouter.put("/getPostsBy", async (req, res) => {
   res.status(200).send(postsByUser);
 });
 
+/**
+ * Save a bookmark.
+ */
+postRouter.put('/bookmark', async (req, res) => {
+  let { userID, postID } = req.body;
+
+  if (!userID || !postID) {
+    res.status(400).send('The request body was invalid!');
+    return;
+  }
+
+  let user, post;
+  try {
+
+    user = await User.findById(userID).exec();
+    post = await Post.findById(userID).exec();
+
+    if (!user) {
+      res.status(400).send('This user does not exist.');
+      return;
+    }
+
+    if (!post) {
+      res.status(400).send('This post does not exist.');
+      return;
+    }
+
+    user.bookmarks.push(post);
+    await user.save();
+     
+  } catch (e) {
+    res.status(500).send('An error occured on the backend.');
+    console.error(e);
+    return;
+  }
+
+  res.status(200).send();
+});
+
 export { postRouter };
