@@ -13,6 +13,7 @@ export class CreatePostComponent implements OnInit {
   darkModeStatus = localStorage.getItem("darkModeStatus") == 'true';
   visibilityClicked: boolean = false;
   imageClicked: boolean = false;
+  commentClicked: boolean = false;
 
   constructor(
     private postService: PostService,
@@ -30,6 +31,7 @@ export class CreatePostComponent implements OnInit {
       form.value.content,
       localStorage.getItem('userID'),
       this.visibilityClicked
+      //this.commentClicked
     );
 
     this.router.navigate(['/home']);
@@ -43,5 +45,9 @@ export class CreatePostComponent implements OnInit {
 
   onImageClicked() {
     this.imageClicked = !this.imageClicked;
+  }
+  
+  onCommentClicked() {
+    this.commentClicked = !this.commentClicked;
   }
 }
