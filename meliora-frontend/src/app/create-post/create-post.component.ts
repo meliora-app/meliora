@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PostService } from '../shared/services/post.service';
 import { ToastService } from '../shared/services/toast.service';
-import * as angular from "angular";
 
 @Component({
   selector: 'app-create-post',
