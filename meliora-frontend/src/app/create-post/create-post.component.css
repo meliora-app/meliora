@@ -86,3 +86,9 @@ span {
   display: flex;
   float: right;
 }
+
+.wcStyle {
+  font-size: 20px !important;
+  font-family: "Raleway", sans-serif;
+  color: #0b3d77
+}
