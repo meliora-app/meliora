@@ -279,4 +279,40 @@ userRouter.delete("/deleteAccount", async (req, res) => {
   });
 });
 
+/**
+ * Block a user
+ */
+userRouter.put('/block', async (req, res) => {
+  let { blockerID, blockedID } = req.body;
+
+  if (!blockerID || !blockedID) {
+    res.status(400).send('Request body has incorrect format!');
+    return;
+  }
+
+  try {
+
+    let blockingUser = await User.findById(blockerID).exec();
+    
+    if (!blockingUser.blocked)
+      blockingUser.blocked = [];
+
+    if (blockingUser.blocked.includes(blockedID)) {
+      blockingUser.blocked = blockingUser.blocked.filter((thisUser) => {
+        return thisUser != blockedID;
+      });
+    } else {
+      blockingUser.blocked.push(blockedID);
+    }
+
+    await blockingUser.save();
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend.');
+    return;
+  }
+
+  res.status(200).send(true);
+});
+
 export { userRouter };
