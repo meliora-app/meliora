@@ -12,6 +12,13 @@ import mongoose from "mongoose";
 
 let { ObjectId } = mongoose.Types;
 
+const Reactions = {
+  HEART: 0,
+  THUMB: 1,
+  SMILEY: 2,
+  HUG: 3
+};
+
 const postRouter = new Router();
 
 /**
@@ -257,7 +264,64 @@ postRouter.put('/bookmark', async (req, res) => {
     return;
   }
 
-  res.status(200).send();
+  res.status(200).send(true);
+});
+
+/**
+ * Save a Reaction
+ */
+postRouter.put('/react', async (req, res) => {
+  let { postID, reaction } = req.body;
+
+  if (!postID || reaction === undefined) {
+    res.status(400).send('Request Body has incorrect format!');
+    return;
+  }
+
+  let post;
+  try {
+    post = await Post.findById(postID).exec();
+
+    if (!post) {
+      res.status(400).send('This post does not exist!');
+      return;
+    }
+
+    if (!post.reactions) {
+      post.reactions = {
+        hearts: 0,
+        thumbs: 0,
+        smileys: 0,
+        hugs: 0
+      }
+    }
+
+    switch (reaction) {
+      case Reactions.HEART:
+        post.reactions.hearts++;
+        break;
+      case Reactions.THUMB:
+        post.reactions.thumbs++;
+        break;
+      case Reactions.SMILEY:
+        post.reactions.smileys++;
+        break;
+      case Reactions.HUG:
+        post.reactions.hugs++;
+        break;
+      default:
+        res.status(400).send('Invalid Reaction sent in.');
+        return;
+    }
+
+    await post.save();
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend');
+    return;
+  }
+
+  res.status(200).send(true);
 });
 
 export { postRouter };

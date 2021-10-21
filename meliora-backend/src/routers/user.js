@@ -95,9 +95,13 @@ userRouter.post("/updateProfile", async (req, res) => {
   let userDocument;
 
   try {
+    /*
     userDocument = await User.findOne({
       $or: [{ _id: user._id }, { username: user.username }],
     }).exec();
+    */
+
+    userDocument = await User.findById(user._id).exec();
     if (!userDocument) {
       res.status(500).send("User not found");
       return;
