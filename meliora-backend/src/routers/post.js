@@ -8,6 +8,16 @@ import { Router } from "express";
 
 import { Post } from "../models/Post.js";
 import { User } from "../models/User.js";
+import mongoose from "mongoose";
+
+let { ObjectId } = mongoose.Types;
+
+const Reactions = {
+  HEART: 0,
+  THUMB: 1,
+  SMILEY: 2,
+  HUG: 3
+};
 
 const postRouter = new Router();
 
@@ -53,16 +63,17 @@ postRouter.get("/getAll", async (req, res) => {
   }
 
   res.status(200).send(allPosts);
+  return;
 });
 
 /**
  * Get a single post
  * Xavier Madera
  */
-postRouter.put("/:postId", async (req, res) => {
-  let post;
+postRouter.put("/getPost", async (req, res) => {
+  let { post } = req.body;
   try {
-    post = await Post.findById(req.params.postId).exec();
+    post = await Post.findById(post).exec();
 
     if (!post) {
       res.status(400).send('There is no post with this ID.');
@@ -148,6 +159,7 @@ postRouter.patch("/flag", async (req, res) => {
 
     await postDoc.save();
   } catch (e) {
+    console.error(e);
     res.status(500).send("An error occurred on the backend.");
     return;
   }
@@ -182,6 +194,7 @@ postRouter.delete("/deletePost", async (req, res) => {
     _id: post._id,
     msg: "Post Deletion Successful",
   });
+  return;
 });
 
 /**
@@ -198,6 +211,7 @@ postRouter.put("/getPostsBy", async (req, res) => {
 
   let postsByUser = [];
   try {
+
     postsByUser = await Post.find({ author: userID }).exec();
 
     if (!postsByUser || postsByUser.length == 0) {
@@ -211,6 +225,111 @@ postRouter.put("/getPostsBy", async (req, res) => {
   }
 
   res.status(200).send(postsByUser);
+  return;
+});
+
+/**
+ * Save a bookmark.
+ */
+postRouter.put('/bookmark', async (req, res) => {
+  let { userID, postID } = req.body;
+
+  if (!userID || !postID) {
+    res.status(400).send('The request body was invalid!');
+    return;
+  }
+
+  let user, post;
+  try {
+
+    user = await User.findById(userID).exec();
+    post = await Post.findById(postID).exec();
+
+    if (!user) {
+      res.status(400).send('This user does not exist.');
+      return;
+    }
+
+    if (!post) {
+      res.status(400).send('This post does not exist.');
+      return;
+    }
+
+    if (!user.boomarks)
+      user.bookmarks = []
+    
+    if (user.bookmarks.includes(post)) {
+      res.status(400).send('You have already bookmarked this post.');
+      return;
+    }
+
+    user.bookmarks.push(post);
+    await user.save();
+     
+  } catch (e) {
+    res.status(500).send('An error occured on the backend.');
+    console.error(e);
+    return;
+  }
+
+  res.status(200).send(true);
+});
+
+/**
+ * Save a Reaction
+ */
+postRouter.put('/react', async (req, res) => {
+  let { postID, reaction } = req.body;
+
+  if (!postID || reaction === undefined) {
+    res.status(400).send('Request Body has incorrect format!');
+    return;
+  }
+
+  let post;
+  try {
+    post = await Post.findById(postID).exec();
+
+    if (!post) {
+      res.status(400).send('This post does not exist!');
+      return;
+    }
+
+    if (!post.reactions) {
+      post.reactions = {
+        hearts: 0,
+        thumbs: 0,
+        smileys: 0,
+        hugs: 0
+      }
+    }
+
+    switch (reaction) {
+      case Reactions.HEART:
+        post.reactions.hearts++;
+        break;
+      case Reactions.THUMB:
+        post.reactions.thumbs++;
+        break;
+      case Reactions.SMILEY:
+        post.reactions.smileys++;
+        break;
+      case Reactions.HUG:
+        post.reactions.hugs++;
+        break;
+      default:
+        res.status(400).send('Invalid Reaction sent in.');
+        return;
+    }
+
+    await post.save();
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend');
+    return;
+  }
+
+  res.status(200).send(true);
 });
 
 export { postRouter };

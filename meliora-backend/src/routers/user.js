@@ -95,9 +95,13 @@ userRouter.post("/updateProfile", async (req, res) => {
   let userDocument;
 
   try {
+    /*
     userDocument = await User.findOne({
       $or: [{ _id: user._id }, { username: user.username }],
     }).exec();
+    */
+
+    userDocument = await User.findById(user._id).exec();
     if (!userDocument) {
       res.status(500).send("User not found");
       return;
@@ -141,7 +145,7 @@ userRouter.put("/getUserProfile", async (req, res) => {
       return;
     }
 
-    let posts = await Post.findMany({ author: userID }).exec();
+    let posts = await Post.find({ author: userID }).exec();
 
     completeUserProfile = user;
     completeUserProfile.posts = posts;
@@ -273,6 +277,42 @@ userRouter.delete("/deleteAccount", async (req, res) => {
     _id: user._id,
     msg: "Account Deletion Successful or user not found",
   });
+});
+
+/**
+ * Block a user
+ */
+userRouter.put('/block', async (req, res) => {
+  let { blockerID, blockedID } = req.body;
+
+  if (!blockerID || !blockedID) {
+    res.status(400).send('Request body has incorrect format!');
+    return;
+  }
+
+  try {
+
+    let blockingUser = await User.findById(blockerID).exec();
+    
+    if (!blockingUser.blocked)
+      blockingUser.blocked = [];
+
+    if (blockingUser.blocked.includes(blockedID)) {
+      blockingUser.blocked = blockingUser.blocked.filter((thisUser) => {
+        return thisUser != blockedID;
+      });
+    } else {
+      blockingUser.blocked.push(blockedID);
+    }
+
+    await blockingUser.save();
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend.');
+    return;
+  }
+
+  res.status(200).send(true);
 });
 
 export { userRouter };
