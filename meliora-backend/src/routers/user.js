@@ -141,7 +141,7 @@ userRouter.put("/getUserProfile", async (req, res) => {
       return;
     }
 
-    let posts = await Post.findMany({ author: userID }).exec();
+    let posts = await Post.find({ author: userID }).exec();
 
     completeUserProfile = user;
     completeUserProfile.posts = posts;

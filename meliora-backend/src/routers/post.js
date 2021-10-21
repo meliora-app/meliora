@@ -8,6 +8,9 @@ import { Router } from "express";
 
 import { Post } from "../models/Post.js";
 import { User } from "../models/User.js";
+import mongoose from "mongoose";
+
+let { ObjectId } = mongoose.Types;
 
 const postRouter = new Router();
 
@@ -53,16 +56,17 @@ postRouter.get("/getAll", async (req, res) => {
   }
 
   res.status(200).send(allPosts);
+  return;
 });
 
 /**
  * Get a single post
  * Xavier Madera
  */
-postRouter.put("/:postId", async (req, res) => {
-  let post;
+postRouter.put("/getPost", async (req, res) => {
+  let { post } = req.body;
   try {
-    post = await Post.findById(req.params.postId).exec();
+    post = await Post.findById(post).exec();
 
     if (!post) {
       res.status(400).send('There is no post with this ID.');
@@ -148,6 +152,7 @@ postRouter.patch("/flag", async (req, res) => {
 
     await postDoc.save();
   } catch (e) {
+    console.error(e);
     res.status(500).send("An error occurred on the backend.");
     return;
   }
@@ -182,6 +187,7 @@ postRouter.delete("/deletePost", async (req, res) => {
     _id: post._id,
     msg: "Post Deletion Successful",
   });
+  return;
 });
 
 /**
@@ -198,6 +204,7 @@ postRouter.put("/getPostsBy", async (req, res) => {
 
   let postsByUser = [];
   try {
+
     postsByUser = await Post.find({ author: userID }).exec();
 
     if (!postsByUser || postsByUser.length == 0) {
@@ -211,6 +218,7 @@ postRouter.put("/getPostsBy", async (req, res) => {
   }
 
   res.status(200).send(postsByUser);
+  return;
 });
 
 /**
@@ -228,7 +236,7 @@ postRouter.put('/bookmark', async (req, res) => {
   try {
 
     user = await User.findById(userID).exec();
-    post = await Post.findById(userID).exec();
+    post = await Post.findById(postID).exec();
 
     if (!user) {
       res.status(400).send('This user does not exist.');
