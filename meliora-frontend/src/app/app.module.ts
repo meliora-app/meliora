@@ -34,6 +34,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { QuotePageComponent } from './quote-page/quote-page.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { NoPostsCardComponent } from './no-posts-card/no-posts-card.component';
+import { MentalHealthComponent } from './mental-health/mental-health.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { NoPostsCardComponent } from './no-posts-card/no-posts-card.component';
     QuotePageComponent,
     ForgotPasswordComponent,
     NoPostsCardComponent,
+    MentalHealthComponent,
   ],
   imports: [
     BrowserModule,

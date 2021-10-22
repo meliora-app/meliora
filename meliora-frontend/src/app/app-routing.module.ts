@@ -6,6 +6,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { HomepageComponent } from './homepage/homepage.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LoginComponent } from './login/login.component';
+import { MentalHealthComponent } from './mental-health/mental-health.component';
 import { ProfileComponent } from './profile/profile.component';
 import { QuotePageComponent } from './quote-page/quote-page.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -23,10 +24,11 @@ const routes: Routes = [
   { path: 'edit-profile', component: EditProfileComponent },
   { path: 'settings', component: SettingsComponent },
   { path: 'quote', component: QuotePageComponent },
+  { path: 'mental-health', component: MentalHealthComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { anchorScrolling: 'enabled' })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
