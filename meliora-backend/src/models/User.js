@@ -39,6 +39,14 @@ const UserSchema = new Schema({
 	blocked: {
 		type: [SchemaTypes.ObjectId],
 		default: [],
+	}, 
+	following: {
+		type: [SchemaTypes.ObjectId],
+		default: []
+	},
+	followers: {
+		type: [SchemaTypes.ObjectId],
+		default: []
 	},
 	private: {
 		type: SchemaTypes.Boolean,
