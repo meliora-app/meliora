@@ -31,6 +31,8 @@ export class ProfileComponent implements OnInit {
   followAdd: boolean = true; // plus button to follow user
   followCheck: boolean = false; // check button to indicate current user is following viewed user
   unfollow: boolean = false; // minus button to unfollow user
+  block: boolean = true;
+  unblock: boolean = false;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private fireStorage: AngularFireStorage) {  }
 
@@ -121,6 +123,18 @@ export class ProfileComponent implements OnInit {
     this.followCheck = false;
     this.followAdd = true;
     this.unfollow = false;
-    alert("Are you sure you want to unfollow " + this.viewedUsername + " ?");
+    alert("Are you sure you want to unfollow " + this.viewedUsername + "?");
+  }
+
+  onBlockClicked() {
+    this.block = false;
+    this.unblock = true;
+    alert("Are you sure you want to block " + this.viewedUsername + "?");
+  }
+
+  onUnblockClicked() {
+    this.block = true;
+    this.unblock = false;
+    alert("Are you sure you want to unblock " + this.viewedUsername + "?");
   }
 }

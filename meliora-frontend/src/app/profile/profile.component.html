@@ -46,8 +46,30 @@
             </div>
           </div>
         </div>
+        <mat-menu #blockMenu="matMenu">
+          <button mat-menu-item
+          *ngIf="block"
+          style="color: red;"
+          (click)="onBlockClicked()"
+          >Block
+        </button>
+        <button mat-menu-item
+          *ngIf="unblock"
+          (click)="onUnblockClicked()"
+          >Unblock
+        </button>
+        </mat-menu>
+  
+        <button
+          [mat-menu-trigger-for]="blockMenu"
+          *ngIf="isNotUser"
+          mat-icon-button
+          class="btn btn-login my-2 my-sm-0"
+          style="margin-right: 1em; color: black"
+        >
+          <mat-icon>more_horiz</mat-icon>
+        </button>
       </div>
-
       <div class="follow-options wrapper container mr-3">
         <button
             mat-icon-button
