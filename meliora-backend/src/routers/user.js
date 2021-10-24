@@ -280,6 +280,7 @@ userRouter.delete("/deleteAccount", async (req, res) => {
 });
 
 /**
+ * 
  * Block a user
  */
 userRouter.put('/block', async (req, res) => {

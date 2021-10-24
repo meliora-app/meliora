@@ -9,7 +9,7 @@
     "npm": "7.x"
   },
   "scripts": {
-    "start": "(cd meliora-backend;npm start)",
+    "start": "(cd meliora-backend;node src/index.js)",
     "test": "(cd meliora-backend;npm test)",
 	  "build": "(cd meliora-backend;npx babel src -d build)"
   },
