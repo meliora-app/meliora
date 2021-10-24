@@ -28,6 +28,7 @@ export class Post {
 export class PostCardComponent implements OnInit {
   @Input() post: Post; // Post used as input for template
   @Output() postDeleted: EventEmitter<string> = new EventEmitter();
+  bookmarkClicked: boolean = false;
 
   darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
   ref: AngularFireStorageReference;
@@ -75,6 +76,10 @@ getProfilePic() {
     this.downloadURL = url;
     // this.timestamp = new Date().getTime();
   });
+}
+
+onBookmarkClicked() {
+  this.bookmarkClicked = !this.bookmarkClicked;
 }
 
 }
