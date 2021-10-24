@@ -29,6 +29,8 @@ export class PostCardComponent implements OnInit {
   @Input() post: Post; // Post used as input for template
   @Output() postDeleted: EventEmitter<string> = new EventEmitter();
   bookmarkClicked: boolean = false;
+  thumbsUp: boolean = false;
+  isNotUser: boolean;
 
   darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
   ref: AngularFireStorageReference;
@@ -41,6 +43,7 @@ export class PostCardComponent implements OnInit {
   ngOnInit(): void {
     this.getProfilePic();
     this.belongsToUser = localStorage.getItem('userID') == this.post.authorID;
+    this.isNotUser = !this.belongsToUser;
   }
 
   async deletePostClicked(postID: string) {
@@ -80,6 +83,10 @@ getProfilePic() {
 
 onBookmarkClicked() {
   this.bookmarkClicked = !this.bookmarkClicked;
+}
+
+onThumbUpClicked() {
+  this.thumbsUp = !this.thumbsUp;
 }
 
 }
