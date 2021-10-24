@@ -117,8 +117,6 @@
             <label class="form-check inline" for="flexRadioDefault1">
               Female
             </label>
-            <!-- <input type="radio" value="male" name="gender" ngModel checked> Male
-            <input type="radio" value="female" name="gender" ngModel> Female -->
           </div>
           <div class="form-group row">
                 <input class="form-check" type="checkbox" [(ngModel)]="settings.darkModeStatus" name="darkModeStatus" (change)="checkDarkMode($event)" id="flexCheckChecked" [checked]="settings.darkModeStatus">
@@ -126,6 +124,12 @@
                   Dark Mode
             </label>
           </div>
+          <div class="form-group row">
+            <input class="form-check" type="checkbox" name="privateOrPublic" id="flexCheckChecked" [checked]="settings.private">
+            <label class="form-check" for="flexCheckChecked">
+              Private
+        </label>
+      </div>
           <div class="text-center">
             <button type="submit" class="btn btn-lg signup-submit text-center" 
             onclick="getElementById('saved').innerHTML='Changes Saved!'">
