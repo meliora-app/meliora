@@ -71,3 +71,9 @@ img {
   font-weight: bold;
   border: 1px solid #041b35;
 }
+
+.follow-options {
+  display: flex;
+  float: right;
+  
+}

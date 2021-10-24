@@ -36,7 +36,16 @@
     class="trash-icon"
     (click)="deletePostClicked(post.postID)">
         <mat-icon>delete</mat-icon>
-      </button>
+    </button>
+    <button
+      mat-icon-button
+      type="button"
+      (click)="onBookmarkClicked()"
+      [ngStyle]="{ color: bookmarkClicked ? '#0b3d77' : 'white' }"
+      >
+      <mat-icon>bookmark</mat-icon>
+    </button>
+
       <mat-menu #flagMenu="matMenu">
         <button mat-menu-item>Harmful</button>
         <button mat-menu-item>Vulgar</button>
@@ -51,6 +60,6 @@
       >
         <mat-icon>flag</mat-icon>
       </button>
-    </div>
+    </div>   
   </body>
 </html>

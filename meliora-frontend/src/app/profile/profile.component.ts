@@ -27,6 +27,12 @@ export class ProfileComponent implements OnInit {
   isSelf: boolean = true;
   viewedUserNumPosts: number = this.posts.length;
   belongsToUser: boolean;
+  isNotUser: boolean;
+  followAdd: boolean = true; // plus button to follow user
+  followCheck: boolean = false; // check button to indicate current user is following viewed user
+  unfollow: boolean = false; // minus button to unfollow user
+  block: boolean = true;
+  unblock: boolean = false;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private fireStorage: AngularFireStorage) {  }
 
@@ -84,6 +90,7 @@ export class ProfileComponent implements OnInit {
       console.log("Viewed user: " + this.viewedUserID);
     });
     this.belongsToUser = this.viewedUserID == this.userId;
+    this.isNotUser = !this.belongsToUser;
     this.loadProfile();
   }
 
@@ -104,5 +111,30 @@ export class ProfileComponent implements OnInit {
       this.downloadURL = url;
       // this.timestamp = new Date().getTime();
     });
+  }
+
+  onFollowAddClicked() {
+    this.followCheck = true;
+    this.followAdd = false;
+    this.unfollow = true;
+  }
+
+  onUnfollowedClicked() {
+    this.followCheck = false;
+    this.followAdd = true;
+    this.unfollow = false;
+    alert("Are you sure you want to unfollow " + this.viewedUsername + "?");
+  }
+
+  onBlockClicked() {
+    this.block = false;
+    this.unblock = true;
+    alert("Are you sure you want to block " + this.viewedUsername + "?");
+  }
+
+  onUnblockClicked() {
+    this.block = true;
+    this.unblock = false;
+    alert("Are you sure you want to unblock " + this.viewedUsername + "?");
   }
 }
