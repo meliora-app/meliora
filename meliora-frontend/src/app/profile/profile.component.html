@@ -48,6 +48,40 @@
         </div>
       </div>
 
+      <div class="follow-options wrapper container mr-3">
+        <button
+            mat-icon-button
+            class="mr-2"
+            *ngIf="followAdd && isNotUser"
+            type="button"
+            (click)="onFollowAddClicked()"
+            >
+            <mat-icon>add_circle_outline</mat-icon>
+            <span style="color: #0b3d77; font-size: 20px;">Follow</span>
+          </button>
+          <icon
+            mat-icon-button
+            *ngIf="followCheck && unfollow && isNotUser"
+            class="mr-2 mt-1"
+            [ngStyle]="{ color: '#0b3d77' }"
+            >
+            <mat-icon>check</mat-icon>
+            <span style="color: #0b3d77; font-size: 20px; font-weight: bold;">Following</span>
+        </icon>
+
+          <button
+            mat-icon-button
+            class="pl-5"
+            *ngIf="unfollow && isNotUser"
+            type="button"
+            (click)="onUnfollowedClicked()"
+            [ngStyle]="{ color: followAdd ? 'green' : '#0b3d77' }"
+            >
+            <mat-icon>remove_circle_outline</mat-icon>
+            <span style="color: #0b3d77; font-size: 20px;">Unfollow</span>
+          </button>
+        </div>
+
       <div class="wrapper container mr-5">
         <div>
           <!-- About Section -->
