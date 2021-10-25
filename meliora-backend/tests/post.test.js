@@ -97,9 +97,27 @@ describe('Unit Tests for Post Router:', () => {
 		expect(res.status).toBe(200);
 	});
 
-	test('SP-2, US-2:', async () => {});
+	test('SP-2, US-2: Post Created Earlier should have default reaction counts of 0.', async () => {
+		let post = await Post.findById(testPostID).exec();
 
-	test('SP-2, US-2:', async () => {});
+		let sum = post.reactions.hearts + post.reactions.thumbs + post.reactions.hugs + post.reactions.smileys;
+
+		expect(sum).toBe(0);
+	});
+
+	test('SP-2, US-2: We should see an updated count when reacting to a post.', async () => {
+		await request(server)
+			.put('/api/posts/react')
+			.set('Content-Type', 'application/json')
+			.send({
+				postID: testPostID,
+				reaction: 0
+			});
+
+		let post = await Post.findById(testPostID).exec();
+
+		expect(post.reactions.hearts).toBe(1);
+	});
 
 	test('SP-2, US-3:', async () => {});
 
