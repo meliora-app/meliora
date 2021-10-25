@@ -75,12 +75,9 @@ export class ProfileComponent implements OnInit {
             this.posts.push(new Post(postResBody[i]._id, postResBody[i].title, postResBody[i].content, postResBody[i].author, postResBody[i].anonymous, this.viewedUsername));
           }
         }
-        console.log("SUCCESS");
       }
 
     }
-
-
   }
 
   // handler to refresh profile page after post is deleted
@@ -120,27 +117,34 @@ export class ProfileComponent implements OnInit {
   }
 
   onFollowAddClicked() {
+    // backend call
     this.followCheck = true;
     this.followAdd = false;
     this.unfollow = true;
   }
 
   onUnfollowedClicked() {
-    this.followCheck = false;
-    this.followAdd = true;
-    this.unfollow = false;
-    alert("Are you sure you want to unfollow " + this.viewedUsername + "?");
+    if (confirm("Are you sure you want to unfollow " + this.viewedUsername + "?")) {
+      //backend call
+      this.followCheck = false;
+      this.followAdd = true;
+      this.unfollow = false;
+    }
   }
 
   onBlockClicked() {
-    this.block = false;
-    this.unblock = true;
-    alert("Are you sure you want to block " + this.viewedUsername + "?");
+    if (confirm("Are you sure you want to block " + this.viewedUsername + "?")) {
+      // backend call
+      this.block = false;
+      this.unblock = true;
+    }
   }
 
   onUnblockClicked() {
-    this.block = true;
-    this.unblock = false;
-    alert("Are you sure you want to unblock " + this.viewedUsername + "?");
+    if (confirm("Are you sure you want to unblock " + this.viewedUsername + "?")) {
+      // backend call
+      this.block = true;
+      this.unblock = false;
+    }
   }
 }
