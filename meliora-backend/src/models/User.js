@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import { PostSchema } from './Post.js';
+import mongoose from "mongoose";
+import { PostSchema } from "./Post.js";
 
 const { SchemaTypes, Schema, model } = mongoose;
 
@@ -66,6 +66,6 @@ const UserSchema = new Schema({
 	}
 });
 
-const User = new model('User', UserSchema);
+const User = new model("User", UserSchema);
 
 export { User, UserSchema };

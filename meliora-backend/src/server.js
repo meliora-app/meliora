@@ -1,25 +1,32 @@
-import express from 'express';
-import { config } from 'dotenv';
-import { pingRouter } from './routers/ping.js';
-import { postRouter } from './routers/post.js';
-import { userRouter } from './routers/user.js';
-import cors from 'cors';
+import express from "express";
+import { config } from "dotenv";
+import { pingRouter } from "./routers/ping.js";
+import { postRouter } from "./routers/post.js";
+import { userRouter } from "./routers/user.js";
+import { catRouter } from "./routers/categories.js";
+
+import cors from "cors";
 
 config();
 
 let server = express();
 
-server.use(express.json({
-	limit: '50mb',
-}));
+server.use(
+  express.json({
+    limit: "50mb",
+  })
+);
 
-server.use(cors({
-	origin: '*',
-	methods: ["GET", "POST", "PUT", "PATCH", "DELETE"]
-}));
+server.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  })
+);
 
-server.use('/ping', pingRouter);
-server.use('/api/posts', postRouter);
-server.use('/api/users', userRouter);
+server.use("/ping", pingRouter);
+server.use("/api/posts", postRouter);
+server.use("/api/users", userRouter);
+server.use("/api/categories", catRouter);
 
 export { server };

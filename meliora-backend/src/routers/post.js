@@ -9,6 +9,7 @@ import { Router } from "express";
 import { Post } from "../models/Post.js";
 import { User } from "../models/User.js";
 import mongoose from "mongoose";
+import { Category } from "../models/Category.js";
 
 let { ObjectId } = mongoose.Types;
 
@@ -16,7 +17,7 @@ const Reactions = {
   HEART: 0,
   THUMB: 1,
   SMILEY: 2,
-  HUG: 3
+  HUG: 3,
 };
 
 const postRouter = new Router();
@@ -39,7 +40,8 @@ const isValidPost = (post) => {
     "title" in post &&
     "content" in post &&
     "anonymous" in post &&
-    "hidden" in post
+    "hidden" in post &&
+    "category" in post
   );
 };
 
@@ -76,12 +78,12 @@ postRouter.put("/getPost", async (req, res) => {
     post = await Post.findById(post).exec();
 
     if (!post) {
-      res.status(400).send('There is no post with this ID.');
+      res.status(400).send("There is no post with this ID.");
       return;
     }
   } catch (e) {
     console.error(e);
-    res.status(500).send('An error occured on the backend.');
+    res.status(500).send("An error occured on the backend.");
     return;
   }
 
@@ -105,8 +107,10 @@ postRouter.post("/create", async (req, res) => {
     postDocument = await new Post(newPost).save();
 
     let user = await User.findById(newPost.author).exec();
+    let category = await Category.findById(newPost.category).exec();
 
     user.authorList.push(postDocument._id);
+    category.posts.push(postDocument._id);
 
     await user.save();
   } catch (e) {
@@ -211,7 +215,6 @@ postRouter.put("/getPostsBy", async (req, res) => {
 
   let postsByUser = [];
   try {
-
     postsByUser = await Post.find({ author: userID }).exec();
 
     if (!postsByUser || postsByUser.length == 0) {
@@ -231,43 +234,40 @@ postRouter.put("/getPostsBy", async (req, res) => {
 /**
  * Save a bookmark.
  */
-postRouter.put('/bookmark', async (req, res) => {
+postRouter.put("/bookmark", async (req, res) => {
   let { userID, postID } = req.body;
 
   if (!userID || !postID) {
-    res.status(400).send('The request body was invalid!');
+    res.status(400).send("The request body was invalid!");
     return;
   }
 
   let user, post;
   try {
-
     user = await User.findById(userID).exec();
     post = await Post.findById(postID).exec();
 
     if (!user) {
-      res.status(400).send('This user does not exist.');
+      res.status(400).send("This user does not exist.");
       return;
     }
 
     if (!post) {
-      res.status(400).send('This post does not exist.');
+      res.status(400).send("This post does not exist.");
       return;
     }
 
-    if (!user.boomarks)
-      user.bookmarks = []
-    
+    if (!user.boomarks) user.bookmarks = [];
+
     if (user.bookmarks.includes(post)) {
-      res.status(400).send('You have already bookmarked this post.');
+      res.status(400).send("You have already bookmarked this post.");
       return;
     }
 
     user.bookmarks.push(post);
     await user.save();
-     
   } catch (e) {
-    res.status(500).send('An error occured on the backend.');
+    res.status(500).send("An error occured on the backend.");
     console.error(e);
     return;
   }
@@ -278,11 +278,11 @@ postRouter.put('/bookmark', async (req, res) => {
 /**
  * Save a Reaction
  */
-postRouter.put('/react', async (req, res) => {
+postRouter.put("/react", async (req, res) => {
   let { postID, reaction } = req.body;
 
   if (!postID || reaction === undefined) {
-    res.status(400).send('Request Body has incorrect format!');
+    res.status(400).send("Request Body has incorrect format!");
     return;
   }
 
@@ -291,7 +291,7 @@ postRouter.put('/react', async (req, res) => {
     post = await Post.findById(postID).exec();
 
     if (!post) {
-      res.status(400).send('This post does not exist!');
+      res.status(400).send("This post does not exist!");
       return;
     }
 
@@ -300,8 +300,8 @@ postRouter.put('/react', async (req, res) => {
         hearts: 0,
         thumbs: 0,
         smileys: 0,
-        hugs: 0
-      }
+        hugs: 0,
+      };
     }
 
     switch (reaction) {
@@ -318,14 +318,14 @@ postRouter.put('/react', async (req, res) => {
         post.reactions.hugs++;
         break;
       default:
-        res.status(400).send('Invalid Reaction sent in.');
+        res.status(400).send("Invalid Reaction sent in.");
         return;
     }
 
     await post.save();
   } catch (e) {
     console.error(e);
-    res.status(500).send('An error occured on the backend');
+    res.status(500).send("An error occured on the backend");
     return;
   }
 

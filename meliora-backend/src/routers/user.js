@@ -373,9 +373,9 @@ userRouter.put('/follow', async (req, res) => {
   res.status(200).send(true);
 });
 
-
-
-
+/* 
+* Block a user
+*/
 userRouter.put('/block', async (req, res) => {
   let { blockerID, blockedID } = req.body;
 
