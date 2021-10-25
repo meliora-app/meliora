@@ -60,6 +60,71 @@
       >
         <mat-icon>flag</mat-icon>
       </button>
+
+      <button
+        mat-icon-button
+        type="button"
+        class="tu"
+        *ngIf="thumbsUp"
+        (click)="onThumbUpClicked()"
+        [ngStyle]="{ color: thumbsUp ? '#0b3d77' : 'white' }"
+        >
+        <mat-icon>thumb_up</mat-icon>
+      </button>
+      
+      <button
+        mat-icon-button
+        type="button"
+        *ngIf="smileyFace"
+        class="tu"
+        (click)="onSmileyFaceClicked()"
+        [ngStyle]="{ color: smileyFace ? '#0b3d77' : 'white' }"
+        >
+        <mat-icon>emoji_emotions</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        type="button"
+        *ngIf="heart"
+        class="tu"
+        (click)="onHeartClicked()"
+        [ngStyle]="{ color: heart ? '#0b3d77' : 'white' }"
+        >
+        <mat-icon>favorite</mat-icon>
+      </button>
+      <mat-menu #reactionMenu="matMenu">
+        <button mat-menu-item
+          type="button"
+          (click)="onThumbUpClicked()"
+          [ngStyle]="{ color: thumbsUp ? '#0b3d77' : 'white' }"
+          >
+          <mat-icon>thumb_up</mat-icon>
+        </button>
+        <button mat-menu-item
+          type="button"
+          (click)="onSmileyFaceClicked()"
+          [ngStyle]="{ color: smileyFace ? '#0b3d77' : 'white' }"
+          >
+          <mat-icon>emoji_emotions</mat-icon>
+      </button>
+        <button mat-menu-item
+          type="button"
+          (click)="onHeartClicked()"
+          [ngStyle]="{ color: heart ? '#0b3d77' : 'white' }"
+          >
+          <mat-icon>favorite</mat-icon></button>
+      </mat-menu>
+
+      <button
+        [mat-menu-trigger-for]="reactionMenu"
+        *ngIf="!addReaction"
+        mat-icon-button
+        class="tu btn btn-login"
+        style="background-color: #a6cdfc; color: #fff"
+      >
+        <mat-icon>add_reaction</mat-icon>
+      </button>
     </div>   
   </body>
 </html>
