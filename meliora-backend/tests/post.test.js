@@ -119,17 +119,82 @@ describe('Unit Tests for Post Router:', () => {
 		expect(post.reactions.hearts).toBe(1);
 	});
 
-	test('SP-2, US-3:', async () => {});
+	test('SP-2, US-3: Default location on earlier post should be 0, 0', async () => {
+		let post = await Post.findById(testPostID).exec();
 
-	test('SP-2, US-3:', async () => {});
+		let coordSum = post.location.latitude + post.location.longitude;
 
-	test('SP-2, US-4:', async () => {});
+		expect(coordSum).toBe(0);
+	});
 
-	test('SP-2, US-4:', async () => {});
+	test('SP-2, US-3: Server should respond with 200 when creating a post with a location attached.', async () => {
+		let res = await request(server)
+			.post('/api/posts/create')
+			.set('Content-Type', 'application/json')
+			.send({
+				title: 'Test3 Title',
+				content: 'Test3 Content',
+				author: process.env.TEST_USER_ID,
+				anonymous: true,
+				hidden: false,
+				category: process.env.TEST_CAT_ID,
+				location: {
+					latitude: 10.2,
+					longitude: 10.2
+				}
+			});
 
-	test('SP-2, US-5:', async () => {});
+		let post = await Post.findById(res.body._id).exec();
 
-	test('SP-2, US-5:', async () => {});
+		expect(post.location.latitude).toBe(10.2);
+	});
+
+	test('SP-2, US-4: Earlier post should have its hidden status set as false.', async () => {
+		let post = await Post.findById(testPostID).exec();
+		expect(post.hidden).toBe(false);
+	});
+
+	test('SP-2, US-4: A new post created with hidden set to true should reflect that within the database.', async () => {
+		let res = await request(server)
+			.post('/api/posts/create')
+			.set('Content-Type', 'application/json')
+			.send({
+				title: 'Test3 Title',
+				content: 'Test3 Content',
+				author: process.env.TEST_USER_ID,
+				anonymous: true,
+				hidden: true,
+				category: process.env.TEST_CAT_ID
+			});
+		
+		let post = await Post.findById(res.body._id).exec();
+		
+		expect(post.hidden).toBe(true);
+	});
+
+	test('SP-2, US-5: Previously created post should have a default commentsAllowed value of true.', async () => {
+		let post = await Post.findById(testPostID).exec();
+		expect(post.commentsAllowed).toBe(true);
+	});
+
+	test('SP-2, US-5: A new post created with commentsAllowed set to false should reflect that within the database.', async () => {
+		let res = await request(server)
+			.post('/api/posts/create')
+			.set('Content-Type', 'application/json')
+			.send({
+				title: 'Test3 Title',
+				content: 'Test3 Content',
+				author: process.env.TEST_USER_ID,
+				anonymous: true,
+				hidden: true,
+				commentsAllowed: false,
+				category: process.env.TEST_CAT_ID
+			});
+		
+		let post = await Post.findById(res.body._id).exec();
+		
+		expect(post.commentsAllowed).toBe(false);
+	});
 
 	test('SP-2, US-6:', async () => {});
 
@@ -167,6 +232,7 @@ describe('Unit Tests for Post Router:', () => {
 
 	afterAll(async () => {
 		await Post.deleteMany({title: 'Test2 Title'});
+		await Post.deleteMany({title: 'Test3 Title'});
 		await disconnect();
 	})
 });
