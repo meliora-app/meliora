@@ -229,6 +229,7 @@ userRouter.put("/getUser", async (req, res) => {
     res.status(500).send("Error fetching user");
   }
 
+  /*
   res.status(200).send({
     _id: userDoc._id,
     username: userDoc.username,
@@ -240,8 +241,9 @@ userRouter.put("/getUser", async (req, res) => {
     sex: userDoc.sex,
     name: userDoc.name,
     dateOfBirth: userDoc.dateOfBirth
-    
   });
+  */
+ res.status(200).send(userDoc);
 });
 
 /**
