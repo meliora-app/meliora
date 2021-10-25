@@ -26,6 +26,10 @@ export class ProfileComponent implements OnInit {
   posts: Post[] = [];
   isSelf: boolean = true;
   viewedUserNumPosts: number = this.posts.length;
+  numLikes = 0;
+  numThumbs = 0;
+  numSmileys = 0;
+  numHugs = 0;
   belongsToUser: boolean;
   isNotUser: boolean;
   followAdd: boolean = true; // plus button to follow user
@@ -34,7 +38,7 @@ export class ProfileComponent implements OnInit {
   block: boolean = true;
   unblock: boolean = false;
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private fireStorage: AngularFireStorage) {  }
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private fireStorage: AngularFireStorage) { }
 
   async loadProfile() {
     this.getProfilePic();
@@ -48,7 +52,7 @@ export class ProfileComponent implements OnInit {
         _id: this.viewedUserID
       })
     });
-    
+
     if (res.status == 200) {
       console.log("SUCCESS");
       let resBody = await res.json();
@@ -73,8 +77,10 @@ export class ProfileComponent implements OnInit {
         }
         console.log("SUCCESS");
       }
-    
+
     }
+
+
   }
 
   // handler to refresh profile page after post is deleted
@@ -95,7 +101,7 @@ export class ProfileComponent implements OnInit {
   }
 
   onEditProfileClick() {
-    this.router.navigate(['/edit-profile'], { queryParams: {"username": this.viewedUsername, "bio": this.bio, "numPosts": this.viewedUserNumPosts}});
+    this.router.navigate(['/edit-profile'], { queryParams: { "username": this.viewedUsername, "bio": this.bio, "numPosts": this.viewedUserNumPosts } });
   }
 
   // displayProfilePic() {
