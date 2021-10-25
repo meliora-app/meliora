@@ -50,11 +50,11 @@ const PostSchema = new Schema({
   location: {
     latitude: {
       type: SchemaTypes.Number,
-      required: false,
+      default: 0,
     },
     longitude: {
       type: SchemaTypes.Number,
-      required: false,
+      default: 0,
     },
   },
   reactions: {

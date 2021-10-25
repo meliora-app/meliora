@@ -316,4 +316,34 @@ userRouter.put('/block', async (req, res) => {
   res.status(200).send(true);
 });
 
+/**
+ * Set a User's Privacy Preference
+ */
+userRouter.put('/setPrivate', async (req, res) => {
+
+  let { userID } = req.body;
+
+  if (!userID) {
+    res.status(400).send('You must send in a user ID!');
+    return;
+  }
+
+  try {
+
+    let user = await User.findById(userID).exec();
+
+    user.private = (!("private" in user) || !user.private);
+
+    await user.save();
+
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend.');
+    return;
+  }
+
+  res.status(200).send(true);
+  return;
+});
+
 export { userRouter };
