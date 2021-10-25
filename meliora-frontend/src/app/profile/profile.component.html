@@ -73,13 +73,13 @@
       <div class="follow-options wrapper container mr-3">
         <button
             mat-icon-button
-            class="mr-2"
+            class="mt-1 mr-2"
             *ngIf="followAdd && isNotUser"
             type="button"
             (click)="onFollowAddClicked()"
             >
-            <mat-icon>add_circle_outline</mat-icon>
-            <span style="color: #0b3d77; font-size: 20px;">Follow</span>
+            <mat-icon>person_add</mat-icon>
+            <span class="ml-2" style="color: #0b3d77; font-size: 20px;">Follow</span>
           </button>
           <icon
             mat-icon-button
@@ -98,8 +98,8 @@
             (click)="onUnfollowedClicked()"
             [ngStyle]="{ color: followAdd ? 'green' : '#0b3d77' }"
             >
-            <mat-icon>remove_circle_outline</mat-icon>
-            <span style="color: #0b3d77; font-size: 20px;">Unfollow</span>
+            <mat-icon>person_remove</mat-icon>
+            <span class="ml-2"style="color: #0b3d77; font-size: 20px;">Unfollow</span>
           </button>
         </div>
 
