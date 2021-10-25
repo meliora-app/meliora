@@ -7,6 +7,8 @@ import {
   AngularFireStorageReference,
 } from '@angular/fire/storage';
 import { PostService } from '../shared/services/post.service';
+import { UserService } from '../shared/services/userServices/user.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-profile',
@@ -26,10 +28,10 @@ export class ProfileComponent implements OnInit {
   posts: Post[] = [];
   isSelf: boolean = true;
   viewedUserNumPosts: number = this.posts.length;
-  numLikes = 0;
-  numThumbs = 0;
-  numSmileys = 0;
-  numHugs = 0;
+  numLikes: any = "--";
+  numThumbs: any = "--";
+  numSmileys: any = "--";
+  numHugs: any = "--";
   belongsToUser: boolean;
   isNotUser: boolean;
   followAdd: boolean = true; // plus button to follow user
@@ -38,7 +40,8 @@ export class ProfileComponent implements OnInit {
   block: boolean = true;
   unblock: boolean = false;
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private fireStorage: AngularFireStorage) { }
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private fireStorage: AngularFireStorage,
+    private userService: UserService) { }
 
   async loadProfile() {
     this.getProfilePic();
@@ -69,18 +72,38 @@ export class ProfileComponent implements OnInit {
       });
       if (postRes.status == 200) {
         let postResBody = await postRes.json();
+        if (postResBody != null && postResBody != []) {
+          this.numLikes = 0;
+          this.numThumbs = 0;
+          this.numSmileys = 0;
+          this.numHugs = 0;
+        }
         this.viewedUserNumPosts = postResBody.length;
         for (let i = 0; i < postResBody.length; i++) {
+          var reactions = postResBody[i]["reactions"];
+          this.numLikes += reactions.hearts;
+          this.numThumbs += reactions.thumbs;
+          this.numSmileys += reactions.smileys;
+          this.numHugs += reactions.hugs;
           if (!postResBody[i].anonymous || this.belongsToUser) {
             this.posts.push(new Post(postResBody[i]._id, postResBody[i].title, postResBody[i].content, postResBody[i].author, postResBody[i].anonymous, this.viewedUsername));
+
           }
         }
         console.log("SUCCESS");
+
       }
+
 
     }
 
 
+  }
+
+  async calcNumReactions() {
+    this.userService.getUserPosts(this.viewedUserID).then(posts => {
+      console.log("posts = " + posts);
+    });
   }
 
   // handler to refresh profile page after post is deleted
@@ -91,6 +114,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProfilePic();
+    this.calcNumReactions();
     this.activatedRoute.queryParams.subscribe(params => {
       this.viewedUserID = params._id;
       console.log("Viewed user: " + this.viewedUserID);
