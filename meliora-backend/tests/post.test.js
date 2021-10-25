@@ -35,12 +35,13 @@ describe('Unit Tests for Post Router:', () => {
 				content: 'Test2 Content',
 				author: process.env.TEST_USER_ID,
 				anonymous: true,
-				hidden: false
+				hidden: false,
+				category: process.env.TEST_CAT_ID
 			});
 
 		let status = res.status;
 
-		res = await Post.findOne({ flags: 0 }).exec();
+		res = await Post.findOne({ title: 'Test2 Title' }).exec();
 
 		testPostID = res._id;
 
@@ -90,7 +91,7 @@ describe('Unit Tests for Post Router:', () => {
 			.put(`/api/posts/getPostsBy`)
 			.set('Content-Type', 'application/json')
 			.send({
-				userID: '61489001f5cbecf2074c5244',
+				userID: '61552c5957d8965194069d8a',
 			});
 
 		expect(res.status).toBe(200);
@@ -146,10 +147,8 @@ describe('Unit Tests for Post Router:', () => {
 
 	test('SP-2, US-15:', async () => {});
 
-	afterAll(done => {
-		Post.findByIdAndDelete(testPostID).exec();
-		disconnect();
-
-		done();
+	afterAll(async () => {
+		await Post.deleteMany({title: 'Test2 Title'});
+		await disconnect();
 	})
 });

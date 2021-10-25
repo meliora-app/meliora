@@ -174,7 +174,7 @@ userRouter.post("/updateSettings", async (req, res) => {
 
   let userDoc;
   try {
-    userDoc = await User.findOne({_id: user._id}).exec();
+    userDoc = await User.findById(user._id).exec();
     
     if (!userDoc) {
       res.status(500).send("Error finding user with ID: " + user._id);
@@ -184,7 +184,7 @@ userRouter.post("/updateSettings", async (req, res) => {
     if (user.dateOfBirth) userDoc.dateOfBirth = user.dateOfBirth;
     if (user.name) userDoc.name = user.name;
     if (user.phone) userDoc.phone = user.phone;
-    userDoc.save();
+    await userDoc.save();
 
   } catch (e) {
     console.error(e);

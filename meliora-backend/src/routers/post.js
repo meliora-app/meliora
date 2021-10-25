@@ -218,7 +218,7 @@ postRouter.put("/getPostsBy", async (req, res) => {
     postsByUser = await Post.find({ author: userID }).exec();
 
     if (!postsByUser || postsByUser.length == 0) {
-      res.status(400).send("This user has no posts.");
+      res.status(200).send("This user has no posts.");
       return;
     }
   } catch (e) {
