@@ -35,6 +35,7 @@ import { QuotePageComponent } from './quote-page/quote-page.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { NoPostsCardComponent } from './no-posts-card/no-posts-card.component';
 import { MentalHealthComponent } from './mental-health/mental-health.component';
+import { ExpandedPostCardComponent } from './expanded-post-card/expanded-post-card.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { MentalHealthComponent } from './mental-health/mental-health.component';
     ForgotPasswordComponent,
     NoPostsCardComponent,
     MentalHealthComponent,
+    ExpandedPostCardComponent,
   ],
   imports: [
     BrowserModule,

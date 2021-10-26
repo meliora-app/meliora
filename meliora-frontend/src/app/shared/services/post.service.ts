@@ -36,4 +36,33 @@ export class PostService {
         console.log(responseData);
       });
   }
+
+  async getPostByID(id: string) {
+    var body = {
+      post: id,
+    };
+    var postData;
+    this.http
+      .put('https://meliora-backend.herokuapp.com/api/posts/getPost', body, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .subscribe((responseData) => {
+        console.log(responseData);
+        postData = responseData;
+      });
+
+    return postData;
+  }
+
+  trimPost(content: string) {
+    var words = content.split(' ');
+    var newContent = content;
+    if (words.length > 80) {
+      newContent = words.slice(0, 80).join(' ');
+    }
+
+    return newContent;
+  }
 }

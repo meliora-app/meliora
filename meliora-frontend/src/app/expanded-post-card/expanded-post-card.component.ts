@@ -1,42 +1,62 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
   AngularFireStorage,
   AngularFireStorageReference,
 } from '@angular/fire/storage';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from '../shared/models/post.model';
 import { PostService } from '../shared/services/post.service';
 
 @Component({
-  selector: 'app-post-card',
-  templateUrl: './post-card.component.html',
-  styleUrls: ['./post-card.component.css'],
+  selector: 'app-expanded-post-card',
+  templateUrl: './expanded-post-card.component.html',
+  styleUrls: ['./expanded-post-card.component.css'],
 })
-export class PostCardComponent implements OnInit {
-  @Input() post: Post; // Post used as input for template
-  @Input() isExpanded: boolean;
+export class ExpandedPostCardComponent implements OnInit {
   @Output() postDeleted: EventEmitter<string> = new EventEmitter();
   bookmarkClicked: boolean = false;
   thumbsUp: boolean = false;
+  isNotUser: boolean;
   postContent: string = '';
+  post: Post;
+  ref: AngularFireStorageReference;
+  downloadURL: string = '';
+  belongsToUser: boolean;
 
   darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
-  ref: AngularFireStorageReference;
-  // timestamp;
-  downloadURL: string;
-  belongsToUser: boolean;
   constructor(
-    private route: Router,
+    private router: Router,
+    private route: ActivatedRoute,
     private fireStorage: AngularFireStorage,
     private postService: PostService
   ) {}
 
   ngOnInit(): void {
-    if (!this.isExpanded) {
-      this.postContent = this.postService.trimPost(this.post.content);
-    }
-    this.getProfilePic();
+    this.route.queryParams.subscribe((queryParams) => {
+      this.post = {
+        title: queryParams.title,
+        content: queryParams.content,
+        authorUsername: queryParams.authorUsername,
+        authorID: queryParams.authorID,
+        postID: queryParams.postID,
+        anon: queryParams.anon === 'true',
+      };
+      this.downloadURL = queryParams.downloadURL;
+    });
+    this.getPost();
+    console.log(this.post);
     this.belongsToUser = localStorage.getItem('userID') == this.post.authorID;
+  }
+
+  // route to profile with clicked user
+  userClicked() {
+    this.router.navigate(['/profile'], {
+      queryParams: { _id: this.post.authorID },
+    });
+  }
+
+  async getPost() {
+    var postData = await this.postService.getPostByID(this.post.postID);
   }
 
   async deletePostClicked(postID: string) {
@@ -62,28 +82,5 @@ export class PostCardComponent implements OnInit {
         window.location.reload();
       }
     }
-  }
-
-  // route to profile with clicked user
-  userClicked() {
-    this.route.navigate(['/profile'], {
-      queryParams: { _id: this.post.authorID },
-    });
-  }
-
-  getProfilePic() {
-    this.ref = this.fireStorage.ref('profilePictures/' + this.post.authorID);
-    this.ref.getDownloadURL().subscribe((url) => {
-      this.downloadURL = url;
-      // this.timestamp = new Date().getTime();
-    });
-  }
-
-  onBookmarkClicked() {
-    this.bookmarkClicked = !this.bookmarkClicked;
-  }
-
-  onThumbUpClicked() {
-    this.thumbsUp = !this.thumbsUp;
   }
 }
