@@ -19,6 +19,10 @@ export class PostCardComponent implements OnInit {
   bookmarkClicked: boolean = false;
   thumbsUp: boolean = false;
   postContent: string = '';
+  smileyFace: boolean = false;
+  heart: boolean = false;
+  addReaction: boolean; // checks if reaction is selected
+  isNotUser: boolean;
 
   darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
   ref: AngularFireStorageReference;
@@ -85,5 +89,16 @@ export class PostCardComponent implements OnInit {
 
   onThumbUpClicked() {
     this.thumbsUp = !this.thumbsUp;
+    this.addReaction = this.thumbsUp;
+  }
+
+  onSmileyFaceClicked() {
+    this.smileyFace = !this.smileyFace;
+    this.addReaction = this.smileyFace;
+  }
+
+  onHeartClicked() {
+    this.heart = !this.heart;
+    this.addReaction = this.heart;
   }
 }

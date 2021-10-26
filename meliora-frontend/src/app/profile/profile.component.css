@@ -77,3 +77,11 @@ img {
   float: right;
   
 }
+
+.wrapper-react {
+  margin-left: -5%;
+}
+
+.icon-size {
+  font-size: 1.5em;
+}

@@ -1,132 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../../assets/lotus.png" />
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
 
-    <!-- Learned Bootstrap From -->
-    <!-- https://getbootstrap.com/-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../../assets/lotus.png" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
-    <!-- Font Awesome -->
-    <script
-      src="https://kit.fontawesome.com/25ed10730a.js"
-      crossorigin="anonymous"
-    ></script>
+  <!-- Learned Bootstrap From -->
+  <!-- https://getbootstrap.com/-->
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Raleway&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/25ed10730a.js" crossorigin="anonymous"></script>
 
-    <!-- Animate.css -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
-    <title>Create Post Page</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" />
 
-    <script type="text/javascript" src="./loading/loading.js"></script>
-  </head>
-  <body [ngClass]="darkModeStatus ? 'dark-mode' : ''">
-    <!-- Navbar Component -->
-    <app-home-navbar></app-home-navbar>
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <title>Create Post Page</title>
 
-    <!-- login Component -->
-    <section>
-      <h1 class="display-5 text-center heading section-head jumbotron-post">
-        Tell the community about your unique experience...
-      </h1>
-      <div class="post-form">
-        <form (ngSubmit)="onSubmitPost(f)" #f="ngForm">
-          <div>
-            <div class="form-group">
-              <label for="title">Title</label>
-              <input
-                type="text"
-                id="title"
-                class="form-control"
-                required
-                ngModel
-                name="title"
-                placeholder="Enter title here"
-              />
-              <label for="post-content" class="mt-4">Your thoughts...</label>
-              <textarea
-                name="post-content"
-                id="post-content"
-                class="form-control"
-                cols="30"
-                rows="10"
-                name="content"
-                (input)="wordCount($event)"
-                placeholder="Enter text here"
-                
-              ></textarea>
-            </div>
-            <div class="post-options mb-3">
-              <button
-                type="button"
-                mat-icon-button
-                (click)="onImageClicked()"
-                [ngStyle]="{ color: imageClicked ? 'red' : '#0b3d77' }"
-              >
-                <mat-icon>image</mat-icon>
-              </button>
-              <button
-                mat-icon-button
-                type="button"
-                (click)="onVisibilityClicked()"
-                [ngStyle]="{ color: visibilityClicked ? 'red' : '#0b3d77' }"
-              >
-                <mat-icon>visibility</mat-icon>
-              </button>
-              <button
-                mat-icon-button
-                type="button"
-                (click)="onCommentClicked()"
-                [ngStyle]="{ color: commentClicked ? '#0ecc64' : '#0b3d77' }"
-              >
-                <mat-icon>comment</mat-icon>
-              </button>
-            </div>
+  <script type="text/javascript" src="./loading/loading.js"></script>
+</head>
+
+<body [ngClass]="darkModeStatus ? 'dark-mode' : ''">
+  <!-- Navbar Component -->
+  <app-home-navbar></app-home-navbar>
+
+  <!-- login Component -->
+  <section>
+    <h1 class="display-5 text-center heading section-head jumbotron-post">
+      Tell the community about your unique experience...
+    </h1>
+    <div class="post-form">
+      <form (ngSubmit)="onSubmitPost(f)" #f="ngForm">
+        <div>
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" class="form-control" required ngModel name="title"
+              placeholder="Enter title here" />
+            <label for="post-content" class="mt-4">Your thoughts...</label>
+            <textarea name="post-content" id="post-content" class="form-control" cols="30" rows="10" name="content"
+              (input)="wordCount($event)" placeholder="Enter text here"></textarea>
           </div>
-          <div class="wcStyle">Word Count: <span class="wcStyle" id="wordCount">{{ words }}</span></div>
-          <div class="text-center mt-5">
-            <button type="submit" class="btn btn-lg post-submit text-center">
-              Post
+          <div class="post-options mb-3">
+            <button type="button" mat-icon-button (click)="onImageClicked()"
+              [ngStyle]="{ color: imageClicked ? 'red' : '#0b3d77' }">
+              <mat-icon>image</mat-icon>
+            </button>
+            <button mat-icon-button type="button" (click)="onVisibilityClicked()"
+              [ngStyle]="{ color: visibilityClicked ? 'red' : '#0b3d77' }">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button type="button" (click)="onCommentClicked()"
+              [ngStyle]="{ color: commentClicked ? '#0ecc64' : '#0b3d77' }">
+              <mat-icon>comment</mat-icon>
             </button>
           </div>
-        </form>
-      </div>
-    </section>
-  </body>
+        </div>
+        <div class="wcStyle">Word Count: <span class="wcStyle" id="wordCount">{{ words }}</span></div>
+        <span class="text-left container">
+          <button type="button" class="btn post-submit text-center" id="record-location">
+            Record Location
+          </button>
+          <button type="button" class="btn post-submit text-center" id="remove-location">
+            Remove Location
+          </button>
+        </span>
+        <span class="text-right mt-10">
+
+        </span>
+        <div class="text-center mt-5">
+          <button type="submit" class="btn btn-lg post-submit text-center">
+            Post
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </section>
+</body>
+
 </html>

@@ -7,6 +7,8 @@ import {
   AngularFireStorageReference,
 } from '@angular/fire/storage';
 import { PostService } from '../shared/services/post.service';
+import { UserService } from '../shared/services/userServices/user.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-profile',
@@ -26,6 +28,10 @@ export class ProfileComponent implements OnInit {
   posts: Post[] = [];
   isSelf: boolean = true;
   viewedUserNumPosts: number = this.posts.length;
+  numLikes: any = '--';
+  numThumbs: any = '--';
+  numSmileys: any = '--';
+  numHugs: any = '--';
   belongsToUser: boolean;
   isNotUser: boolean;
   followAdd: boolean = true; // plus button to follow user
@@ -37,11 +43,29 @@ export class ProfileComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private fireStorage: AngularFireStorage
+    private fireStorage: AngularFireStorage,
+    private userService: UserService
   ) {}
 
-  async loadProfile() {
+  ngOnInit(): void {
     this.getProfilePic();
+    this.calcNumReactions();
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.viewedUserID = params._id;
+      console.log('Viewed user: ' + this.viewedUserID);
+    });
+    this.belongsToUser = this.viewedUserID == this.userId;
+    this.isNotUser = !this.belongsToUser;
+    this.loadProfile();
+  }
+
+  async calcNumReactions() {
+    this.userService.getUserPosts(this.viewedUserID).then((posts) => {
+      console.log('posts = ' + posts);
+    });
+  }
+
+  async loadProfile() {
     this.darkModeStatus = localStorage.getItem('darkModeStatus') == 'true';
     let res = await fetch(
       'https://meliora-backend.herokuapp.com/api/users/getUser',
@@ -75,8 +99,19 @@ export class ProfileComponent implements OnInit {
       );
       if (postRes.status == 200) {
         let postResBody = await postRes.json();
+        if (postResBody != null && postResBody != []) {
+          this.numLikes = 0;
+          this.numThumbs = 0;
+          this.numSmileys = 0;
+          this.numHugs = 0;
+        }
         this.viewedUserNumPosts = postResBody.length;
         for (let i = 0; i < postResBody.length; i++) {
+          var reactions = postResBody[i]['reactions'];
+          this.numLikes += reactions.hearts;
+          this.numThumbs += reactions.thumbs;
+          this.numSmileys += reactions.smileys;
+          this.numHugs += reactions.hugs;
           if (!postResBody[i].anonymous || this.belongsToUser) {
             this.posts.push(
               new Post(
@@ -99,17 +134,6 @@ export class ProfileComponent implements OnInit {
   postDeletedHandler(msg: string) {
     this.posts.length = 0;
     window.location.reload();
-  }
-
-  ngOnInit(): void {
-    this.getProfilePic();
-    this.activatedRoute.queryParams.subscribe((params) => {
-      this.viewedUserID = params._id;
-      console.log('Viewed user: ' + this.viewedUserID);
-    });
-    this.belongsToUser = this.viewedUserID == this.userId;
-    this.isNotUser = !this.belongsToUser;
-    this.loadProfile();
   }
 
   onEditProfileClick() {

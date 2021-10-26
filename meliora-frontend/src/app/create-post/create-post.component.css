@@ -92,3 +92,38 @@ span {
   font-family: "Raleway", sans-serif;
   color: #0b3d77
 }
+
+#record-location {
+  width: 170px;
+  font-size: 18px;
+  background-color: #0a66cf;
+  margin-left: -10%;
+  margin-right: 10%;
+}
+
+#remove-location {
+  width: 180px;
+  font-size: 18px;
+  background-color: #3f454c;
+}
+
+#record-location:hover {
+  width: 170px;
+  font-size: 18px;
+  background-color: #0a66cf;
+  margin-left: -10%;
+  margin-right: 10%;
+  color: #fff;
+}
+
+#remove-location:hover {
+  width: 180px;
+  font-size: 18px;
+  background-color: #3f454c;
+  color: #fff;
+}
+
+
+.container {
+  display: flex;
+}
