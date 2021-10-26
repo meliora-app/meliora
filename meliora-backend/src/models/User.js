@@ -52,6 +52,10 @@ const UserSchema = new Schema({
 		type: SchemaTypes.Boolean,
 		default: false,
 	},
+	admin: {
+		type: SchemaTypes.Boolean,
+		default: false,
+	},
 	bookmarks: {
 		type: [PostSchema],
 		default: []	
