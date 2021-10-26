@@ -174,7 +174,7 @@ userRouter.post("/updateSettings", async (req, res) => {
 
   let userDoc;
   try {
-    userDoc = await User.findOne({_id: user._id}).exec();
+    userDoc = await User.findById(user._id).exec();
     
     if (!userDoc) {
       res.status(500).send("Error finding user with ID: " + user._id);
@@ -184,7 +184,7 @@ userRouter.post("/updateSettings", async (req, res) => {
     if (user.dateOfBirth) userDoc.dateOfBirth = user.dateOfBirth;
     if (user.name) userDoc.name = user.name;
     if (user.phone) userDoc.phone = user.phone;
-    userDoc.save();
+    await userDoc.save();
 
   } catch (e) {
     console.error(e);
@@ -411,5 +411,34 @@ userRouter.put('/block', async (req, res) => {
   res.status(200).send(true);
 });
 
+/**
+ * Set a User's Privacy Preference
+ */
+userRouter.put('/setPrivate', async (req, res) => {
+
+  let { userID } = req.body;
+
+  if (!userID) {
+    res.status(400).send('You must send in a user ID!');
+    return;
+  }
+
+  try {
+
+    let user = await User.findById(userID).exec();
+
+    user.private = (!("private" in user) || !user.private);
+
+    await user.save();
+
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend.');
+    return;
+  }
+
+  res.status(200).send(true);
+  return;
+});
 
 export { userRouter };

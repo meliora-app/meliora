@@ -77,7 +77,7 @@ describe('Unit Tests for Post Router:', () => {
 			.post('/api/users/updateProfile')
 			.set('Content-Type', 'application/json')
 			.send({
-				username: 'Test User 1',
+				_id: process.env.TEST_USER_ID,
 				bio: 'Test Bio'
 			});
 

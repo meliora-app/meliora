@@ -35,12 +35,13 @@ describe('Unit Tests for Post Router:', () => {
 				content: 'Test2 Content',
 				author: process.env.TEST_USER_ID,
 				anonymous: true,
-				hidden: false
+				hidden: false,
+				category: process.env.TEST_CAT_ID
 			});
 
 		let status = res.status;
 
-		res = await Post.findOne({ flags: 0 }).exec();
+		res = await Post.findOne({ title: 'Test2 Title' }).exec();
 
 		testPostID = res._id;
 
@@ -90,27 +91,110 @@ describe('Unit Tests for Post Router:', () => {
 			.put(`/api/posts/getPostsBy`)
 			.set('Content-Type', 'application/json')
 			.send({
-				userID: '61489001f5cbecf2074c5244',
+				userID: '61552c5957d8965194069d8a',
 			});
 
 		expect(res.status).toBe(200);
 	});
 
-	test('SP-2, US-2:', async () => {});
+	test('SP-2, US-2: Post Created Earlier should have default reaction counts of 0.', async () => {
+		let post = await Post.findById(testPostID).exec();
 
-	test('SP-2, US-2:', async () => {});
+		let sum = post.reactions.hearts + post.reactions.thumbs + post.reactions.hugs + post.reactions.smileys;
 
-	test('SP-2, US-3:', async () => {});
+		expect(sum).toBe(0);
+	});
 
-	test('SP-2, US-3:', async () => {});
+	test('SP-2, US-2: We should see an updated count when reacting to a post.', async () => {
+		await request(server)
+			.put('/api/posts/react')
+			.set('Content-Type', 'application/json')
+			.send({
+				postID: testPostID,
+				reaction: 0
+			});
 
-	test('SP-2, US-4:', async () => {});
+		let post = await Post.findById(testPostID).exec();
 
-	test('SP-2, US-4:', async () => {});
+		expect(post.reactions.hearts).toBe(1);
+	});
 
-	test('SP-2, US-5:', async () => {});
+	test('SP-2, US-3: Default location on earlier post should be 0, 0', async () => {
+		let post = await Post.findById(testPostID).exec();
 
-	test('SP-2, US-5:', async () => {});
+		let coordSum = post.location.latitude + post.location.longitude;
+
+		expect(coordSum).toBe(0);
+	});
+
+	test('SP-2, US-3: Server should respond with 200 when creating a post with a location attached.', async () => {
+		let res = await request(server)
+			.post('/api/posts/create')
+			.set('Content-Type', 'application/json')
+			.send({
+				title: 'Test3 Title',
+				content: 'Test3 Content',
+				author: process.env.TEST_USER_ID,
+				anonymous: true,
+				hidden: false,
+				category: process.env.TEST_CAT_ID,
+				location: {
+					latitude: 10.2,
+					longitude: 10.2
+				}
+			});
+
+		let post = await Post.findById(res.body._id).exec();
+
+		expect(post.location.latitude).toBe(10.2);
+	});
+
+	test('SP-2, US-4: Earlier post should have its hidden status set as false.', async () => {
+		let post = await Post.findById(testPostID).exec();
+		expect(post.hidden).toBe(false);
+	});
+
+	test('SP-2, US-4: A new post created with hidden set to true should reflect that within the database.', async () => {
+		let res = await request(server)
+			.post('/api/posts/create')
+			.set('Content-Type', 'application/json')
+			.send({
+				title: 'Test3 Title',
+				content: 'Test3 Content',
+				author: process.env.TEST_USER_ID,
+				anonymous: true,
+				hidden: true,
+				category: process.env.TEST_CAT_ID
+			});
+		
+		let post = await Post.findById(res.body._id).exec();
+		
+		expect(post.hidden).toBe(true);
+	});
+
+	test('SP-2, US-5: Previously created post should have a default commentsAllowed value of true.', async () => {
+		let post = await Post.findById(testPostID).exec();
+		expect(post.commentsAllowed).toBe(true);
+	});
+
+	test('SP-2, US-5: A new post created with commentsAllowed set to false should reflect that within the database.', async () => {
+		let res = await request(server)
+			.post('/api/posts/create')
+			.set('Content-Type', 'application/json')
+			.send({
+				title: 'Test3 Title',
+				content: 'Test3 Content',
+				author: process.env.TEST_USER_ID,
+				anonymous: true,
+				hidden: true,
+				commentsAllowed: false,
+				category: process.env.TEST_CAT_ID
+			});
+		
+		let post = await Post.findById(res.body._id).exec();
+		
+		expect(post.commentsAllowed).toBe(false);
+	});
 
 	test('SP-2, US-6:', async () => {});
 
@@ -146,10 +230,9 @@ describe('Unit Tests for Post Router:', () => {
 
 	test('SP-2, US-15:', async () => {});
 
-	afterAll(done => {
-		Post.findByIdAndDelete(testPostID).exec();
-		disconnect();
-
-		done();
+	afterAll(async () => {
+		await Post.deleteMany({title: 'Test2 Title'});
+		await Post.deleteMany({title: 'Test3 Title'});
+		await disconnect();
 	})
 });
