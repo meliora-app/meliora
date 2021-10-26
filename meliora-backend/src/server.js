@@ -6,6 +6,7 @@ import { userRouter } from "./routers/user.js";
 import { catRouter } from "./routers/categories.js";
 
 import cors from "cors";
+import { adminRouter } from "./routers/admin.js";
 
 config();
 
@@ -28,5 +29,6 @@ server.use("/ping", pingRouter);
 server.use("/api/posts", postRouter);
 server.use("/api/users", userRouter);
 server.use("/api/categories", catRouter);
+server.use("/admin", adminRouter);
 
 export { server };
