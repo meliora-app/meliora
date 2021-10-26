@@ -332,4 +332,44 @@ postRouter.put("/react", async (req, res) => {
   res.status(200).send(true);
 });
 
+/*
+* Get posts from followed users
+*/
+postRouter.put("/getFollowingPosts", async (req, res) => {
+  let { userID } = req.body;
+
+  if (!userID) {
+    res.status(400).send("You need to send in a user ID!");
+    return;
+  }
+
+  let posts = [];
+  let userDoc;
+  let followedUser;
+  try {
+
+    userDoc = await User.findById(userID).exec();
+    for(let followedID of userDoc.following) {
+      followedUser = await User.findById(followedID).exec();
+      for(let postID of followedUser.authorList) {
+        posts.push(await Post.findById(postID).exec());
+      }
+    }
+
+    if (!posts || posts.length == 0) {
+      res.status(400).send("No posts available to return");
+      return;
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("An error occurred on the backend: " + e);
+    return;
+  }
+
+  res.status(200).send(posts);
+  return;
+});
+
+
+
 export { postRouter };

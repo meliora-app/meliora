@@ -229,6 +229,7 @@ userRouter.put("/getUser", async (req, res) => {
     res.status(500).send("Error fetching user");
   }
 
+  /*
   res.status(200).send({
     _id: userDoc._id,
     username: userDoc.username,
@@ -240,8 +241,9 @@ userRouter.put("/getUser", async (req, res) => {
     sex: userDoc.sex,
     name: userDoc.name,
     dateOfBirth: userDoc.dateOfBirth
-    
   });
+  */
+ res.status(200).send(userDoc);
 });
 
 /**
@@ -280,9 +282,102 @@ userRouter.delete("/deleteAccount", async (req, res) => {
 });
 
 /**
- * 
- * Block a user
+ * Follow a user
  */
+userRouter.put('/follow', async (req, res) => {
+  let { followerID, followedID } = req.body;
+
+  if (!followerID || !followedID) {
+    res.status(400).send('Request body has incorrect format!');
+    return;
+  }
+
+  try {
+
+    let followingUser = await User.findById(followerID).exec();
+    let followedUser = await User.findById(followedID).exec();
+    
+    if (!followingUser.following)
+      followingUser.following = [];
+
+    if (!followedUser.followers) {
+      followedUser.followers = [];
+    }
+
+    // ensure no duplicates in following
+    if (!followingUser.following.includes(followedID)) {
+      followingUser.following.push(followedID);
+    }
+
+    //ensure no duplicates in followers
+    if (!followedUser.followers.includes(followerID)) {
+      followedUser.followers.push(followerID);
+    }
+
+    await followingUser.save();
+    await followedUser.save();
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend.');
+    return;
+  }
+
+  res.status(200).send(true);
+});
+
+/**
+ * Unfollow a user
+ */
+ userRouter.put('/unfollow', async (req, res) => {
+  let { followerID, followedID } = req.body;
+
+  if (!followerID || !followedID) {
+    res.status(400).send('Request body has incorrect format!');
+    return;
+  }
+
+  try {
+
+    let followingUser = await User.findById(followerID).exec();
+    let followedUser = await User.findById(followedID).exec();
+    
+    if (!followingUser.following)
+      followingUser.following = [];
+
+    if (!followedUser.followers) {
+      followedUser.followers = [];
+    }
+
+    // ensure exists in following
+    if (followingUser.following.includes(followedID)) {
+      await User.findOneAndUpdate(
+        { _id: followerID },
+        { $pull: { following: followedID } }
+      ).exec();
+    }
+
+    //ensure exists in followers
+    if (followedUser.followers.includes(followerID)) {
+      await User.findOneAndUpdate(
+        { _id:followedID },
+        { $pull: { followers: followerID } }
+      ).exec();
+    }
+
+    await followingUser.save();
+    await followedUser.save();
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend.');
+    return;
+  }
+
+  res.status(200).send(true);
+});
+
+/* 
+* Block a user
+*/
 userRouter.put('/block', async (req, res) => {
   let { blockerID, blockedID } = req.body;
 
