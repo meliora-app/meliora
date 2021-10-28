@@ -98,6 +98,17 @@
             <mat-icon>favorite</mat-icon>
           </button>
 
+          <button
+              mat-menu-button
+              type="button"
+              *ngIf="hugs"
+              class="tu"
+              (click)="onHugsClicked()"
+              [ngStyle]="{ color: hugs ? '#0b3d77' : 'white' }"
+            >
+              <mat-icon>groups</mat-icon>
+            </button>
+
           <mat-menu #reactionMenu="matMenu">
             <button
               mat-menu-item
@@ -122,6 +133,14 @@
               [ngStyle]="{ color: heart ? '#0b3d77' : 'white' }"
             >
               <mat-icon>favorite</mat-icon>
+            </button>
+            <button
+              mat-menu-item
+              type="button"
+              (click)="onHugsClicked()"
+              [ngStyle]="{ color: hugs ? '#0b3d77' : 'white' }"
+            >
+              <mat-icon>groups</mat-icon>
             </button>
           </mat-menu>
 

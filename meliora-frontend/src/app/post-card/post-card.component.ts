@@ -21,6 +21,7 @@ export class PostCardComponent implements OnInit {
   postContent: string = '';
   smileyFace: boolean = false;
   heart: boolean = false;
+  hugs: boolean = false;
   addReaction: boolean; // checks if reaction is selected
   isNotUser: boolean;
 
@@ -100,5 +101,10 @@ export class PostCardComponent implements OnInit {
   onHeartClicked() {
     this.heart = !this.heart;
     this.addReaction = this.heart;
+  }
+
+  onHugsClicked() {
+    this.hugs = !this.hugs;
+    this.addReaction = this.hugs;
   }
 }
