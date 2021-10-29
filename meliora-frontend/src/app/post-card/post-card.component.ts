@@ -18,6 +18,7 @@ export class PostCardComponent implements OnInit {
   @Input() isExpanded: boolean;
   @Output() postDeleted: EventEmitter<string> = new EventEmitter();
   bookmarkClicked: boolean = false;
+  userID: string = localStorage.getItem('userID');
   thumbsUp: boolean = false;
   postContent: string = '';
   smileyFace: boolean = false;
@@ -42,7 +43,7 @@ export class PostCardComponent implements OnInit {
       this.postContent = this.postService.trimPost(this.post.content);
     }
     this.getProfilePic();
-    this.belongsToUser = localStorage.getItem('userID') == this.post.authorID;
+    this.belongsToUser = this.userID == this.post.authorID;
   }
 
   async deletePostClicked(postID: string) {
@@ -92,24 +93,36 @@ export class PostCardComponent implements OnInit {
   onThumbUpClicked() {
     this.thumbsUp = !this.thumbsUp;
     this.addReaction = this.thumbsUp;
-    this.postService.storeReaction(this.post.postID, Reaction.THUMB);
+    this.postService.storeReaction(
+      Reaction.THUMB,
+      this.post.postID,
+      this.userID
+    );
   }
 
   onSmileyFaceClicked() {
     this.smileyFace = !this.smileyFace;
     this.addReaction = this.smileyFace;
-    this.postService.storeReaction(this.post.postID, Reaction.SMILEY);
+    this.postService.storeReaction(
+      Reaction.SMILEY,
+      this.post.postID,
+      this.userID
+    );
   }
 
   onHeartClicked() {
     this.heart = !this.heart;
     this.addReaction = this.heart;
-    this.postService.storeReaction(this.post.postID, Reaction.HEART);
+    this.postService.storeReaction(
+      Reaction.HEART,
+      this.post.postID,
+      this.userID
+    );
   }
 
   onHugsClicked() {
     this.hugs = !this.hugs;
     this.addReaction = this.hugs;
-    this.postService.storeReaction(this.post.postID, Reaction.HUG);
+    this.postService.storeReaction(Reaction.HUG, this.post.postID, this.userID);
   }
 }

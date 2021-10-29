@@ -47,7 +47,7 @@ export class PostService {
     };
     var postData;
     this.http
-      .put('https://meliora-backend.herokuapp.com/api/posts/getPost', body, {
+      .put('https://meliora-backend.herokuapp.com/api/reaction/getPost', body, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -70,13 +70,14 @@ export class PostService {
     return newContent;
   }
 
-  storeReaction(postID: string, reaction: Reaction) {
+  storeReaction(reaction: Reaction, postID: string, profileID: string) {
     this.http
-      .put(
-        'https://meliora-backend.herokuapp.com/api/posts/react',
+      .post(
+        'https://meliora-backend.herokuapp.com/api/reaction/add',
         {
-          postID: postID,
           reaction: reaction,
+          profileID: profileID,
+          postID: postID,
         },
         {
           headers: {
