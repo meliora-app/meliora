@@ -113,6 +113,7 @@ postRouter.post("/create", async (req, res) => {
     category.posts.push(postDocument._id);
 
     await user.save();
+    await category.save();
   } catch (e) {
     res.status(500).send("An error occurred on the backend.");
     console.error(e);
@@ -333,8 +334,8 @@ postRouter.put("/react", async (req, res) => {
 });
 
 /*
-* Get posts from followed users
-*/
+ * Get posts from followed users
+ */
 postRouter.put("/getFollowingPosts", async (req, res) => {
   let { userID } = req.body;
 
@@ -347,11 +348,10 @@ postRouter.put("/getFollowingPosts", async (req, res) => {
   let userDoc;
   let followedUser;
   try {
-
     userDoc = await User.findById(userID).exec();
-    for(let followedID of userDoc.following) {
+    for (let followedID of userDoc.following) {
       followedUser = await User.findById(followedID).exec();
-      for(let postID of followedUser.authorList) {
+      for (let postID of followedUser.authorList) {
         posts.push(await Post.findById(postID).exec());
       }
     }
@@ -369,7 +369,5 @@ postRouter.put("/getFollowingPosts", async (req, res) => {
   res.status(200).send(posts);
   return;
 });
-
-
 
 export { postRouter };
