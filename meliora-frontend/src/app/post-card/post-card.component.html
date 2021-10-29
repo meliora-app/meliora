@@ -36,7 +36,9 @@
           <p *ngIf="post.anon" class="post-heading pt-2">Anonymous</p>
           <p class="post-subheading pt-2">Purdue University</p>
         </div>
-        <div class="category-pill text-center pt-4 px-4">Nature</div>
+        <div class="category-pill text-center pt-4 px-4">
+          {{ category.name }}
+        </div>
       </div>
       <hr width="98%" color="#A0B1C6" />
       <div>
@@ -54,7 +56,8 @@
               authorID: post.authorID,
               postID: post.postID,
               anon: post.anon,
-              downloadURL: downloadURL
+              downloadURL: downloadURL,
+              category: category
             }"
             >View More</a
           >
@@ -99,15 +102,15 @@
           </button>
 
           <button
-              mat-menu-button
-              type="button"
-              *ngIf="hugs"
-              class="tu"
-              (click)="onHugsClicked()"
-              [ngStyle]="{ color: hugs ? '#0b3d77' : 'white' }"
-            >
-              <mat-icon>groups</mat-icon>
-            </button>
+            mat-menu-button
+            type="button"
+            *ngIf="hugs"
+            class="tu"
+            (click)="onHugsClicked()"
+            [ngStyle]="{ color: hugs ? '#0b3d77' : 'white' }"
+          >
+            <mat-icon>groups</mat-icon>
+          </button>
 
           <mat-menu #reactionMenu="matMenu">
             <button

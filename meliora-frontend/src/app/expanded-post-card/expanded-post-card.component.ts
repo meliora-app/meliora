@@ -6,6 +6,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from '../shared/models/post.model';
 import { PostService } from '../shared/services/post.service';
+import { Category } from '../shared/models/category.model';
 
 @Component({
   selector: 'app-expanded-post-card',
@@ -22,6 +23,7 @@ export class ExpandedPostCardComponent implements OnInit {
   ref: AngularFireStorageReference;
   downloadURL: string = '';
   belongsToUser: boolean;
+  category: Category;
 
   darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
   constructor(
@@ -38,10 +40,12 @@ export class ExpandedPostCardComponent implements OnInit {
         content: queryParams.content,
         authorUsername: queryParams.authorUsername,
         authorID: queryParams.authorID,
+        categoryID: queryParams.categoryID,
         postID: queryParams.postID,
         anon: queryParams.anon === 'true',
       };
       this.downloadURL = queryParams.downloadURL;
+      this.category = queryParams.category;
     });
     this.getPost();
     console.log(this.post);

@@ -6,7 +6,9 @@ import {
 import { Router } from '@angular/router';
 import { Post } from '../shared/models/post.model';
 import { Reaction } from '../shared/models/reaction.model';
+import { Category } from '../shared/models/category.model';
 import { PostService } from '../shared/services/post.service';
+import { CategoryService } from '../shared/services/category.service';
 
 @Component({
   selector: 'app-post-card',
@@ -26,6 +28,7 @@ export class PostCardComponent implements OnInit {
   hugs: boolean = false;
   addReaction: boolean; // checks if reaction is selected
   isNotUser: boolean;
+  category: Category = { id: '', name: '' };
 
   darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
   ref: AngularFireStorageReference;
@@ -35,15 +38,29 @@ export class PostCardComponent implements OnInit {
   constructor(
     private route: Router,
     private fireStorage: AngularFireStorage,
-    private postService: PostService
+    private postService: PostService,
+    private categoryService: CategoryService
   ) {}
 
   ngOnInit(): void {
     if (!this.isExpanded) {
       this.postContent = this.postService.trimPost(this.post.content);
     }
+    this.getCategory();
     this.getProfilePic();
     this.belongsToUser = this.userID == this.post.authorID;
+  }
+
+  async getCategory() {
+    this.postService
+      .getPostCategory(this.post.categoryID)
+      .subscribe((categoryData) => {
+        this.category = {
+          id: categoryData._id,
+          name: categoryData.name,
+        };
+        console.log(this.category);
+      });
   }
 
   async deletePostClicked(postID: string) {

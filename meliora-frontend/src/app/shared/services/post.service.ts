@@ -60,6 +60,17 @@ export class PostService {
     return postData;
   }
 
+  getPostCategory(id: string) {
+    return this.http.get<{
+      _id: string;
+      name: string;
+      description: string;
+      followers: string[];
+      posts: string[];
+      __v: number;
+    }>(`https://meliora-backend.herokuapp.com/api/categories/getById?id=${id}`);
+  }
+
   trimPost(content: string) {
     var words = content.split(' ');
     var newContent = content;

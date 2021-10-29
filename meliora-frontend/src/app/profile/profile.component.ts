@@ -118,6 +118,7 @@ export class ProfileComponent implements OnInit {
                 postResBody[i].title,
                 postResBody[i].content,
                 postResBody[i].author,
+                postResBody[i].category,
                 postResBody[i].anonymous,
                 this.viewedUsername
               )
