@@ -10,13 +10,16 @@ export class PostService {
   async createPost(
     postTitle: string,
     postContent: string,
+    category: string,
     author: string,
     anonymous: boolean
   ) {
     var postData = {
       title: postTitle,
       content: postContent,
+      category: category,
       author: author,
+      hidden: false,
       anonymous: anonymous,
     };
 
