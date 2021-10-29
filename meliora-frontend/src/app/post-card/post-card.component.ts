@@ -5,6 +5,7 @@ import {
 } from '@angular/fire/storage';
 import { Router } from '@angular/router';
 import { Post } from '../shared/models/post.model';
+import { Reaction } from '../shared/models/reaction.model';
 import { PostService } from '../shared/services/post.service';
 
 @Component({
@@ -91,20 +92,24 @@ export class PostCardComponent implements OnInit {
   onThumbUpClicked() {
     this.thumbsUp = !this.thumbsUp;
     this.addReaction = this.thumbsUp;
+    this.postService.storeReaction(this.post.postID, Reaction.THUMB);
   }
 
   onSmileyFaceClicked() {
     this.smileyFace = !this.smileyFace;
     this.addReaction = this.smileyFace;
+    this.postService.storeReaction(this.post.postID, Reaction.SMILEY);
   }
 
   onHeartClicked() {
     this.heart = !this.heart;
     this.addReaction = this.heart;
+    this.postService.storeReaction(this.post.postID, Reaction.HEART);
   }
 
   onHugsClicked() {
     this.hugs = !this.hugs;
     this.addReaction = this.hugs;
+    this.postService.storeReaction(this.post.postID, Reaction.HUG);
   }
 }

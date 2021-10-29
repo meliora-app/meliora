@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Reaction } from '../models/reaction.model';
 
 @Injectable({
   providedIn: 'root',
@@ -67,5 +68,24 @@ export class PostService {
     }
 
     return newContent;
+  }
+
+  storeReaction(postID: string, reaction: Reaction) {
+    this.http
+      .put(
+        'https://meliora-backend.herokuapp.com/api/posts/react',
+        {
+          postID: postID,
+          reaction: reaction,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .subscribe((responseData) => {
+        console.log(responseData);
+      });
   }
 }
