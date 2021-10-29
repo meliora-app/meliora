@@ -21,7 +21,7 @@ commentRouter.post("/add", (req, res) => {
       res.status(200).send("Comment created successfully!");
     })
     .catch((err) => {
-      res.status(500).send("Database error: ", err);
+      res.status(500).send(`Database error: ${err}`);
     });
 });
 

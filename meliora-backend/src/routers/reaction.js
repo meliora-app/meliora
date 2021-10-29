@@ -57,7 +57,7 @@ reactionRouter.post("/add", async (req, res) => {
     await postData.save();
     res.status(200).send("Reaction added successfully!");
   } catch (err) {
-    res.status(500).send("Database error: ", err);
+    res.status(500).send(`Database error: ${err}`);
   }
 });
 
