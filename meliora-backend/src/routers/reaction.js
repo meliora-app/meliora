@@ -72,3 +72,5 @@ const isValidReaction = (reactionData) => {
     "postID" in reactionData
   );
 };
+
+export { reactionRouter };
