@@ -27,12 +27,27 @@ export class HomepageComponent implements OnInit {
   }
 
   async loadFeed() {
+    /*
     let res = await fetch('https://meliora-backend.herokuapp.com/api/posts/getAll', {
       method: "GET"
+    });
+    */
+    let res = await fetch('https://meliora-backend.herokuapp.com/api/posts/getFollowingPosts', {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userID: localStorage.getItem('userID')
+      })
     });
     if (res.status == 200) {
       let resBody = await res.json();
       for (let i = 0; i < resBody.length; i++) {
+        // ensure not null, TODO need to remove from author list on delete post
+        if (resBody[i] == null) {
+          continue;
+        }
         // need to get user name with get user, would be helpful to include username with post fetch
         let resUser = await fetch('https://meliora-backend.herokuapp.com/api/users/getUser', {
           method: "PUT",

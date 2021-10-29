@@ -37,6 +37,8 @@ export class ProfileComponent implements OnInit {
   unfollow: boolean = false; // minus button to unfollow user
   block: boolean = true;
   unblock: boolean = false;
+  numFollowing: number = 0;
+  numFollowers: number = 0;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private fireStorage: AngularFireStorage) { }
 
@@ -54,10 +56,12 @@ export class ProfileComponent implements OnInit {
     });
 
     if (res.status == 200) {
-      console.log("SUCCESS");
       let resBody = await res.json();
       this.viewedUsername = resBody.username;
       this.bio = resBody.bio;
+      this.numFollowers = resBody.followers.length;
+      this.numFollowing = resBody.following.length;
+      await this.setFollowingVars();
       let postRes = await fetch('https://meliora-backend.herokuapp.com/api/posts/getPostsBy', {
         method: "PUT",
         headers: {
@@ -90,7 +94,6 @@ export class ProfileComponent implements OnInit {
     this.getProfilePic();
     this.activatedRoute.queryParams.subscribe(params => {
       this.viewedUserID = params._id;
-      console.log("Viewed user: " + this.viewedUserID);
     });
     this.belongsToUser = this.viewedUserID == this.userId;
     this.isNotUser = !this.belongsToUser;
@@ -116,19 +119,45 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  onFollowAddClicked() {
+  async onFollowAddClicked() {
     // backend call
-    this.followCheck = true;
-    this.followAdd = false;
-    this.unfollow = true;
+    let res = await fetch('https://meliora-backend.herokuapp.com/api/users/follow', {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        followerID: this.loggedInUser,
+        followedID: this.viewedUserID
+      })
+    });
+    if (res.status == 200) {
+      this.followCheck = true;
+      this.followAdd = false;
+      this.unfollow = true;
+      window.location.reload();
+    }
   }
 
-  onUnfollowedClicked() {
+  async onUnfollowedClicked() {
     if (confirm("Are you sure you want to unfollow " + this.viewedUsername + "?")) {
       //backend call
-      this.followCheck = false;
-      this.followAdd = true;
-      this.unfollow = false;
+      let res = await fetch('https://meliora-backend.herokuapp.com/api/users/unfollow', {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          followerID: this.loggedInUser,
+          followedID: this.viewedUserID
+        })
+      });
+      if (res.status == 200) {
+        this.followCheck = false;
+        this.followAdd = true;
+        this.unfollow = false;
+        window.location.reload();
+      }
     }
   }
 
@@ -145,6 +174,26 @@ export class ProfileComponent implements OnInit {
       // backend call
       this.block = true;
       this.unblock = false;
+    }
+  }
+
+  // this process is slow right now, we need to keep all current user information on hand
+  async setFollowingVars() {
+    let res = await fetch('https://meliora-backend.herokuapp.com/api/users/getUser', {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        _id: this.loggedInUser
+      })
+    });
+
+    if (res.status == 200) {
+      let resBody = await res.json();
+      this.followCheck = resBody.following.includes(this.viewedUserID);
+      this.followAdd = !this.followCheck;
+      this.unfollow = this.followCheck;
     }
   }
 }
