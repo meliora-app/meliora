@@ -10,6 +10,7 @@ import { Post } from "../models/Post.js";
 import { User } from "../models/User.js";
 import mongoose from "mongoose";
 import { Category } from "../models/Category.js";
+import { Reaction } from "../models/Reaction.js";
 
 let { ObjectId } = mongoose.Types;
 
@@ -368,6 +369,37 @@ postRouter.put("/getFollowingPosts", async (req, res) => {
 
   res.status(200).send(posts);
   return;
+});
+
+postRouter.get("/getTrending", async (req, res) => {
+  var totalEngagements = [];
+
+  var currDate = new Date();
+  currDate.setHours(currDate.getHours() - 3);
+
+  try {
+    const posts = await Post.find({});
+    for (var i = 0; i < posts.length; i++) {
+      var sum = 0;
+
+      var recentEngagements = [];
+      recentEngagements = await Reaction.find({
+        $and: [{ postID: posts[i]._id }, { creationDate: { $gt: currDate } }],
+      })
+        .maxTime(3000)
+        .exec();
+
+      sum += recentEngagements.length;
+
+      totalEngagements.push({ post: posts[i], count: sum });
+    }
+
+    totalEngagements = totalEngagements.sort((a, b) => b.count - a.count);
+
+    res.status(200).send(totalEngagements.slice(0, 2));
+  } catch (err) {
+    res.status(500).send(`Database error: ${err}`);
+  }
 });
 
 export { postRouter };

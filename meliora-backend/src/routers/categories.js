@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { Category } from "../models/Category.js";
 import { Post } from "../models/Post.js";
+import { Reaction } from "../models/Reaction.js";
 
 const catRouter = Router();
 
@@ -35,14 +36,35 @@ catRouter.get("/getAll", (req, res) => {
 });
 
 catRouter.get("/getTrending", async (req, res) => {
-  const categories = await Category.find({});
-  var totalEngagements = new Array(category.length).fill(0);
+  var totalEngagements = [];
 
-  for (var i = 0; i < categories.length; i++) {
-    var posts = categories[i]["posts"];
-    var sum = 0;
-    for (var i = 0; i < posts.length; i++) {}
-    console.log(post);
+  var currDate = new Date();
+  currDate.setHours(currDate.getHours() - 3);
+
+  try {
+    const categories = await Category.find({});
+    for (var i = 0; i < categories.length; i++) {
+      var posts = categories[i]["posts"];
+      var sum = 0;
+      for (var j = 0; j < posts.length; j++) {
+        var recentEngagements = [];
+        recentEngagements = await Reaction.find({
+          $and: [{ postID: posts[j] }, { creationDate: { $gt: currDate } }],
+        })
+          .maxTime(3000)
+          .exec();
+
+        sum += recentEngagements.length;
+      }
+
+      totalEngagements.push({ category: categories[i], count: sum });
+    }
+
+    totalEngagements = totalEngagements.sort((a, b) => b.count - a.count);
+
+    res.status(200).send(totalEngagements.slice(0, 2));
+  } catch (err) {
+    res.status(500).send(`Database error: ${err}`);
   }
 });
 
