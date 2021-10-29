@@ -35,6 +35,18 @@ catRouter.get("/getAll", (req, res) => {
     });
 });
 
+catRouter.get("/getById", (req, res) => {
+  var id = req.query.id;
+  Category.findById(id)
+    .exec()
+    .then((category) => {
+      res.status(200).send(category);
+    })
+    .catch((err) => {
+      res.status(500).send(`Database error: ${err}`);
+    });
+});
+
 catRouter.get("/getTrending", async (req, res) => {
   var totalEngagements = [];
 
