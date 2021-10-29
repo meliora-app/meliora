@@ -17,7 +17,7 @@ reactionRouter.post("/add", async (req, res) => {
 
   try {
     const postData = await Post.findById(reactionData.postID).exec();
-    const existingData = Reaction.findOne({
+    const existingData = await Reaction.findOne({
       $and: [
         { profileID: reactionData.profileID },
         { postID: reactionData.postID },
