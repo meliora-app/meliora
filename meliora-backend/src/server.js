@@ -7,6 +7,7 @@ import { catRouter } from "./routers/categories.js";
 
 import cors from "cors";
 import { adminRouter } from "./routers/admin.js";
+import { commentRouter } from "./routers/comment.js";
 
 config();
 
@@ -25,10 +26,12 @@ server.use(
   })
 );
 
-server.use("/ping", pingRouter);
 server.use("/api/posts", postRouter);
 server.use("/api/users", userRouter);
 server.use("/api/categories", catRouter);
+server.use("/api/comment", commentRouter);
+
+server.use("/ping", pingRouter);
 server.use("/admin", adminRouter);
 
 export { server };

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { PostSchema } from "./Post.js";
 import { UserSchema } from "./User.js";
 
 const { SchemaTypes, Schema, model } = mongoose;
