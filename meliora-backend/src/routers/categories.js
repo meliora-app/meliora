@@ -36,9 +36,11 @@ catRouter.get("/getAll", (req, res) => {
 
 catRouter.get("/getTrending", async (req, res) => {
   const categories = await Category.find({});
+  var totalEngagements = new Array(category.length).fill(0);
 
   for (var i = 0; i < categories.length; i++) {
     var posts = categories[i]["posts"];
+    var sum = 0;
     var post = await Post.findById(posts[0]);
     console.log(post);
   }

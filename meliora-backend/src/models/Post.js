@@ -74,6 +74,10 @@ const PostSchema = new Schema({
       type: SchemaTypes.Number,
       default: 0,
     },
+    creation_date: {
+      type: SchemaTypes.Date,
+      default: Date.now(),
+    },
   },
 });
 
