@@ -93,36 +93,48 @@ export class PostCardComponent implements OnInit {
   onThumbUpClicked() {
     this.thumbsUp = !this.thumbsUp;
     this.addReaction = this.thumbsUp;
-    this.postService.storeReaction(
-      Reaction.THUMB,
-      this.post.postID,
-      this.userID
-    );
+    if (this.thumbsUp) {
+      this.postService.storeReaction(
+        Reaction.THUMB,
+        this.post.postID,
+        this.userID
+      );
+    }
   }
 
   onSmileyFaceClicked() {
     this.smileyFace = !this.smileyFace;
     this.addReaction = this.smileyFace;
-    this.postService.storeReaction(
-      Reaction.SMILEY,
-      this.post.postID,
-      this.userID
-    );
+    if (this.smileyFace) {
+      this.postService.storeReaction(
+        Reaction.SMILEY,
+        this.post.postID,
+        this.userID
+      );
+    }
   }
 
   onHeartClicked() {
     this.heart = !this.heart;
     this.addReaction = this.heart;
-    this.postService.storeReaction(
-      Reaction.HEART,
-      this.post.postID,
-      this.userID
-    );
+    if (this.heart) {
+      this.postService.storeReaction(
+        Reaction.HEART,
+        this.post.postID,
+        this.userID
+      );
+    }
   }
 
   onHugsClicked() {
     this.hugs = !this.hugs;
     this.addReaction = this.hugs;
-    this.postService.storeReaction(Reaction.HUG, this.post.postID, this.userID);
+    if (this.hugs) {
+      this.postService.storeReaction(
+        Reaction.HUG,
+        this.post.postID,
+        this.userID
+      );
+    }
   }
 }
