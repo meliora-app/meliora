@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { Reaction } from "../models/Reaction";
-import { Post } from "../models/Post";
+import { Reaction } from "../models/Reaction.js";
+import { Post } from "../models/Post.js";
 
 const reactionRouter = Router();
 
