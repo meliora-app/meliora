@@ -73,3 +73,8 @@ hr {
 .tu {
   margin-left: 280px;
 }
+
+.container {
+  display: flex;
+  align-self: flex-start;
+}
