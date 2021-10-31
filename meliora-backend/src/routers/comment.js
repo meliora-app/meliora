@@ -52,6 +52,26 @@ commentRouter.put("/getComments", async (req, res) => {
 
 });
 
+commentRouter.delete("/deleteComment", async (req, res) => {
+  let commentID = req.body.commentID;
+
+  if (!commentID) {
+    res.status(400).send("Request needs comment ID");
+  }
+  try {
+    // remove comment from database
+    await Comment.deleteOne({ _id: commentID }).exec();
+  } catch (e) {
+    res.status(500).send("Error deleting comment: ");
+    return;
+  }
+  res.status(200).send({
+    _id: commentID,
+    msg: "Comment Deletion Successful",
+  });
+  return;
+});
+
 const isValidComment = (commentData) => {
   return (
     "comment" in commentData &&
