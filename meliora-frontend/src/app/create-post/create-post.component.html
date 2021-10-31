@@ -56,8 +56,13 @@
             <input type="text" id="title" class="form-control" required ngModel name="title"
               placeholder="Enter title here" />
             <label for="post-content" class="mt-4">Your thoughts...</label>
-            <textarea name="post-content" id="post-content" class="form-control" cols="30" rows="10" name="content"
-              (input)="wordCount($event)" placeholder="Enter text here"></textarea>
+            <textarea #postArea name="post-content" id="post-content" class="form-control" cols="30" rows="10"
+              name="content" ngModel (input)="wordCount($event)" placeholder="Enter text here"></textarea>
+            <select id="category" name="category" class="form-control mt-3" ngModel>
+              <option *ngFor="let category of categories" [ngValue]="category.name">
+                {{ category.name }}
+              </option>
+            </select>
           </div>
           <div class="post-options mb-3">
             <button type="button" mat-icon-button (click)="onImageClicked()"
@@ -74,24 +79,32 @@
             </button>
           </div>
         </div>
-        <div class="wcStyle">Word Count: <span class="wcStyle" id="wordCount">{{ words }}</span></div>
+        <div class="wcStyle">
+          Word Count: <span class="wcStyle" id="wordCount">{{ words }}</span>
+        </div>
         <span class="text-left container">
-          <button type="button" class="btn post-submit text-center" id="record-location">
+          <button type="button" (click)="
+            
+              postArea.value = (Lat != null) ? postArea.value + '\nlocation = (' + Lat + ',' + Long + ')' :
+                postArea.value + '\nlocation = unknown';
+            
+          
+          " class="btn post-submit text-center" id="record-location">
             Record Location
           </button>
-          <button type="button" class="btn post-submit text-center" id="remove-location">
+          <button type="button" (click)="
+            postArea.value = postArea.value.replace('\nlocation = (' + Lat + ',' + Long + ')', '');
+          
+          " class="btn post-submit text-center" id="remove-location">
             Remove Location
           </button>
         </span>
-        <span class="text-right mt-10">
-
-        </span>
+        <span class="text-right mt-10"> </span>
         <div class="text-center mt-5">
           <button type="submit" class="btn btn-lg post-submit text-center">
             Post
           </button>
         </div>
-
       </form>
     </div>
   </section>

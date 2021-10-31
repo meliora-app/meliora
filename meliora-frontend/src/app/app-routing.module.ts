@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { ExpandedPostCardComponent } from './expanded-post-card/expanded-post-card.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
@@ -25,10 +26,11 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent },
   { path: 'quote', component: QuotePageComponent },
   { path: 'mental-health', component: MentalHealthComponent },
+  { path: 'expanded-post', component: ExpandedPostCardComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { anchorScrolling: 'enabled' })],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

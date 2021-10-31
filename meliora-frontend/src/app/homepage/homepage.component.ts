@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Post } from '../post-card/post-card.component'
+import { Post } from '../shared/models/post.model';
 
 @Component({
   selector: 'app-homepage',
@@ -70,6 +70,7 @@ export class HomepageComponent implements OnInit {
               resBody[i].title,
               resBody[i].content,
               resBody[i].author,
+              resBody[i].category,
               resBody[i].anonymous,
               resUserBody.username
             )

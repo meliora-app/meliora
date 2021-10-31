@@ -1,0 +1,29 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
+
+interface DbCategory {
+  id: string;
+  name: string;
+  description: string;
+  followers: string[];
+  posts: string[];
+}
+
+@Injectable({ providedIn: 'root' })
+export class CategoryService {
+  constructor(private http: HttpClient) {}
+
+  async getAll() {
+    return this.http
+      .get('https://meliora-backend.herokuapp.com/api/categories/getAll')
+      .pipe(
+        map((categoryData: DbCategory[]) => {
+          var categoryList = categoryData.map((category) => {
+            return { id: category['_id'], name: category.name };
+          });
+          return categoryList;
+        })
+      );
+  }
+}

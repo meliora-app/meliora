@@ -1,130 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <title>Post Card</title>
-  </head>
-  <body>
-    <div class="post-card py-3 px-3">
-      <div class="wrapper">
-        <div [ngClass]="darkModeStatus ? 'dark-mode' : ''" class="profile-pic">
-          <img [src]="downloadURL" alt="" />
-        </div>
-        <div class="pl-3">
-          <p *ngIf="!post.anon" class="post-heading pt-2" (click)="userClicked()">{{post.authorUsername}}</p>
-          <p *ngIf="post.anon" class="post-heading pt-2">Anonymous</p>
-          <p class="post-subheading pt-2">Purdue University</p>
-        </div>
-        <div class="category-pill text-center pt-4 px-4">Nature</div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <title>Post Card</title>
+</head>
+
+<body>
+  <div class="post-card py-3 px-3" [ngStyle]="{
+        marginLeft: isExpanded ? 'auto' : '',
+        marginRight: isExpanded ? 'auto' : ''
+      }" [ngClass]="{ 'mt-3': isExpanded }">
+    <div class="wrapper">
+      <div [ngClass]="darkModeStatus ? 'dark-mode' : ''" class="profile-pic">
+        <img [src]="downloadURL" alt="" />
       </div>
-      <hr width="98%" color="#A0B1C6" />
-      <div>
-        <h2>{{post.title}}</h2>
-        <p class="post-text">
-          {{post.content}}
+      <div class="pl-3">
+        <p *ngIf="!post.anon" class="post-heading pt-2" (click)="userClicked()">
+          {{ post.authorUsername }}
         </p>
+        <p *ngIf="post.anon" class="post-heading pt-2">Anonymous</p>
+        <p class="post-subheading pt-2">Purdue University</p>
       </div>
-    <button  *ngIf="belongsToUser" mat-icon-button
-    class="trash-icon"
-    (click)="deletePostClicked(post.postID)">
-        <mat-icon>delete</mat-icon>
-    </button>
-    <button
-      mat-icon-button
-      type="button"
-      (click)="onBookmarkClicked()"
-      [ngStyle]="{ color: bookmarkClicked ? '#0b3d77' : 'white' }"
-      >
-      <mat-icon>bookmark</mat-icon>
-    </button>
+      <div class="category-pill text-center pt-4 px-4">
+        {{ category.name }}
+      </div>
+    </div>
+    <hr width="98%" color="#A0B1C6" />
+    <div>
+      <h2>{{ post.title }}</h2>
+      <p class="post-text">
+        {{ isExpanded ? post.content : postContent }}
+        <a *ngIf="!isExpanded" style="text-decoration: underline" routerLink="/expanded-post" [queryParams]="{
+              title: post.title,
+              content: post.content,
+              authorUsername: post.authorUsername,
+              authorID: post.authorID,
+              postID: post.postID,
+              anon: post.anon,
+              downloadURL: downloadURL,
+              category: category
+            }">View More</a>
+      </p>
+    </div>
+    <div class="d-flex">
+      <div class="d-flex flex-row mb-3">
+        <div class="container p-10 flex-grow-2">
+          <button mat-icon-button type="button" [ngStyle]="{ color: 'white' }">
+            <mat-icon>comment</mat-icon>
+          </button>
 
-      <mat-menu #flagMenu="matMenu">
-        <button mat-menu-item>Harmful</button>
-        <button mat-menu-item>Vulgar</button>
-        <button mat-menu-item>Offensive</button>
-      </mat-menu>
+          <div class="reaction ">
+            <button mat-icon-button type="button" class="tu" *ngIf="thumbsUp" (click)="onThumbUpClicked()"
+              [ngStyle]="{ color: thumbsUp ? '#0b3d77' : 'white' }">
+              <mat-icon>thumb_up</mat-icon>
+            </button>
 
-      <button
-        [mat-menu-trigger-for]="flagMenu"
-        mat-icon-button
-        class="btn btn-login my-2 my-sm-0"
-        style="margin-right: 1em; background-color: #a6cdfc; color: #fff"
-      >
-        <mat-icon>flag</mat-icon>
-      </button>
+            <button mat-icon-button type="button" *ngIf="smileyFace" class="tu" (click)="onSmileyFaceClicked()"
+              [ngStyle]="{ color: smileyFace ? '#0b3d77' : 'white' }">
+              <mat-icon>emoji_emotions</mat-icon>
+            </button>
 
-      <button
-        mat-icon-button
-        type="button"
-        class="tu"
-        *ngIf="thumbsUp"
-        (click)="onThumbUpClicked()"
-        [ngStyle]="{ color: thumbsUp ? '#0b3d77' : 'white' }"
-        >
-        <mat-icon>thumb_up</mat-icon>
-      </button>
-      
-      <button
-        mat-icon-button
-        type="button"
-        *ngIf="smileyFace"
-        class="tu"
-        (click)="onSmileyFaceClicked()"
-        [ngStyle]="{ color: smileyFace ? '#0b3d77' : 'white' }"
-        >
-        <mat-icon>emoji_emotions</mat-icon>
-      </button>
+            <button mat-icon-button type="button" *ngIf="heart" class="tu" (click)="onHeartClicked()"
+              [ngStyle]="{ color: heart ? '#0b3d77' : 'white' }">
+              <mat-icon>favorite</mat-icon>
+            </button>
 
-      <button
-        mat-icon-button
-        type="button"
-        *ngIf="heart"
-        class="tu"
-        (click)="onHeartClicked()"
-        [ngStyle]="{ color: heart ? '#0b3d77' : 'white' }"
-        >
-        <mat-icon>favorite</mat-icon>
-      </button>
-      <mat-menu #reactionMenu="matMenu">
-        <button mat-menu-item
-          type="button"
-          (click)="onThumbUpClicked()"
-          [ngStyle]="{ color: thumbsUp ? '#0b3d77' : 'white' }"
-          >
-          <mat-icon>thumb_up</mat-icon>
-        </button>
-        <button mat-menu-item
-          type="button"
-          (click)="onSmileyFaceClicked()"
-          [ngStyle]="{ color: smileyFace ? '#0b3d77' : 'white' }"
-          >
-          <mat-icon>emoji_emotions</mat-icon>
-      </button>
-        <button mat-menu-item
-          type="button"
-          (click)="onHeartClicked()"
-          [ngStyle]="{ color: heart ? '#0b3d77' : 'white' }"
-          >
-          <mat-icon>favorite</mat-icon></button>
-      </mat-menu>
+            <button mat-menu-button type="button" *ngIf="hugs" class="tu" (click)="onHugsClicked()"
+              [ngStyle]="{ color: hugs ? '#0b3d77' : 'white' }">
+              <mat-icon>groups</mat-icon>
+            </button>
 
-      <button
-        [mat-menu-trigger-for]="reactionMenu"
-        *ngIf="!addReaction"
-        mat-icon-button
-        class="tu btn btn-login"
-        style="background-color: #a6cdfc; color: #fff"
-      >
-        <mat-icon>add_reaction</mat-icon>
-      </button>
-    </div>   
-  </body>
+            <mat-menu #reactionMenu="matMenu">
+              <button mat-menu-item type="button" (click)="onThumbUpClicked()"
+                [ngStyle]="{ color: thumbsUp ? '#0b3d77' : 'white' }">
+                <mat-icon>thumb_up</mat-icon>
+              </button>
+              <button mat-menu-item type="button" (click)="onSmileyFaceClicked()"
+                [ngStyle]="{ color: smileyFace ? '#0b3d77' : 'white' }">
+                <mat-icon>emoji_emotions</mat-icon>
+              </button>
+              <button mat-menu-item type="button" (click)="onHeartClicked()"
+                [ngStyle]="{ color: heart ? '#0b3d77' : 'white' }">
+                <mat-icon>favorite</mat-icon>
+              </button>
+              <button mat-menu-item type="button" (click)="onHugsClicked()"
+                [ngStyle]="{ color: hugs ? '#0b3d77' : 'white' }">
+                <mat-icon>groups</mat-icon>
+              </button>
+            </mat-menu>
+
+            <button [mat-menu-trigger-for]="reactionMenu" *ngIf="!addReaction" mat-icon-button class=" btn btn-login"
+              style="background-color: #a6cdfc; color: #fff">
+              <mat-icon>add_reaction</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex mb-3">
+        <div class="flex-row-reverse p-10" style="margin-left: 11em;">
+          <button *ngIf="belongsToUser" mat-icon-button class="trash-icon" (click)="deletePostClicked(post.postID)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button type="button" (click)="onBookmarkClicked()"
+            [ngStyle]="{ color: bookmarkClicked ? '#0b3d77' : 'white' }">
+            <mat-icon>bookmark</mat-icon>
+          </button>
+
+          <mat-menu #flagMenu="matMenu">
+            <button mat-menu-item>Harmful</button>
+            <button mat-menu-item>Vulgar</button>
+            <button mat-menu-item>Offensive</button>
+          </mat-menu>
+
+          <button [mat-menu-trigger-for]="flagMenu" mat-icon-button class="btn btn-login my-2 my-sm-0"
+            style="margin-right: 1em; background-color: #a6cdfc; color: #fff">
+            <mat-icon>flag</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
 </html>
