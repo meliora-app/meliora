@@ -25,6 +25,33 @@ commentRouter.post("/add", (req, res) => {
     });
 });
 
+commentRouter.put("/getComments", async (req, res) => {
+  let { id } = req.body;
+
+  if (!id) {
+    res.status(400).send("You need to send in a post ID!");
+    return;
+  }
+
+  let comments = [];
+  try {
+    comments = await Comment.find({ postID: id }).exec();
+
+    if (!comments || comments.length == 0) {
+      res.status(200).send("This post has no comments.");
+      return;
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("An error occurred on the backend.");
+    return;
+  }
+
+  res.status(200).send(comments);
+  return;
+
+});
+
 const isValidComment = (commentData) => {
   return (
     "comment" in commentData &&
