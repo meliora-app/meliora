@@ -36,6 +36,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { NoPostsCardComponent } from './no-posts-card/no-posts-card.component';
 import { MentalHealthComponent } from './mental-health/mental-health.component';
 import { ExpandedPostCardComponent } from './expanded-post-card/expanded-post-card.component';
+import { CommentCardComponent } from './comment-card/comment-card.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { ExpandedPostCardComponent } from './expanded-post-card/expanded-post-ca
     NoPostsCardComponent,
     MentalHealthComponent,
     ExpandedPostCardComponent,
+    CommentCardComponent,
   ],
   imports: [
     BrowserModule,

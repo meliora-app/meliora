@@ -20,11 +20,22 @@
         <div class="post-card py-3 px-3 form-group">
           <label for="comment">Add a comment</label>
           <input id="comment" class="form-control" type="text" />
+          <button id="addCommentButton" (click)="onAddCommentClicked()">Add Comment</button>
         </div>
       </div>
-      <!-- <div class="post-card">
+      <div id="comment-container">
         <h2>Comments</h2>
-      </div> -->
+        <ng-container *ngIf="comments.length > 0">
+          <app-comment-card
+            *ngFor="let comment of comments"
+            [comment]="comment"
+            style="margin: 10px"
+          ></app-comment-card>
+        </ng-container>
+        <ng-container *ngIf="comments.length == 0">
+          <app-no-posts-card></app-no-posts-card>
+        </ng-container>
+      </div>
     </div>
   </body>
 </html>
