@@ -84,7 +84,7 @@ export class ExpandedPostCardComponent implements OnInit {
       for (var i = 0; i < resBody.length; i++) {
         this.comments.push(new Comment(
           resBody[i].postID,
-          resBody[i].content,
+          resBody[i].comment,
           resBody[i].profileID
         ))
       }

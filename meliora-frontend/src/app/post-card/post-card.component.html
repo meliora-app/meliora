@@ -50,7 +50,15 @@
     <div class="d-flex">
       <div class="d-flex flex-row mb-3">
         <div class="container p-10 flex-grow-2">
-          <button mat-icon-button type="button" [ngStyle]="{ color: 'white' }">
+          <button mat-icon-button type="button" [ngStyle]="{ color: 'white' }" routerLink="/expanded-post" [queryParams]="{
+            title: post.title,
+            content: post.content,
+            authorUsername: post.authorUsername,
+            authorID: post.authorID,
+            postID: post.postID,
+            anon: post.anon,
+            downloadURL: downloadURL,
+            category: category}">
             <mat-icon>comment</mat-icon>
           </button>
 

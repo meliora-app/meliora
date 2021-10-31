@@ -12,7 +12,7 @@
     />
     <title>Expanded Post Card</title>
   </head>
-  <body>
+  <body [ngClass]="darkModeStatus ? 'dark-mode' : ''">
     <app-home-navbar></app-home-navbar>
     <div class="wrapper">
       <div style="margin-left: auto; margin-right: auto">
