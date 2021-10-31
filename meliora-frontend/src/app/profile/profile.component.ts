@@ -51,6 +51,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.getProfilePic();
     this.calcNumReactions();
+    this.setFollowingVars();
     this.activatedRoute.queryParams.subscribe((params) => {
       this.viewedUserID = params._id;
       console.log('Viewed user: ' + this.viewedUserID);
@@ -86,6 +87,11 @@ export class ProfileComponent implements OnInit {
       let resBody = await res.json();
       this.viewedUsername = resBody.username;
       this.bio = resBody.bio;
+      this.numFollowers = resBody.followers.length;
+      this.numFollowing = resBody.following.length;
+      this.unblock = resBody.blocked.includes(this.loggedInUser);
+      this.block = !this.unblock;
+
       let postRes = await fetch(
         'https://meliora-backend.herokuapp.com/api/posts/getPostsBy',
         {
@@ -203,19 +209,46 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  onBlockClicked() {
+  async onBlockClicked() {
     if (confirm("Are you sure you want to block " + this.viewedUsername + "?")) {
       // backend call
-      this.block = false;
-      this.unblock = true;
+      let res = await fetch('https://meliora-backend.herokuapp.com/api/users/block', {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          blockerID: this.loggedInUser,
+          blockedID: this.viewedUserID
+        })
+      });
+      if (res.status == 200) {
+        this.block = false;
+        this.unblock = true;
+        window.location.reload();
+      }
     }
   }
 
-  onUnblockClicked() {
+  async onUnblockClicked() {
     if (confirm("Are you sure you want to unblock " + this.viewedUsername + "?")) {
       // backend call
-      this.block = true;
-      this.unblock = false;
+      let res = await fetch('https://meliora-backend.herokuapp.com/api/users/block', {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          blockerID: this.loggedInUser,
+          blockedID: this.viewedUserID
+        })
+      });
+      if (res.status == 200) {
+        this.block = true;
+        this.unblock = false;
+        window.location.reload();
+      }
+
     }
   }
 
