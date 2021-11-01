@@ -55,22 +55,22 @@
           </button>
 
           <div class="reaction ">
-            <button mat-icon-button type="button" class="tu" *ngIf="thumbsUp" (click)="onThumbUpClicked()"
+            <button mat-icon-button type="button" *ngIf="thumbsUp" (click)="onThumbUpClicked()"
               [ngStyle]="{ color: thumbsUp ? '#0b3d77' : 'white' }">
               <mat-icon>thumb_up</mat-icon>
             </button>
 
-            <button mat-icon-button type="button" *ngIf="smileyFace" class="tu" (click)="onSmileyFaceClicked()"
+            <button mat-icon-button type="button" *ngIf="smileyFace" (click)="onSmileyFaceClicked()"
               [ngStyle]="{ color: smileyFace ? '#0b3d77' : 'white' }">
               <mat-icon>emoji_emotions</mat-icon>
             </button>
 
-            <button mat-icon-button type="button" *ngIf="heart" class="tu" (click)="onHeartClicked()"
+            <button mat-icon-button type="button" *ngIf="heart" (click)="onHeartClicked()"
               [ngStyle]="{ color: heart ? '#0b3d77' : 'white' }">
               <mat-icon>favorite</mat-icon>
             </button>
 
-            <button mat-menu-button type="button" *ngIf="hugs" class="tu" (click)="onHugsClicked()"
+            <button mat-menu-button type="button" *ngIf="hugs" (click)="onHugsClicked()"
               [ngStyle]="{ color: hugs ? '#0b3d77' : 'white' }">
               <mat-icon>groups</mat-icon>
             </button>
