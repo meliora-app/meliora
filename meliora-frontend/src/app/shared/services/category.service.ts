@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 
-interface DbCategory {
+export interface DbCategory {
   id: string;
   name: string;
   description: string;

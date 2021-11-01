@@ -1,0 +1,14 @@
+.wrapper {
+  display: flex;
+}
+
+.small-card {
+  width: 20%;
+  height: 5em;
+  border-radius: 30px;
+  background-color: lightblue;
+}
+
+.small-card p {
+  margin-top: 1.7em;
+}

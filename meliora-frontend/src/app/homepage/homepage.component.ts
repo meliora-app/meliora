@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Category } from '../shared/models/category.model';
 import { Post } from '../shared/models/post.model';
+import { CategoryService } from '../shared/services/category.service';
+import { TrendingService } from '../shared/services/trending.service';
 
 @Component({
   selector: 'app-homepage',
@@ -9,6 +12,7 @@ import { Post } from '../shared/models/post.model';
 export class HomepageComponent implements OnInit {
   darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
   posts: Post[] = [];
+  trendingCategories: Category[] = [];
   //localStorage.getItem("darkModeStatus");
   categories = [
     'Friendship',
@@ -20,10 +24,23 @@ export class HomepageComponent implements OnInit {
     'Travel',
     'Mindfulness',
   ];
-  constructor() { }
+  constructor(private trendingService: TrendingService) { }
 
   ngOnInit(): void {
+    this.getTrendingCategories();
     this.loadFeed();
+  }
+
+  async getTrendingCategories() {
+    this.trendingService.getTrendingCategories().subscribe((result) => {
+      for (var i = 0; i < result.length; i++) {
+        console.log(result[i]);
+        this.trendingCategories.push({
+          id: result[i].category.id,
+          name: result[i].category.name,
+        });
+      }
+    });
   }
 
   async loadFeed() {
