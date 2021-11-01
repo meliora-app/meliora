@@ -45,9 +45,7 @@ export class ExpandedPostCardComponent implements OnInit {
         anon: queryParams.anon === 'true',
       };
       this.downloadURL = queryParams.downloadURL;
-      this.category = queryParams.category;
     });
-    this.getPost();
     console.log(this.post);
     this.belongsToUser = localStorage.getItem('userID') == this.post.authorID;
   }
@@ -57,10 +55,6 @@ export class ExpandedPostCardComponent implements OnInit {
     this.router.navigate(['/profile'], {
       queryParams: { _id: this.post.authorID },
     });
-  }
-
-  async getPost() {
-    var postData = await this.postService.getPostByID(this.post.postID);
   }
 
   async deletePostClicked(postID: string) {
