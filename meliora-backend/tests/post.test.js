@@ -198,7 +198,9 @@ describe('Unit Tests for Post Router:', () => {
 
 	test('SP-2, US-6:', async () => {});
 
-	test('SP-2, US-6: Server should respond with 400 when the post does not exist.', async () => {
+	test('SP-2, US-6:', async () => {});
+
+	test('SP-2, US-9: Server should respond with 400 when the post/user does not exist.', async () => {
 		let res = await request(server)
 			.put('/api/posts/bookmark')
 			.set('Content-Type', 'application/json')
@@ -210,9 +212,16 @@ describe('Unit Tests for Post Router:', () => {
 		expect(res.status).toBe(400);
 	});
 
-	test('SP-2, US-9:', async () => {});
-
-	test('SP-2, US-9:', async () => {});
+	test('SP-2, US-9: Server should respond with 200 when valid USER ID and POST ID sent.', async () => {
+		let res = await request(server)
+			.put('/api/posts/bookmark')
+			.set('Content-Type', 'application/json')
+			.send({
+				userID: process.env.TEST_USER_ID,
+				postID: process.env.TEST_POST_ID
+			});
+		expect(res.status).toBe(200);
+	});
 
 	test('SP-2, US-10:', async () => {});
 
