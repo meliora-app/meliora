@@ -103,7 +103,7 @@
       </div>
       <div class="d-flex mb-1">
         <div class="flex-row-reverse p-10" style="margin-left: 1em">
-          <button *ngIf="belongsToUser" class="btn btn-lg" id="private-btn" (click)="deletePostClicked(post.postID)">
+          <button *ngIf="belongsToUser" class="btn btn-lg" id="private-btn" (click)="makePostPrivate(post.postID)">
             make private
           </button>
         </div>
