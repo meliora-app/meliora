@@ -40,7 +40,7 @@ export class PostCardComponent implements OnInit {
     private fireStorage: AngularFireStorage,
     private postService: PostService,
     private categoryService: CategoryService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (!this.isExpanded) {
