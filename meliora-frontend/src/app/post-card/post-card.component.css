@@ -73,3 +73,15 @@ hr {
 .tu {
   margin-left: 280px;
 }
+
+.container {
+  display: flex;
+  align-self: flex-start;
+}
+
+.btn-lg {
+  border-radius: 30px;
+  font-size: 1.2em;
+  height: 2.5em;
+  background-color: #ffffffa9;
+}
