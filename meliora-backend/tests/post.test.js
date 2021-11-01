@@ -227,9 +227,28 @@ describe('Unit Tests for Post Router:', () => {
 
 	test('SP-2, US-10:', async () => {});
 
-	test('SP-2, US-13:', async () => {});
+	test('SP-2, US-13: Server should respond 400 when invalid postID sent', async () => {
+		let res = await request(server)
+			.post('/api/reaction/add')
+			.set('Content-Type', 'application/json')
+			.send({
+				profileID: process.env.TEST_USER_ID,
+				postID: process.env.TEST_BOGUS_POST_ID
+			});		
+		expect(res.status).toBe(400);
+	});
 
-	test('SP-2, US-13:', async () => {});
+	test('SP-2, US-13: Server should respond 200 when valid userID and postID sent for reactions', async () => {
+		// NEEDS TO BE FIXED ONCE ENDPOINT IS WORKING!!
+		/*let res = await request(server)
+			.post('/api/reaction/add')
+			.set('Content-Type', 'application/json')
+			.send({
+				profileID: process.env.TEST_USER_ID,
+				postID: process.env.TEST_POST_ID
+			});		
+		expect(res.status).toBe(200);*/
+	});
 
 	test('SP-2, US-14:', async () => {});
 
