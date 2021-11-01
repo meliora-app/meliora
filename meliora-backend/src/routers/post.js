@@ -402,4 +402,34 @@ postRouter.get("/getTrending", async (req, res) => {
   }
 });
 
+postRouter.put('/setPrivate', async (req, res) => {
+  let { postID } = req.body;
+
+  if (!postID) {
+    res.status(400).send('You must send in a post ID!');
+    return;
+  }
+
+  try {
+
+    let post = await Post.findById(postID).exec();
+
+    if (!post) {
+      res.status(400).send('This post doesn\'t exist!');
+      return;
+    }
+
+    post.hidden = !post.hidden;
+
+    await post.save();
+
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend.');
+    return;
+  }
+
+  res.status(200).send(true);
+});
+
 export { postRouter };
