@@ -64,9 +64,29 @@ describe('Unit Tests for Post Router:', () => {
 		expect(res.status).toBe(200);
 	});
 
-	test('SP-2, US-11:', async () => {});
+	test('SP-2, US-11: Server should return 400 when invalid USER ID sent', async () => {
+		let res = await request(server)
+			.put('/api/users/block')
+			.set('Content-Type', 'application/json')
+			.send({
+				blockerID: process.env.TEST_BOGUS_USER_ID,
+				blockedID: process.env.TEST_BOGUS_USER_ID
+			});
 
-	test('SP-2, US-11:', async () => {});
+		expect(res.status).toBe(400);
+	});
+
+	test('SP-2, US-11: Server should return 200 when valid USER ID 1 blocks USER ID 2', async () => {
+		let res = await request(server)
+			.put('/api/users/block')
+			.set('Content-Type', 'application/json')
+			.send({
+				blockerID: process.env.TEST_USER_ID,
+				blockedID: process.env.TEST_USER_ID_2
+			});
+
+		expect(res.status).toBe(200);
+	});
 
 	test('SP-2, US-12:', async () => {});
 
