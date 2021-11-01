@@ -88,9 +88,27 @@ describe('Unit Tests for Post Router:', () => {
 		expect(res.status).toBe(200);
 	});
 
-	test('SP-2, US-12:', async () => {});
+	test('SP-2, US-12: Server should return 400 when invalid USER ID sent', async () => {
+		let res = await request(server)
+			.put('/api/users/setPrivate')
+			.set('Content-Type', 'application/json')
+			.send({
+				userID: process.env.TEST_BOGUS_USER_ID,
+			});
 
-	test('SP-2, US-12:', async () => {});
+		expect(res.status).toBe(400);
+	});
+
+	test('SP-2, US-12: Server should return 200 when valid USER ID sent', async () => {
+		let res = await request(server)
+			.put('/api/users/setPrivate')
+			.set('Content-Type', 'application/json')
+			.send({
+				userID: process.env.TEST_USER_ID,
+			});
+
+		expect(res.status).toBe(200);
+	});
 	
 	test('US-8: Server should return 200 when a correct username and a bio is provided', async () => {
 		let res = await request(server)
