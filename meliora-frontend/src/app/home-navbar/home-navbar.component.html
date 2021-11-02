@@ -25,18 +25,22 @@
     <ul class="navbar-nav ml-auto">
       <li
         class="
-          nav-item
-          navbar-center
-          form-inline
-          active
-          text-center
-          justify-content-left
+        nav-item
+        navbar-center
+        form-inline
+        active
+        text-center
+        justify-content-left
         "
         style="text-align: center"
       >
         <!-- <i class="fas fa-search"></i> -->
-        <input class="form-control mr-sm-2" type="search" id="search" placeholder="Search" aria-label="Search" />
-        <button class="form-control" (click)="onSearchClicked()"><mat-icon>search</mat-icon></button>
+        <div id="searchGroup" class="input-group mb-3">
+          <input class="form-control" type="text" id="search" placeholder="Search" aria-label="Search" />
+          <div class="input-group-append">
+            <button id="searchButton" for="search" class="btn" type="button" (click)="onSearchClicked()"><mat-icon>search</mat-icon></button>
+          </div>
+        </div>
       </li>
 
       <li class="nav-item active">
