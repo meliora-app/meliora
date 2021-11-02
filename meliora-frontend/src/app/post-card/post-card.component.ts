@@ -92,6 +92,30 @@ export class PostCardComponent implements OnInit {
     }
   }
 
+  async makePostPrivate(postID: string) {
+    if (confirm('Are you sure you want to make this post private?')) {
+      let res = await fetch(
+        'https://meliora-backend.herokuapp.com/api/posts/setPrivate',
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            postID: postID
+          }),
+        }
+      );
+      if (res.status == 200) {
+        let resBody = await res.json();
+        console.log(resBody.msg);
+        // TODO RELOAD PROFILE PAGE
+        this.postDeleted.emit('made private: ' + resBody._id);
+        window.location.reload();
+      }
+    }
+  }
+
   // route to profile with clicked user
   userClicked() {
     this.route.navigate(['/profile'], {

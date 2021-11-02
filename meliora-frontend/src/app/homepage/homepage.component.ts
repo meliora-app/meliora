@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Category } from '../shared/models/category.model';
 import { Post } from '../shared/models/post.model';
+import { CategoryService } from '../shared/services/category.service';
+import { TrendingService } from '../shared/services/trending.service';
 
 @Component({
   selector: 'app-homepage',
@@ -9,6 +12,7 @@ import { Post } from '../shared/models/post.model';
 export class HomepageComponent implements OnInit {
   darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
   posts: Post[] = [];
+  trendingCategories: Category[] = [];
   //localStorage.getItem("darkModeStatus");
   categories = [
     'Friendship',
@@ -20,10 +24,23 @@ export class HomepageComponent implements OnInit {
     'Travel',
     'Mindfulness',
   ];
-  constructor() {}
+  constructor(private trendingService: TrendingService) { }
 
   ngOnInit(): void {
+    this.getTrendingCategories();
     this.loadFeed();
+  }
+
+  async getTrendingCategories() {
+    this.trendingService.getTrendingCategories().subscribe((result) => {
+      for (var i = 0; i < result.length; i++) {
+        console.log(result[i]);
+        this.trendingCategories.push({
+          id: result[i].category.id,
+          name: result[i].category.name,
+        });
+      }
+    });
   }
 
   async loadFeed() {
@@ -64,18 +81,26 @@ export class HomepageComponent implements OnInit {
         console.log(resUser.status);
         if (resUser.status == 200) {
           let resUserBody = await resUser.json();
-          this.posts.push(
-            new Post(
-              resBody[i]._id,
-              resBody[i].title,
-              resBody[i].content,
-              resBody[i].author,
-              resBody[i].category,
-              resBody[i].anonymous,
-              resUserBody.username,
-              resBody[i].commentsAllowed
-            )
-          );
+          console.log('hidden or not = ' + resBody[i].hidden);
+          console.log('author = ' + resBody[i].author);
+          console.log('localStorage Author = ' + localStorage.getItem('userID'));
+          console.log('title = ' + resBody[i].title);
+          if (!resBody[i].hidden || resBody[i].author == localStorage.getItem('userID')) {
+
+            this.posts.push(
+              new Post(
+                resBody[i]._id,
+                resBody[i].title,
+                resBody[i].content,
+                resBody[i].author,
+                resBody[i].category,
+                resBody[i].anonymous,
+                resUserBody.username,
+                resBody[i].commentsAllowed
+
+              )
+            );
+          }
         }
       }
     }

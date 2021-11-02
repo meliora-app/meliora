@@ -48,9 +48,7 @@ export class ExpandedPostCardComponent implements OnInit {
         commentsAllowed: queryParams.commentsAllowed === 'true'
       };
       this.downloadURL = queryParams.downloadURL;
-      this.category = queryParams.category;
     });
-    this.getPost();
     console.log(this.post);
     this.belongsToUser = localStorage.getItem('userID') == this.post.authorID;
   }

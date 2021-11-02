@@ -45,7 +45,21 @@
 
       <li class="nav-item active">
         <a class="nav-link" routerLink="/create-post"
-          >Create <span class="sr-only">(current)</span></a
+          ><mat-icon>add</mat-icon> <span class="sr-only">(current)</span></a
+        >
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/trending"
+          ><mat-icon>whatshot</mat-icon>
+          <span class="sr-only">(current)</span></a
+        >
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link btn"
+          ><mat-icon>notifications</mat-icon>
+          <span class="sr-only">(current)</span></a
         >
       </li>
 
@@ -62,14 +76,9 @@
           justify-content-left
         "
       >
-        <a class="nav-link btn" routerLink="/mental-health"
-          >Reach Out For Help<span class="sr-only">(current)</span></a
-        >
-      </li>
-
-      <li class="nav-item active">
-        <a class="nav-link btn"
-          >Notifications <span class="sr-only">(current)</span></a
+        <a class="nav-link btn" routerLink="/mental-health">
+          <mat-icon>live_help</mat-icon>
+          <span class="sr-only">(current)</span></a
         >
       </li>
     </ul>

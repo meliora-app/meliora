@@ -12,6 +12,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { QuotePageComponent } from './quote-page/quote-page.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SignupComponent } from './signup/signup.component';
+import { TrendingComponent } from './trending/trending.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing-page', pathMatch: 'full' },
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'quote', component: QuotePageComponent },
   { path: 'mental-health', component: MentalHealthComponent },
   { path: 'expanded-post', component: ExpandedPostCardComponent },
+  { path: 'trending', component: TrendingComponent },
 ];
 
 @NgModule({

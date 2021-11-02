@@ -38,6 +38,7 @@ import { MentalHealthComponent } from './mental-health/mental-health.component';
 import { ExpandedPostCardComponent } from './expanded-post-card/expanded-post-card.component';
 import { CommentCardComponent } from './comment-card/comment-card.component';
 import { NoProfileComponent } from './no-profile/no-profile.component';
+import { TrendingComponent } from './trending/trending.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { NoProfileComponent } from './no-profile/no-profile.component';
     ExpandedPostCardComponent,
     CommentCardComponent,
     NoProfileComponent,
+    TrendingComponent,
   ],
   imports: [
     BrowserModule,

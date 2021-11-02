@@ -78,3 +78,15 @@ hr {
   display: flex;
   align-self: flex-start;
 }
+
+.btn-lg {
+  border-radius: 30px;
+  font-size: 1.2em;
+  height: 2.5em;
+  background-color: #ffffffa9;
+}
+
+#right-react {
+  margin-top: -3.5em;
+  margin-left: 8em;
+}
