@@ -75,7 +75,6 @@ img {
 .follow-options {
   display: flex;
   float: right;
-  
 }
 
 .wrapper-react {
@@ -84,4 +83,8 @@ img {
 
 .icon-size {
   font-size: 1.5em;
+}
+
+.active {
+  background-color: lightblue;
 }

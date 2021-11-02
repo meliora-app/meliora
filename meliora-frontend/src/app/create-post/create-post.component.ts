@@ -160,8 +160,8 @@ export class CreatePostComponent implements OnInit {
       form.value.content,
       categoryID,
       localStorage.getItem('userID'),
-      this.visibilityClicked
-      //this.commentClicked
+      this.visibilityClicked,
+      !this.commentClicked
     );
 
     this.router.navigate(['/home']);

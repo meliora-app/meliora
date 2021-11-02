@@ -37,6 +37,7 @@ import { NoPostsCardComponent } from './no-posts-card/no-posts-card.component';
 import { MentalHealthComponent } from './mental-health/mental-health.component';
 import { ExpandedPostCardComponent } from './expanded-post-card/expanded-post-card.component';
 import { CommentCardComponent } from './comment-card/comment-card.component';
+import { NoProfileComponent } from './no-profile/no-profile.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { CommentCardComponent } from './comment-card/comment-card.component';
     MentalHealthComponent,
     ExpandedPostCardComponent,
     CommentCardComponent,
+    NoProfileComponent,
   ],
   imports: [
     BrowserModule,

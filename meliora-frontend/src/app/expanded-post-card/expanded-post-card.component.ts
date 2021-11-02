@@ -45,6 +45,7 @@ export class ExpandedPostCardComponent implements OnInit {
         categoryID: queryParams.categoryID,
         postID: queryParams.postID,
         anon: queryParams.anon === 'true',
+        commentsAllowed: queryParams.commentsAllowed === 'true'
       };
       this.downloadURL = queryParams.downloadURL;
       this.category = queryParams.category;
@@ -83,6 +84,7 @@ export class ExpandedPostCardComponent implements OnInit {
       let resBody = await res.json();
       for (var i = 0; i < resBody.length; i++) {
         this.comments.push(new Comment(
+          resBody[i]._id,
           resBody[i].postID,
           resBody[i].comment,
           resBody[i].profileID

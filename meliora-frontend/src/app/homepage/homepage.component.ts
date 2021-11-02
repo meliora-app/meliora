@@ -72,7 +72,8 @@ export class HomepageComponent implements OnInit {
               resBody[i].author,
               resBody[i].category,
               resBody[i].anonymous,
-              resUserBody.username
+              resUserBody.username,
+              resBody[i].commentsAllowed
             )
           );
         }

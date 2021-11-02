@@ -29,6 +29,7 @@ export class PostCardComponent implements OnInit {
   addReaction: boolean; // checks if reaction is selected
   isNotUser: boolean;
   category: Category = { id: '', name: '' };
+  totalReactions: number = 0;
 
   darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
   ref: AngularFireStorageReference;
@@ -40,14 +41,17 @@ export class PostCardComponent implements OnInit {
     private fireStorage: AngularFireStorage,
     private postService: PostService,
     private categoryService: CategoryService
-  ) {}
+  ) {
+    this.calcTotalReactions();
+  }
 
-  ngOnInit(): void {
+  ngOnInit() {
     if (!this.isExpanded) {
       this.postContent = this.postService.trimPost(this.post.content);
     }
     this.getCategory();
     this.getProfilePic();
+    this.calcTotalReactions();
     this.belongsToUser = this.userID == this.post.authorID;
   }
 
@@ -103,11 +107,31 @@ export class PostCardComponent implements OnInit {
     });
   }
 
-  onBookmarkClicked() {
+  async onBookmarkClicked() {
     this.bookmarkClicked = !this.bookmarkClicked;
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/posts/bookmark',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          postID: this.post.postID,
+          userID: localStorage.getItem('userID'),
+        }),
+      }
+    );
+    if (res.status == 200) {
+      let resBody = await res.json();
+      console.log(resBody.msg);
+      // TODO RELOAD PROFILE PAGE
+      this.postDeleted.emit('deleted: ' + resBody._id);
+      window.location.reload();
+    }
   }
 
-  onThumbUpClicked() {
+  async onThumbUpClicked() {
     this.thumbsUp = !this.thumbsUp;
     this.addReaction = this.thumbsUp;
     if (this.thumbsUp) {
@@ -117,9 +141,10 @@ export class PostCardComponent implements OnInit {
         this.userID
       );
     }
+    this.calcTotalReactions();
   }
 
-  onSmileyFaceClicked() {
+  async onSmileyFaceClicked() {
     this.smileyFace = !this.smileyFace;
     this.addReaction = this.smileyFace;
     if (this.smileyFace) {
@@ -129,9 +154,11 @@ export class PostCardComponent implements OnInit {
         this.userID
       );
     }
+    this.calcTotalReactions();
+
   }
 
-  onHeartClicked() {
+  async onHeartClicked() {
     this.heart = !this.heart;
     this.addReaction = this.heart;
     if (this.heart) {
@@ -141,9 +168,10 @@ export class PostCardComponent implements OnInit {
         this.userID
       );
     }
+    this.calcTotalReactions();
   }
 
-  onHugsClicked() {
+  async onHugsClicked() {
     this.hugs = !this.hugs;
     this.addReaction = this.hugs;
     if (this.hugs) {
@@ -153,5 +181,33 @@ export class PostCardComponent implements OnInit {
         this.userID
       );
     }
+    this.calcTotalReactions();
+  }
+
+  async calcTotalReactions() {
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/posts/getPost',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          post: this.post.postID,
+        }),
+      }
+    );
+    if (res.status == 200) {
+      let currentPost = await res.json();
+      console.log(currentPost);
+      var total = 0;
+      total += currentPost.reactions.hearts;
+      total += currentPost.reactions.thumbs;
+      total += currentPost.reactions.smileys;
+      total += currentPost.reactions.hugs;
+      this.totalReactions = total;
+    }
+
+
   }
 }

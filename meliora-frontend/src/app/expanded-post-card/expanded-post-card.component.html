@@ -17,13 +17,13 @@
     <div class="wrapper">
       <div style="margin-left: auto; margin-right: auto">
         <app-post-card [post]="this.post" [isExpanded]="true"></app-post-card>
-        <div class="post-card py-3 px-3 form-group">
+        <div *ngIf="!post.commentsAllowed" class="post-card py-3 px-3 form-group">
           <label for="comment">Add a comment</label>
           <input id="comment" class="form-control" type="text" />
           <button id="addCommentButton" (click)="onAddCommentClicked()">Add Comment</button>
         </div>
       </div>
-      <div id="comment-container">
+      <div *ngIf="!post.commentsAllowed" id="comment-container">
         <h2>Comments</h2>
         <ng-container *ngIf="comments.length > 0">
           <app-comment-card

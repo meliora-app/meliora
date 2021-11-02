@@ -62,6 +62,7 @@ export class SettingsComponent implements OnInit {
     );
     if (res.status == 200) {
       let resBody = await res.json();
+      this.private = resBody.private;
       this.settings = new Settings(
         resBody.username,
         resBody.email,
@@ -158,5 +159,21 @@ export class SettingsComponent implements OnInit {
         console.log(resBody.msg);
       }
     }
+  }
+
+  async onPrivateChanged() {
+    this.private = !this.private;
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/users/setPrivate',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userID: this.userID
+        }),
+      }
+    );
   }
 }

@@ -7,14 +7,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Your Profile</title>
 </head>
-
 <body [ngClass]="darkModeStatus ? 'dark-mode' : ''">
   <div>
     <!-- Navbar -->
     <app-home-navbar></app-home-navbar>
 
+    <div *ngIf="userBlocked" class="container mt-5 mr-5 wrapper">
+      <app-no-profile></app-no-profile>
+    </div>
+
     <!-- Profile picture and associated user stats -->
-    <div class="container mt-5 mr-5 wrapper">
+    <div *ngIf="!userBlocked" class="container mt-5 mr-5 wrapper">
       <div [ngClass]="darkModeStatus ? 'dark-mode' : ''" class="profile-circle">
         <img [src]="downloadURL" alt="" />
       </div>
@@ -75,7 +78,7 @@
         <mat-icon>more_horiz</mat-icon>
       </button>
     </div>
-    <div class="follow-options wrapper container mr-3">
+    <div *ngIf="!userBlocked && block && (!isPrivate || followCheck)" class="follow-options wrapper container mr-3">
       <button mat-icon-button class="mt-1 mr-2" *ngIf="followAdd && isNotUser" type="button"
         (click)="onFollowAddClicked()">
         <mat-icon>person_add</mat-icon>
@@ -88,8 +91,14 @@
         <span style="color: #0b3d77; font-size: 20px; font-weight: bold;">Following</span>
       </button>
     </div>
+    <div *ngIf="unblock" style="margin: 10px" class="follow-options wrapper container">
+      <h2 style="color: red">You have blocked this user</h2>
+    </div>
+    <div *ngIf="(!belongsToUser && !followCheck && isPrivate)" style="margin: 10px" class="follow-options wrapper container">
+      <h2>This User's Account is Private</h2>
+    </div>
 
-    <div class="wrapper container mr-5">
+    <div *ngIf="!userBlocked && block" class="wrapper container mr-5">
       <div>
         <!-- About Section -->
         <div class="container mr-5">
@@ -98,10 +107,19 @@
             {{bio}}
           </div>
         </div>
-
+        <br>
         <!-- Posts Section -->
-        <div class="container mr-5">
-          <p class="profile-heading mt-3 pl-2">Posts</p>
+        <div *ngIf="block && (!isPrivate || followCheck || belongsToUser)" class="container mr-5" style="margin: 10px">
+          <h2 *ngIf="!belongsToUser" >Posts</h2>
+          <ul *ngIf="belongsToUser" class="nav nav-pills">
+            <li class="nav-item">
+              <button [ngClass]="{ 'active' : !viewBookmarks }" type="button" (click)="onPostsClicked()">Posts</button>
+            </li>
+            <li class="nav-item">
+              <button [ngClass]="{ 'active' : viewBookmarks }" type="button" (click)="onBookmarksClicked()">Bookmarks</button>
+            </li>
+          </ul>
+          <br>
           <ng-container *ngIf="posts.length > 0">
             <app-post-card *ngFor="let post of posts" [post]="post" (postDeleted)="postDeletedHandler($event)"
               style="margin: 10px;"></app-post-card>
@@ -120,6 +138,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div *ngIf="unblock || (!belongsToUser && !followCheck && isPrivate)" class="container mr-5" style="margin: 50px auto">
+      <app-no-posts-card></app-no-posts-card>
     </div>
   </div>
 </body>
