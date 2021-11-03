@@ -26,4 +26,10 @@ export class CategoryService {
         })
       );
   }
+
+  getByID(id: string) {
+    return this.http.get<DbCategory>(
+      `https://meliora-backend.herokuapp.com/api/categories/getById?id=${id}`
+    );
+  }
 }

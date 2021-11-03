@@ -37,7 +37,10 @@
           <p *ngIf="post.anon" class="post-heading pt-2">Anonymous</p>
           <p class="post-subheading pt-2">Purdue University</p>
         </div>
-        <div class="category-pill text-center pt-4 px-4">
+        <div
+          class="category-pill text-center pt-4 px-4"
+          [routerLink]="'/category/' + post.categoryID"
+        >
           {{ category.name }}
         </div>
       </div>

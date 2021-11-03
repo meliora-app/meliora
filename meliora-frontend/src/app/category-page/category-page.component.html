@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="icon" type="image/x-icon" href="../../assets/lotus.png" />
+    <title>Category Page</title>
+  </head>
+  <body [ngClass]="darkModeStatus ? 'dark-mode' : ''">
+    <app-home-navbar></app-home-navbar>
+    <div class="">
+      <div class="container mt-5 mr-5 wrapper">
+        <div
+          [ngClass]="darkModeStatus ? 'dark-mode' : ''"
+          class="profile-circle"
+        >
+          <img [src]="downloadURL" alt="" />
+        </div>
+        <div class="pl-3">
+          <div class="wrapper">
+            <p class="mt-3 pl-3 profile-name">{{ categoryData.name }}</p>
+          </div>
+          <div class="wrapper">
+            <div class="pl-3 text-center user-stats">
+              <p>{{ categoryData.posts.length }}</p>
+              <p>Posts</p>
+            </div>
+
+            <div class="pl-5 text-center user-stats">
+              <p>{{ categoryData.followers.length }}</p>
+              <p>Followers</p>
+            </div>
+          </div>
+          <br />
+        </div>
+      </div>
+      <div class="follow-options wrapper container mr-3">
+        <button
+          mat-icon-button
+          class="mt-1 mr-2"
+          type="button"
+          (click)="onFollowClicked()"
+        >
+          <mat-icon>person_add</mat-icon>
+          <span class="ml-2" style="color: #0b3d77; font-size: 20px"
+            >Follow</span
+          >
+        </button>
+        <!-- <button mat-icon-button *ngIf="followCheck && isNotUser" class="mr-2 mt-1"
+              [ngStyle]="{ color: '#0b3d77' }"
+              (click)="onUnfollowedClicked()">
+              <mat-icon>check</mat-icon>
+              <span style="color: #0b3d77; font-size: 20px; font-weight: bold;">Following</span>
+            </button> -->
+      </div>
+
+      <div class="wrapper container mr-5">
+        <div>
+          <!-- About Section -->
+          <div class="container mr-5">
+            <p class="profile-heading mt-3 pl-2">About</p>
+            <div class="profile-about py-3 pl-3">
+              {{ categoryData.description }}
+            </div>
+          </div>
+
+          <!-- Posts Section -->
+          <div class="container mr-5">
+            <p class="profile-heading mt-3 pl-2">Posts</p>
+            <ng-container *ngIf="posts.length > 0">
+              <app-post-card
+                *ngFor="let post of posts"
+                [post]="post"
+                (postDeleted)="postDeletedHandler($event)"
+                style="margin: 10px"
+              ></app-post-card>
+            </ng-container>
+            <ng-container *ngIf="posts.length == 0">
+              <app-no-posts-card></app-no-posts-card>
+            </ng-container>
+          </div>
+        </div>
+        <div>
+          <!-- Categories Section -->
+          <!-- <div class="container mr-5">
+            <p class="profile-heading mt-3 pl-2">Other Categories</p>
+            <div class="categories py-4 px-4">
+              <div class="category-pill py-3 px-3 text-center">Nature</div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

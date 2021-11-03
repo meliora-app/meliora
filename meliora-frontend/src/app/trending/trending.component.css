@@ -12,3 +12,7 @@
 .small-card p {
   margin-top: 1.7em;
 }
+
+.dark-mode {
+  filter: invert(1) hue-rotate(180deg);
+}

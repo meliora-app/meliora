@@ -60,6 +60,11 @@ img {
   float: right;
   margin-left: auto;
   margin-right: 0px;
+  text-decoration: none;
+}
+
+.category-pill:hover {
+  cursor: pointer;
 }
 
 hr {

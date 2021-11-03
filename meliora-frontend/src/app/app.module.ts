@@ -37,6 +37,7 @@ import { NoPostsCardComponent } from './no-posts-card/no-posts-card.component';
 import { MentalHealthComponent } from './mental-health/mental-health.component';
 import { ExpandedPostCardComponent } from './expanded-post-card/expanded-post-card.component';
 import { TrendingComponent } from './trending/trending.component';
+import { CategoryPageComponent } from './category-page/category-page.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { TrendingComponent } from './trending/trending.component';
     MentalHealthComponent,
     ExpandedPostCardComponent,
     TrendingComponent,
+    CategoryPageComponent,
   ],
   imports: [
     BrowserModule,
