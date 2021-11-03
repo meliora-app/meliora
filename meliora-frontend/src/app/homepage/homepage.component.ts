@@ -24,7 +24,7 @@ export class HomepageComponent implements OnInit {
     'Travel',
     'Mindfulness',
   ];
-  constructor(private trendingService: TrendingService) {}
+  constructor(private trendingService: TrendingService) { }
 
   ngOnInit(): void {
     this.getTrendingCategories();
@@ -69,17 +69,24 @@ export class HomepageComponent implements OnInit {
         console.log(resUser.status);
         if (resUser.status == 200) {
           let resUserBody = await resUser.json();
-          this.posts.push(
-            new Post(
-              resBody[i]._id,
-              resBody[i].title,
-              resBody[i].content,
-              resBody[i].author,
-              resBody[i].category,
-              resBody[i].anonymous,
-              resUserBody.username
-            )
-          );
+          console.log('hidden or not = ' + resBody[i].hidden);
+          console.log('author = ' + resBody[i].author);
+          console.log('localStorage Author = ' + localStorage.getItem('userID'));
+          console.log('title = ' + resBody[i].title);
+          if (!resBody[i].hidden || resBody[i].author == localStorage.getItem('userID')) {
+
+            this.posts.push(
+              new Post(
+                resBody[i]._id,
+                resBody[i].title,
+                resBody[i].content,
+                resBody[i].author,
+                resBody[i].category,
+                resBody[i].anonymous,
+                resUserBody.username
+              )
+            );
+          }
         }
       }
     }
