@@ -13,7 +13,7 @@ const CategorySchema = new Schema({
     required: true,
   },
   followers: {
-    type: [UserSchema],
+    type: [SchemaTypes.ObjectId],
     default: [],
   },
   posts: {

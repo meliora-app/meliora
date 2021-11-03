@@ -35,16 +35,48 @@ catRouter.get("/getAll", (req, res) => {
     });
 });
 
-catRouter.get("/getById", (req, res) => {
+catRouter.get("/getById", async (req, res) => {
   var id = req.query.id;
-  Category.findById(id)
-    .exec()
-    .then((category) => {
-      res.status(200).send(category);
-    })
-    .catch((err) => {
-      res.status(500).send(`Database error: ${err}`);
-    });
+  var posts = [];
+  try {
+    var category = await Category.findById(id).exec();
+    for (var i = 0; i < category.posts.length; i++) {
+      var postData = await Post.findById(category.posts[i]).exec();
+      posts.push(postData);
+    }
+    var data = {
+      categoryData: category,
+      posts: posts,
+    };
+    // category.posts = posts;
+    res.status(200).send(data);
+  } catch (err) {
+    res.status(500).send(`Database error: ${err}`);
+  }
+});
+
+catRouter.post("/manageFollower", async (req, res) => {
+  var userID = req.body.userID;
+  var categoryID = req.body.categoryID;
+  try {
+    var category = await Category.findById(categoryID).exec();
+    var followersList = category.followers.map((follower) =>
+      follower.toString()
+    );
+    if (followersList.includes(userID)) {
+      var followerIndex = category.followers.findIndex(
+        (followerID) => followerID.toString() === userID
+      );
+      category.followers.splice(followerIndex, 1);
+    } else {
+      category.followers.push(userID);
+    }
+
+    await category.save();
+    res.status(200).send("Follower information managed successfully!");
+  } catch (err) {
+    res.status(500).send(`Database error: ${err}`);
+  }
 });
 
 catRouter.get("/getTrending", async (req, res) => {
