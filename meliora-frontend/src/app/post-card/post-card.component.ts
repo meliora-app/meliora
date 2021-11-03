@@ -40,7 +40,7 @@ export class PostCardComponent implements OnInit {
     private fireStorage: AngularFireStorage,
     private postService: PostService,
     private categoryService: CategoryService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (!this.isExpanded) {
@@ -56,8 +56,8 @@ export class PostCardComponent implements OnInit {
       .getPostCategory(this.post.categoryID)
       .subscribe((categoryData) => {
         this.category = {
-          id: categoryData._id,
-          name: categoryData.name,
+          id: categoryData.categoryData._id,
+          name: categoryData.categoryData.name,
         };
         console.log(this.category);
       });
@@ -98,7 +98,7 @@ export class PostCardComponent implements OnInit {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            postID: postID
+            postID: postID,
           }),
         }
       );

@@ -23,7 +23,7 @@ export class TrendingComponent implements OnInit {
     this.trendingService.getTrendingCategories().subscribe((result) => {
       for (var i = 0; i < result.length; i++) {
         this.trendingCategories.push({
-          id: result[i].category.id,
+          id: result[i].category._id,
           name: result[i].category.name,
         });
         console.log(this.trendingCategories);

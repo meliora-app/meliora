@@ -24,7 +24,7 @@ export class HomepageComponent implements OnInit {
     'Travel',
     'Mindfulness',
   ];
-  constructor(private trendingService: TrendingService) { }
+  constructor(private trendingService: TrendingService) {}
 
   ngOnInit(): void {
     this.getTrendingCategories();
@@ -36,7 +36,7 @@ export class HomepageComponent implements OnInit {
       for (var i = 0; i < result.length; i++) {
         console.log(result[i]);
         this.trendingCategories.push({
-          id: result[i].category.id,
+          id: result[i].category._id,
           name: result[i].category.name,
         });
       }
@@ -71,10 +71,14 @@ export class HomepageComponent implements OnInit {
           let resUserBody = await resUser.json();
           console.log('hidden or not = ' + resBody[i].hidden);
           console.log('author = ' + resBody[i].author);
-          console.log('localStorage Author = ' + localStorage.getItem('userID'));
+          console.log(
+            'localStorage Author = ' + localStorage.getItem('userID')
+          );
           console.log('title = ' + resBody[i].title);
-          if (!resBody[i].hidden || resBody[i].author == localStorage.getItem('userID')) {
-
+          if (
+            !resBody[i].hidden ||
+            resBody[i].author == localStorage.getItem('userID')
+          ) {
             this.posts.push(
               new Post(
                 resBody[i]._id,

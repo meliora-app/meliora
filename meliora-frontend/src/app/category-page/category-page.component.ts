@@ -32,6 +32,8 @@ export class CategoryPageComponent implements OnInit {
   downloadURL: string = '';
   ref: AngularFireStorageReference;
   following: boolean = false;
+  followerCount: number = 0;
+  userID: string = localStorage.getItem('userID');
 
   constructor(
     private route: ActivatedRoute,
@@ -43,6 +45,7 @@ export class CategoryPageComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.categoryID = params.id;
     });
+    this.getTopicPic();
     this.loadCategoryContent();
   }
 
@@ -59,8 +62,15 @@ export class CategoryPageComponent implements OnInit {
         }) => {
           console.log(categoryData);
           this.categoryData = categoryData;
+          this.followerCount = this.categoryData.followers.length;
+          if (categoryData.followers.includes(this.userID)) {
+            this.following = true;
+          }
         }
       );
+  }
+
+  getTopicPic() {
     this.ref = this.fireStorage.ref('categories/' + this.categoryID + '.jpeg');
     this.ref.getDownloadURL().subscribe((url) => {
       this.downloadURL = url;
@@ -70,6 +80,11 @@ export class CategoryPageComponent implements OnInit {
 
   onFollowClicked() {
     this.following = !this.following;
+    if (this.following === true) {
+      this.followerCount = this.followerCount + 1;
+    } else {
+      this.followerCount = this.followerCount - 1;
+    }
     this.categoryService.manageFollower(
       localStorage.getItem('userID'),
       this.categoryID

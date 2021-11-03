@@ -32,9 +32,17 @@ body {
   color: white;
 }
 
+.big-card:hover {
+  cursor: pointer;
+}
+
 .small-card {
   width: 38%;
   height: 100px;
   border-radius: 30px;
   background-color: lightblue;
+}
+
+.small-card:hover {
+  cursor: pointer;
 }

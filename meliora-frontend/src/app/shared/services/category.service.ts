@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 
 export interface DbCategory {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   followers: string[];
   posts: PostData[];
 }
 
-interface PostData {
+export interface PostData {
   location: {
     latitude: any;
     longitude: any;

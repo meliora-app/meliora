@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Reaction } from '../models/reaction.model';
+import { PostData } from './category.service';
 
 @Injectable({
   providedIn: 'root',
@@ -62,11 +63,14 @@ export class PostService {
 
   getPostCategory(id: string) {
     return this.http.get<{
-      _id: string;
-      name: string;
-      description: string;
-      followers: string[];
-      posts: string[];
+      categoryData: {
+        _id: string;
+        name: string;
+        description: string;
+        followers: string[];
+        posts: string[];
+      };
+      posts: PostData[];
       __v: number;
     }>(`https://meliora-backend.herokuapp.com/api/categories/getById?id=${id}`);
   }
