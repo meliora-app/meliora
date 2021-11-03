@@ -61,6 +61,7 @@
           mat-icon-button
           class="mt-1 mr-2"
           type="button"
+          *ngIf="!following"
           (click)="onFollowClicked()"
         >
           <mat-icon>person_add</mat-icon>
@@ -68,12 +69,18 @@
             >Follow</span
           >
         </button>
-        <!-- <button mat-icon-button *ngIf="followCheck && isNotUser" class="mr-2 mt-1"
-              [ngStyle]="{ color: '#0b3d77' }"
-              (click)="onUnfollowedClicked()">
-              <mat-icon>check</mat-icon>
-              <span style="color: #0b3d77; font-size: 20px; font-weight: bold;">Following</span>
-            </button> -->
+        <button
+          mat-icon-button
+          *ngIf="following"
+          class="mr-2 mt-1"
+          [ngStyle]="{ color: '#0b3d77' }"
+          (click)="onFollowClicked()"
+        >
+          <mat-icon>check</mat-icon>
+          <span style="color: #0b3d77; font-size: 20px; font-weight: bold"
+            >Following</span
+          >
+        </button>
       </div>
 
       <div class="wrapper container mr-5">
@@ -89,15 +96,15 @@
           <!-- Posts Section -->
           <div class="container mr-5">
             <p class="profile-heading mt-3 pl-2">Posts</p>
-            <ng-container *ngIf="posts.length > 0">
+            <ng-container *ngIf="categoryData.posts.length > 0">
               <app-post-card
-                *ngFor="let post of posts"
+                *ngFor="let post of categoryData.posts"
                 [post]="post"
                 (postDeleted)="postDeletedHandler($event)"
                 style="margin: 10px"
               ></app-post-card>
             </ng-container>
-            <ng-container *ngIf="posts.length == 0">
+            <ng-container *ngIf="categoryData.posts.length == 0">
               <app-no-posts-card></app-no-posts-card>
             </ng-container>
           </div>

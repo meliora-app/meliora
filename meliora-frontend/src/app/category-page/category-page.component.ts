@@ -5,10 +5,7 @@ import {
 } from '@angular/fire/storage';
 import { ActivatedRoute } from '@angular/router';
 import { Post } from '../shared/models/post.model';
-import {
-  CategoryService,
-  DbCategory,
-} from '../shared/services/category.service';
+import { CategoryService } from '../shared/services/category.service';
 
 @Component({
   selector: 'app-category-page',
@@ -17,11 +14,25 @@ import {
 })
 export class CategoryPageComponent implements OnInit {
   categoryID: string = '';
-  categoryData: DbCategory;
+  categoryData: {
+    id: string;
+    name: string;
+    description: string;
+    followers: string[];
+    posts: Post[];
+  } = {
+    id: '',
+    name: '',
+    description: '',
+    followers: [],
+    posts: [],
+  };
+  posts: Post[];
   darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
   downloadURL: string = '';
   ref: AngularFireStorageReference;
-  posts: Post[];
+  following: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private categoryService: CategoryService,
@@ -36,9 +47,20 @@ export class CategoryPageComponent implements OnInit {
   }
 
   loadCategoryContent() {
-    this.categoryService.getByID(this.categoryID).subscribe((categoryData) => {
-      this.categoryData = categoryData;
-    });
+    this.categoryService
+      .getByID(this.categoryID)
+      .subscribe(
+        (categoryData: {
+          id: string;
+          name: string;
+          description: string;
+          followers: string[];
+          posts: Post[];
+        }) => {
+          console.log(categoryData);
+          this.categoryData = categoryData;
+        }
+      );
     this.ref = this.fireStorage.ref('categories/' + this.categoryID + '.jpeg');
     this.ref.getDownloadURL().subscribe((url) => {
       this.downloadURL = url;
@@ -46,7 +68,13 @@ export class CategoryPageComponent implements OnInit {
     });
   }
 
-  onFollowClicked() {}
+  onFollowClicked() {
+    this.following = !this.following;
+    this.categoryService.manageFollower(
+      localStorage.getItem('userID'),
+      this.categoryID
+    );
+  }
 
   postDeletedHandler(event) {}
 }
