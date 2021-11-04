@@ -25,15 +25,33 @@ reactionRouter.post("/add", async (req, res) => {
     }).exec();
 
     if (existingData) {
-      const currReaction = existingData.reaction;
+      var currReaction;
+      if (reactionData.flag === "REMOVE") {
+        await Reaction.findOneAndDelete({
+          $and: [
+            { profileID: reactionData.profileID },
+            { postID: reactionData.postID },
+          ],
+        }).exec();
+        currReaction = reactionData.reaction;
+      } else {
+        currReaction = existingData.reaction;
+      }
+
       if (currReaction === "heart") {
-        postData.reactions.heart = postData.reactions.heart - 1;
+        postData.reactions.hearts = postData.reactions.hearts - 1;
       } else if (currReaction === "thumbsUp") {
         postData.reactions.thumbs = postData.reactions.thumbs - 1;
       } else if (currReaction === "smiley") {
         postData.reactions.smileys = postData.reactions.smileys - 1;
       } else {
         postData.reactions.hugs = postData.reactions.hugs - 1;
+      }
+
+      if (reactionData.flag === "REMOVE") {
+        await postData.save();
+        res.status(200).send("Reaction removed successfully!");
+        return;
       }
 
       existingData.reaction = reactionData.reaction;
@@ -45,8 +63,11 @@ reactionRouter.post("/add", async (req, res) => {
       await reaction.save();
     }
 
+    console.log(reactionData.reaction);
+    console.log(postData.reactions);
+
     if (reactionData.reaction === "heart") {
-      postData.reactions.heart = postData.reactions.heart + 1;
+      postData.reactions.hearts = postData.reactions.hearts + 1;
     } else if (reactionData.reaction === "thumbsUp") {
       postData.reactions.thumbs = postData.reactions.thumbs + 1;
     } else if (reactionData.reaction === "smiley") {
@@ -69,7 +90,8 @@ const isValidReaction = (reactionData) => {
       reactionData.reaction === "smiley" ||
       reactionData.reaction === "hug") &&
     "profileID" in reactionData &&
-    "postID" in reactionData
+    "postID" in reactionData &&
+    "flag" in reactionData
   );
 };
 
