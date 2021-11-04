@@ -150,8 +150,8 @@ export class PostCardComponent implements OnInit {
       let resBody = await res.json();
       console.log(resBody.msg);
       // TODO RELOAD PROFILE PAGE
-      this.postDeleted.emit('deleted: ' + resBody._id);
-      window.location.reload();
+      //this.postDeleted.emit('deleted: ' + resBody._id);
+      //window.location.reload();
     }
   }
 
