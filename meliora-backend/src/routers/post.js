@@ -259,7 +259,7 @@ postRouter.put("/bookmark", async (req, res) => {
       return;
     }
 
-    if (!user.boomarks) user.bookmarks = [];
+    if (!user.bookmarks) user.bookmarks = [];
 
     if (user.bookmarks.includes(post)) {
       res.status(400).send("You have already bookmarked this post.");
