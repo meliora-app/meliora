@@ -156,7 +156,6 @@ export class PostCardComponent implements OnInit {
   }
 
   async onThumbUpClicked() {
-    alert("THUMB");
     this.thumbsUp = !this.thumbsUp;
     this.addReaction = this.thumbsUp;
     if (this.thumbsUp) {
