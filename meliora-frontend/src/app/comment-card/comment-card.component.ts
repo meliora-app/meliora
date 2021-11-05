@@ -66,6 +66,7 @@ export class CommentCardComponent implements OnInit {
           })
         }
       );
+      window.location.reload();
     }
   }
 

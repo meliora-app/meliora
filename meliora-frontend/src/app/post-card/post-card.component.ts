@@ -45,12 +45,12 @@ export class PostCardComponent implements OnInit {
     this.calcTotalReactions();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (!this.isExpanded) {
       this.postContent = this.postService.trimPost(this.post.content);
     }
     this.getCategory();
-    this.getProfilePic();
+    await this.getProfilePic();
     this.calcTotalReactions();
     this.belongsToUser = this.userID == this.post.authorID;
   }
@@ -156,6 +156,7 @@ export class PostCardComponent implements OnInit {
   }
 
   async onThumbUpClicked() {
+    alert("THUMB");
     this.thumbsUp = !this.thumbsUp;
     this.addReaction = this.thumbsUp;
     if (this.thumbsUp) {
@@ -165,7 +166,7 @@ export class PostCardComponent implements OnInit {
         this.userID
       );
     }
-    this.calcTotalReactions();
+    await this.calcTotalReactions();
   }
 
   async onSmileyFaceClicked() {
@@ -178,7 +179,7 @@ export class PostCardComponent implements OnInit {
         this.userID
       );
     }
-    this.calcTotalReactions();
+    await this.calcTotalReactions();
 
   }
 
@@ -192,7 +193,7 @@ export class PostCardComponent implements OnInit {
         this.userID
       );
     }
-    this.calcTotalReactions();
+    await this.calcTotalReactions();
   }
 
   async onHugsClicked() {
@@ -205,7 +206,7 @@ export class PostCardComponent implements OnInit {
         this.userID
       );
     }
-    this.calcTotalReactions();
+    await this.calcTotalReactions();
   }
 
   async calcTotalReactions() {

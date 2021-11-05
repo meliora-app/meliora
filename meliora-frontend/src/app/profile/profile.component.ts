@@ -51,16 +51,17 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     private fireStorage: AngularFireStorage,
     private userService: UserService
-  ) {}
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
-  ngOnInit(): void {
-    this.getProfilePic();
+  async ngOnInit() {
     this.calcNumReactions();
     this.setFollowingVars();
     this.activatedRoute.queryParams.subscribe((params) => {
       this.viewedUserID = params._id;
-      console.log('Viewed user: ' + this.viewedUserID);
     });
+    this.getProfilePic();
     this.belongsToUser = this.viewedUserID == this.userId;
     this.isNotUser = !this.belongsToUser;
     this.loadProfile();

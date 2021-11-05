@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, Type } from '@angular/core';
 import {
   AngularFireStorage,
   AngularFireStorageReference,
@@ -16,6 +16,7 @@ import { Comment } from '../shared/models/comment.model'
 })
 export class ExpandedPostCardComponent implements OnInit {
   @Output() postDeleted: EventEmitter<string> = new EventEmitter();
+  @Input() commentDeleted: EventEmitter<string> = new EventEmitter();
   bookmarkClicked: boolean = false;
   thumbsUp: boolean = false;
   isNotUser: boolean;
@@ -26,6 +27,7 @@ export class ExpandedPostCardComponent implements OnInit {
   belongsToUser: boolean;
   category: Category;
   comments: Comment[] = [];
+  
 
   darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
   constructor(
@@ -49,7 +51,8 @@ export class ExpandedPostCardComponent implements OnInit {
       };
       this.downloadURL = queryParams.downloadURL;
     });
-    console.log(this.post);
+    this.getComments();
+
     this.belongsToUser = localStorage.getItem('userID') == this.post.authorID;
   }
 
@@ -62,7 +65,6 @@ export class ExpandedPostCardComponent implements OnInit {
 
   async getPost() {
     var postData = await this.postService.getPostByID(this.post.postID);
-    this.getComments();
   }
 
   async getComments() {
@@ -91,6 +93,18 @@ export class ExpandedPostCardComponent implements OnInit {
     }
   }
 
+  async getCategory() {
+    this.postService
+      .getPostCategory(this.post.categoryID)
+      .subscribe((categoryData) => {
+        this.category = {
+          id: categoryData.categoryData._id,
+          name: categoryData.categoryData.name,
+        };
+        console.log(this.category);
+      });
+  }
+
   async onAddCommentClicked() {
     // call backend comment
     let res = await fetch(
@@ -107,7 +121,9 @@ export class ExpandedPostCardComponent implements OnInit {
         })
       }
     );
-    window.location.reload();
+    //window.location.reload();
+    this.comments = [];
+    this.getComments();
   }
 
   async deletePostClicked(postID: string) {
