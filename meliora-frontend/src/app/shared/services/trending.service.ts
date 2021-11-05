@@ -70,6 +70,7 @@ export class TrendingService {
               categoryID: post.post.category,
               anon: post.post.anonymous,
               authorUsername: post.post.authorName,
+              commentsAllowed: post.post.commentsAllowed
             };
           });
           return transformedPostData;

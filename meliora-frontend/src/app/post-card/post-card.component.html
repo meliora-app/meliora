@@ -62,7 +62,8 @@
               postID: post.postID,
               anon: post.anon,
               downloadURL: downloadURL,
-              category: category
+              category: category,
+              commentsAllowed: post.commentsAllowed
             }"
             >View More</a
           >
@@ -71,11 +72,17 @@
       <div class="d-flex">
         <div class="d-flex flex-row mb-3">
           <div class="container p-10 flex-grow-2">
-            <button
-              mat-icon-button
-              type="button"
-              [ngStyle]="{ color: 'white' }"
-            >
+            <button mat-icon-button type="button" [ngStyle]="{ color: 'white' }" routerLink="/expanded-post" [queryParams]="{
+              title: post.title,
+              content: post.content,
+              authorUsername: post.authorUsername,
+              authorID: post.authorID,
+              categoryID: post.categoryID,
+              postID: post.postID,
+              anon: post.anon,
+              downloadURL: downloadURL,
+              category: category,
+              commentsAllowed: post.commentsAllowed}">
               <mat-icon>comment</mat-icon>
             </button>
 
@@ -166,6 +173,7 @@
               </button>
             </div>
           </div>
+          <h2>{{totalReactions}}</h2>
         </div>
       </div>
       <div class="d-flex mb-1" id="right-react">

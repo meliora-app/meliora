@@ -14,7 +14,8 @@ export class PostService {
     postContent: string,
     category: string,
     author: string,
-    anonymous: boolean
+    anonymous: boolean,
+    commentsAllowed: boolean
   ) {
     var postData = {
       title: postTitle,
@@ -23,6 +24,7 @@ export class PostService {
       author: author,
       hidden: false,
       anonymous: anonymous,
+      commentsAllowed: commentsAllowed
     };
 
     console.log(postData);
@@ -48,7 +50,7 @@ export class PostService {
     };
     var postData;
     this.http
-      .put('https://meliora-backend.herokuapp.com/api/reaction/getPost', body, {
+      .put('https://meliora-backend.herokuapp.com/api/posts/getPost', body, {
         headers: {
           'Content-Type': 'application/json',
         },

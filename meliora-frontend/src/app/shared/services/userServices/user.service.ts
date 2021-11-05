@@ -28,6 +28,27 @@ export class UserService {
     // return userData;
   }
 
+  async getUsername(userID:string) {
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/users/getUser',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          _id: userID,
+        }),
+      }
+    );
+    if (res.status == 200) {
+      let resBody = await res.json();
+      return resBody.username;
+    }
+
+    // return userData;
+  }
+
   // Likes
   getUserPosts(id: string) {
     var posts;

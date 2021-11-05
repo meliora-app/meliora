@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, Type } from '@angular/core';
 import {
   AngularFireStorage,
   AngularFireStorageReference,
@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from '../shared/models/post.model';
 import { PostService } from '../shared/services/post.service';
 import { Category } from '../shared/models/category.model';
+import { Comment } from '../shared/models/comment.model'
 
 @Component({
   selector: 'app-expanded-post-card',
@@ -15,6 +16,7 @@ import { Category } from '../shared/models/category.model';
 })
 export class ExpandedPostCardComponent implements OnInit {
   @Output() postDeleted: EventEmitter<string> = new EventEmitter();
+  @Input() commentDeleted: EventEmitter<string> = new EventEmitter();
   bookmarkClicked: boolean = false;
   thumbsUp: boolean = false;
   isNotUser: boolean;
@@ -24,6 +26,8 @@ export class ExpandedPostCardComponent implements OnInit {
   downloadURL: string = '';
   belongsToUser: boolean;
   category: Category;
+  comments: Comment[] = [];
+  
 
   darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
   constructor(
@@ -43,10 +47,12 @@ export class ExpandedPostCardComponent implements OnInit {
         categoryID: queryParams.categoryID,
         postID: queryParams.postID,
         anon: queryParams.anon === 'true',
+        commentsAllowed: queryParams.commentsAllowed === 'true'
       };
       this.downloadURL = queryParams.downloadURL;
     });
-    console.log(this.post);
+    this.getComments();
+
     this.belongsToUser = localStorage.getItem('userID') == this.post.authorID;
   }
 
@@ -55,6 +61,69 @@ export class ExpandedPostCardComponent implements OnInit {
     this.router.navigate(['/profile'], {
       queryParams: { _id: this.post.authorID },
     });
+  }
+
+  async getPost() {
+    var postData = await this.postService.getPostByID(this.post.postID);
+  }
+
+  async getComments() {
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/comment/getComments',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: this.post.postID,
+        }),
+      }
+    );
+    if (res.status == 200) {
+      let resBody = await res.json();
+      for (var i = 0; i < resBody.length; i++) {
+        this.comments.push(new Comment(
+          resBody[i]._id,
+          resBody[i].postID,
+          resBody[i].comment,
+          resBody[i].profileID
+        ))
+      }
+    }
+  }
+
+  async getCategory() {
+    this.postService
+      .getPostCategory(this.post.categoryID)
+      .subscribe((categoryData) => {
+        this.category = {
+          id: categoryData.categoryData._id,
+          name: categoryData.categoryData.name,
+        };
+        console.log(this.category);
+      });
+  }
+
+  async onAddCommentClicked() {
+    // call backend comment
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/comment/add',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          comment: (<HTMLInputElement>document.getElementById("comment")).value,
+          profileID: localStorage.getItem('userID'),
+          postID: this.post.postID
+        })
+      }
+    );
+    //window.location.reload();
+    this.comments = [];
+    this.getComments();
   }
 
   async deletePostClicked(postID: string) {
@@ -81,4 +150,5 @@ export class ExpandedPostCardComponent implements OnInit {
       }
     }
   }
+
 }

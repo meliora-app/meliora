@@ -12,19 +12,30 @@
     />
     <title>Expanded Post Card</title>
   </head>
-  <body>
+  <body [ngClass]="darkModeStatus ? 'dark-mode' : ''">
     <app-home-navbar></app-home-navbar>
     <div class="wrapper">
       <div style="margin-left: auto; margin-right: auto">
         <app-post-card [post]="this.post" [isExpanded]="true"></app-post-card>
-        <div class="post-card py-3 px-3 form-group">
+        <div *ngIf="!post.commentsAllowed" class="post-card py-3 px-3 form-group">
           <label for="comment">Add a comment</label>
           <input id="comment" class="form-control" type="text" />
+          <button id="addCommentButton" (click)="onAddCommentClicked()">Add Comment</button>
         </div>
       </div>
-      <!-- <div class="post-card">
+      <div *ngIf="!post.commentsAllowed" id="comment-container">
         <h2>Comments</h2>
-      </div> -->
+        <ng-container *ngIf="comments.length > 0">
+          <app-comment-card
+            *ngFor="let comment of comments"
+            [comment]="comment"
+            style="margin: 10px"
+          ></app-comment-card>
+        </ng-container>
+        <ng-container *ngIf="comments.length == 0">
+          <app-no-posts-card></app-no-posts-card>
+        </ng-container>
+      </div>
     </div>
   </body>
 </html>

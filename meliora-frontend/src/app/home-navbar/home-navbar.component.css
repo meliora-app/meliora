@@ -54,16 +54,40 @@
   background-color: #57a1f6;
 }
 
-#search {
+/* #search {
   border-radius: 20px;
   background-color: #a6cdfc;
   border: none;
-  margin-right: 400% !important;
-  width: -400px;
+  width: 300px;
+  float: left;
+}
+
+#searchButton {
+  width: 50px;
+  height: 50px;
+  float: left;
+}
+*/
+#searchGroup {
+  /* margin-right: 200% !important; */
+  margin-right: 300px;
+  margin-top: 20px;
+  width: 400px;
+  /* display: inline-flex; */
+}
+
+#search {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+#searchButton {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 #mental-health {
-  background-color: #0B3D77;
+  background-color: #0b3d77;
   margin-right: 400% !important;
   width: -400px;
 }
