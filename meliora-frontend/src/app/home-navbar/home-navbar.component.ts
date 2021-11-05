@@ -40,4 +40,22 @@ export class HomeNavbarComponent implements OnInit {
   onMyProfileClicked() {
     this.route.navigate(['/profile'], { queryParams: {"_id": localStorage.getItem('userID')}});
   }
+
+  async onSearchClicked() {
+    let res = await fetch('https://meliora-backend.herokuapp.com/api/users/getUser', {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username:  (<HTMLInputElement>document.getElementById("search")).value
+
+      })
+    });
+
+    if (res.status == 200) {
+      let resBody = await res.json();
+      this.route.navigate(['/profile'], { queryParams: {"_id": resBody._id}});
+    }
+  }
 }

@@ -1,0 +1,36 @@
+.heading {
+    font-size: 2em;
+    margin: 1em;
+    margin-right: 6em
+}
+
+.health-textbox {
+    background-color: #9dcdff;
+    width: 50em;
+    height: auto;
+    margin-left: 18%;
+    margin-bottom: 5%;
+    border-radius: 10%;
+    padding: 20px;
+}
+
+.resource-heading {
+    font-size: 2em;
+    color: #0B3D77;
+    margin-top: 2%;
+    text-decoration: underline;
+}
+
+.resource-text {
+    font-size: 1em;
+    color: #0B3D77;
+    margin-top: 2%;
+    margin-left: 2%;
+}
+
+.resource-list {
+    font-size: 1em;
+    color: #0B3D77;
+    margin-top: 2%;
+    margin-left: 5%;
+}

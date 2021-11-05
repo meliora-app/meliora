@@ -1,0 +1,7 @@
+<div class="comment-card py-3 px-3 form-group">
+    <h3>{{comment.content}}</h3>
+    <p style="text-decoration: underline" (click)="onUsernameClick()">{{author}}</p>
+    <button *ngIf="canDelete" mat-icon-button class="trash-icon" (click)="deleteCommentClicked()">
+        <mat-icon>delete</mat-icon>
+    </button>
+</div>

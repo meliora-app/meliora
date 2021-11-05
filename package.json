@@ -1,5 +1,5 @@
 {
-"name": "meliora",
+  "name": "meliora",
   "version": "1.0.0",
   "description": "",
   "main": "meliora-backend/src/index.js",
@@ -11,7 +11,7 @@
   "scripts": {
     "start": "(cd meliora-backend;node src/index.js)",
     "test": "(cd meliora-backend;npm test)",
-	  "build": "(cd meliora-backend;npx babel src -d build)"
+    "build": "(cd meliora-backend;npx babel src -d build)"
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,8 @@
     "express": "^4.17.1",
     "firebase": "^9.0.2",
     "firebase-admin": "^9.11.1",
-    "mongoose": "^6.0.5"
+    "mongoose": "^6.0.5",
+    "node-geocoder": "^3.27.0"
   },
   "jest": {
     "testEnvironment": "node",

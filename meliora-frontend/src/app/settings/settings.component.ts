@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/authServices/auth.service';
 import { NgForm, FormsModule } from '@angular/forms';
+import { MatButtonToggle, MatButtonToggleModule } from '@angular/material/button-toggle';
 
 export class Settings {
   username: string;
@@ -10,6 +11,7 @@ export class Settings {
   dateOfBirth: string;
   sex: string;
   darkModeStatus: boolean;
+  private: boolean;
 
   constructor(
     username: string,
@@ -17,7 +19,7 @@ export class Settings {
     phone: string,
     dateOfBirth: string,
     sex: string,
-    darkModeStatus: boolean
+    darkModeStatus: boolean,
   ) {
     this.username = username;
     this.email = email;
@@ -37,6 +39,7 @@ export class SettingsComponent implements OnInit {
   darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
   userID = localStorage.getItem('userID');
   settings: Settings;
+  private: boolean = true;
 
   constructor(public authService: AuthService, public router: Router) {}
 
@@ -59,6 +62,7 @@ export class SettingsComponent implements OnInit {
     );
     if (res.status == 200) {
       let resBody = await res.json();
+      this.private = resBody.private;
       this.settings = new Settings(
         resBody.username,
         resBody.email,
@@ -155,5 +159,21 @@ export class SettingsComponent implements OnInit {
         console.log(resBody.msg);
       }
     }
+  }
+
+  async onPrivateChanged() {
+    this.private = !this.private;
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/users/setPrivate',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userID: this.userID
+        }),
+      }
+    );
   }
 }

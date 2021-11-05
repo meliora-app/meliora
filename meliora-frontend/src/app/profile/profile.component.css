@@ -71,3 +71,20 @@ img {
   font-weight: bold;
   border: 1px solid #041b35;
 }
+
+.follow-options {
+  display: flex;
+  float: right;
+}
+
+.wrapper-react {
+  margin-left: -5%;
+}
+
+.icon-size {
+  font-size: 1.5em;
+}
+
+.active {
+  background-color: lightblue;
+}

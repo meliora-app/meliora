@@ -25,32 +25,60 @@
     <ul class="navbar-nav ml-auto">
       <li
         class="
+        nav-item
+        navbar-center
+        form-inline
+        active
+        text-center
+        justify-content-left
+        "
+        style="text-align: center"
+      >
+        <!-- <i class="fas fa-search"></i> -->
+        <div id="searchGroup" class="input-group mb-3">
+          <input class="form-control" type="text" id="search" placeholder="Search" aria-label="Search" />
+          <div class="input-group-append">
+            <button id="searchButton" for="search" class="btn" type="button" (click)="onSearchClicked()"><mat-icon>search</mat-icon></button>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/create-post"
+          ><mat-icon>add</mat-icon> <span class="sr-only">(current)</span></a
+        >
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/trending"
+          ><mat-icon>whatshot</mat-icon>
+          <span class="sr-only">(current)</span></a
+        >
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link btn"
+          ><mat-icon>notifications</mat-icon>
+          <span class="sr-only">(current)</span></a
+        >
+      </li>
+
+      <li
+        class="
           nav-item
+          active
+          mr-sm-2
+          mental-health
           navbar-center
           form-inline
           active
           text-center
           justify-content-left
         "
-        style="text-align: center"
       >
-        <!-- <i class="fas fa-search"></i> -->
-        <input
-          class="form-control mr-sm-2"
-          type="search"
-          id="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" routerLink="/create-post"
-          >Create <span class="sr-only">(current)</span></a
-        >
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link btn" href="/notifications page/notifications.html"
-          >Notifications <span class="sr-only">(current)</span></a
+        <a class="nav-link btn" routerLink="/mental-health">
+          <mat-icon>live_help</mat-icon>
+          <span class="sr-only">(current)</span></a
         >
       </li>
     </ul>
@@ -74,7 +102,7 @@
       class="btn btn-login dropdown-toggle my-2 my-sm-0"
       style="margin-right: 1em; background-color: #a6cdfc; color: #fff"
     >
-      {{username}}
+      {{ username }}
     </button>
   </div>
 </nav>

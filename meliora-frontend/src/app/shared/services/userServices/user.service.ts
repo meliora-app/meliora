@@ -7,7 +7,7 @@ import { User } from '../../models/user.model';
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getUserInfo(userData: {}) {
     var userInfo;
@@ -24,6 +24,43 @@ export class UserService {
           console.log(userData);
         });
     });
+
+    // return userData;
+  }
+
+  async getUsername(userID:string) {
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/users/getUser',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          _id: userID,
+        }),
+      }
+    );
+    if (res.status == 200) {
+      let resBody = await res.json();
+      return resBody.username;
+    }
+
+    // return userData;
+  }
+
+  // Likes
+  getUserPosts(id: string) {
+    var posts;
+    // var userData 
+    this.http.get(
+      'http://meliora-backend.herokuapp.com/api/posts/getAll',
+    )
+      .subscribe((responseData) => {
+        posts = responseData;
+        // console.log(userData);
+      });
+    return posts;
 
     // return userData;
   }

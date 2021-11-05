@@ -73,18 +73,47 @@
             ></app-category-pill>
           </div>
         </div>
-        <div  id='post-container' class="general">
+        <div id="post-container" class="general">
           <h2>My Feed</h2>
           <ng-container *ngIf="posts.length > 0">
-            <app-post-card *ngFor="let post of posts" [post]="post" style="margin: 10px;"></app-post-card>
+            <app-post-card
+              *ngFor="let post of posts"
+              [post]="post"
+              [isExpanded]="false"
+              style="margin: 10px"
+            ></app-post-card>
           </ng-container>
-          <ng-container *ngIf="posts.length == 0"><app-no-posts-card></app-no-posts-card></ng-container>
+          <ng-container *ngIf="posts.length == 0"
+            ><app-no-posts-card></app-no-posts-card
+          ></ng-container>
         </div>
         <div class="general">
           <h2>Discover</h2>
-          <div class="big-card text-center">Togetherness</div>
+          <div
+            class="big-card text-center"
+            [routerLink]="'/category/' + trendingCategories[0].id"
+          >
+            {{
+              trendingCategories[0] != undefined
+                ? trendingCategories[0].name
+                : ""
+            }}
+          </div>
           <div class="wrapper text-center mt-3">
-            <div class="small-card mr-3">Love</div>
+            <div
+              class="small-card mr-3"
+              [routerLink]="
+                trendingCategories != undefined
+                  ? '/category/' + trendingCategories[1].id
+                  : ''
+              "
+            >
+              {{
+                trendingCategories != undefined
+                  ? trendingCategories[1].name
+                  : ""
+              }}
+            </div>
             <div class="small-card">Travel</div>
           </div>
         </div>

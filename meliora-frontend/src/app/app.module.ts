@@ -34,6 +34,12 @@ import { ToastrModule } from 'ngx-toastr';
 import { QuotePageComponent } from './quote-page/quote-page.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { NoPostsCardComponent } from './no-posts-card/no-posts-card.component';
+import { MentalHealthComponent } from './mental-health/mental-health.component';
+import { ExpandedPostCardComponent } from './expanded-post-card/expanded-post-card.component';
+import { CommentCardComponent } from './comment-card/comment-card.component';
+import { NoProfileComponent } from './no-profile/no-profile.component';
+import { TrendingComponent } from './trending/trending.component';
+import { CategoryPageComponent } from './category-page/category-page.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +59,12 @@ import { NoPostsCardComponent } from './no-posts-card/no-posts-card.component';
     QuotePageComponent,
     ForgotPasswordComponent,
     NoPostsCardComponent,
+    MentalHealthComponent,
+    ExpandedPostCardComponent,
+    CommentCardComponent,
+    NoProfileComponent,
+    TrendingComponent,
+    CategoryPageComponent,
   ],
   imports: [
     BrowserModule,

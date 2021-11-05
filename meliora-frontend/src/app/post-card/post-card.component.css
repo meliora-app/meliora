@@ -60,6 +60,11 @@ img {
   float: right;
   margin-left: auto;
   margin-right: 0px;
+  text-decoration: none;
+}
+
+.category-pill:hover {
+  cursor: pointer;
 }
 
 hr {
@@ -68,4 +73,25 @@ hr {
 
 .trash-icon {
   color: red;
+}
+
+.tu {
+  margin-left: 280px;
+}
+
+.container {
+  display: flex;
+  align-self: flex-start;
+}
+
+.btn-lg {
+  border-radius: 30px;
+  font-size: 1.2em;
+  height: 2.5em;
+  background-color: #ffffffa9;
+}
+
+#right-react {
+  margin-top: -3.5em;
+  margin-left: 8em;
 }
