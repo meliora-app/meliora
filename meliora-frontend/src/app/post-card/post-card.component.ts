@@ -134,48 +134,68 @@ export class PostCardComponent implements OnInit {
   onThumbUpClicked() {
     this.thumbsUp = !this.thumbsUp;
     this.addReaction = this.thumbsUp;
+    var flag = '';
     if (this.thumbsUp) {
-      this.postService.storeReaction(
-        Reaction.THUMB,
-        this.post.postID,
-        this.userID
-      );
+      flag = 'ADD';
+    } else {
+      flag = 'REMOVE';
     }
+    this.postService.storeReaction(
+      Reaction.THUMB,
+      this.post.postID,
+      this.userID,
+      flag
+    );
   }
 
   onSmileyFaceClicked() {
     this.smileyFace = !this.smileyFace;
     this.addReaction = this.smileyFace;
+    var flag = '';
     if (this.smileyFace) {
-      this.postService.storeReaction(
-        Reaction.SMILEY,
-        this.post.postID,
-        this.userID
-      );
+      flag = 'ADD';
+    } else {
+      flag = 'REMOVE';
     }
+    this.postService.storeReaction(
+      Reaction.SMILEY,
+      this.post.postID,
+      this.userID,
+      flag
+    );
   }
 
   onHeartClicked() {
     this.heart = !this.heart;
     this.addReaction = this.heart;
+    var flag = '';
     if (this.heart) {
-      this.postService.storeReaction(
-        Reaction.HEART,
-        this.post.postID,
-        this.userID
-      );
+      flag = 'ADD';
+    } else {
+      flag = 'REMOVE';
     }
+    this.postService.storeReaction(
+      Reaction.HEART,
+      this.post.postID,
+      this.userID,
+      flag
+    );
   }
 
   onHugsClicked() {
     this.hugs = !this.hugs;
     this.addReaction = this.hugs;
+    var flag = '';
     if (this.hugs) {
-      this.postService.storeReaction(
-        Reaction.HUG,
-        this.post.postID,
-        this.userID
-      );
+      flag = 'ADD';
+    } else {
+      flag = 'REMOVE';
     }
+    this.postService.storeReaction(
+      Reaction.HUG,
+      this.post.postID,
+      this.userID,
+      flag
+    );
   }
 }

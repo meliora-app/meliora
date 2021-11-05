@@ -85,7 +85,12 @@ export class PostService {
     return newContent;
   }
 
-  storeReaction(reaction: Reaction, postID: string, profileID: string) {
+  storeReaction(
+    reaction: Reaction,
+    postID: string,
+    profileID: string,
+    flag: string
+  ) {
     this.http
       .post(
         'https://meliora-backend.herokuapp.com/api/reaction/add',
@@ -93,6 +98,7 @@ export class PostService {
           reaction: reaction,
           profileID: profileID,
           postID: postID,
+          flag: flag,
         },
         {
           headers: {
