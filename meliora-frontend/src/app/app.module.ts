@@ -39,6 +39,7 @@ import { ExpandedPostCardComponent } from './expanded-post-card/expanded-post-ca
 import { CommentCardComponent } from './comment-card/comment-card.component';
 import { NoProfileComponent } from './no-profile/no-profile.component';
 import { TrendingComponent } from './trending/trending.component';
+import { CategoryPageComponent } from './category-page/category-page.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { TrendingComponent } from './trending/trending.component';
     CommentCardComponent,
     NoProfileComponent,
     TrendingComponent,
+    CategoryPageComponent,
   ],
   imports: [
     BrowserModule,

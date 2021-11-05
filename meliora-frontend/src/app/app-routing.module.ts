@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CategoryPageComponent } from './category-page/category-page.component';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ExpandedPostCardComponent } from './expanded-post-card/expanded-post-card.component';
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'mental-health', component: MentalHealthComponent },
   { path: 'expanded-post', component: ExpandedPostCardComponent },
   { path: 'trending', component: TrendingComponent },
+  { path: 'category/:id', component: CategoryPageComponent },
 ];
 
 @NgModule({

@@ -89,13 +89,25 @@
         </div>
         <div class="general">
           <h2>Discover</h2>
-          <div class="big-card text-center">
+          <div
+            class="big-card text-center"
+            [routerLink]="'/category/' + trendingCategories[0].id"
+          >
             {{
-              trendingCategories != undefined ? trendingCategories[0].name : ""
+              trendingCategories[0] != undefined
+                ? trendingCategories[0].name
+                : ""
             }}
           </div>
           <div class="wrapper text-center mt-3">
-            <div class="small-card mr-3">
+            <div
+              class="small-card mr-3"
+              [routerLink]="
+                trendingCategories != undefined
+                  ? '/category/' + trendingCategories[1].id
+                  : ''
+              "
+            >
               {{
                 trendingCategories != undefined
                   ? trendingCategories[1].name
