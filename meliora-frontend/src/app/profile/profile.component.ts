@@ -97,7 +97,6 @@ export class ProfileComponent implements OnInit {
       this.userBlocked = resBody.blocked.includes(this.loggedInUser);
       this.isPrivate = resBody.private;
       for (let i = 0; i < resBody.bookmarks.length; i++) {
-
         this.bookmarkedPosts.push(
           new Post(
             resBody.bookmarks[i]._id,
@@ -107,11 +106,11 @@ export class ProfileComponent implements OnInit {
             resBody.bookmarks[i].category,
             resBody.bookmarks[i].anonymous,
             await this.userService.getUsername(resBody.bookmarks[i].author),
-            resBody.bookmarks[i].commentsAllowed)
+            resBody.bookmarks[i].commentsAllowed
+          )
         );
-
       }
-  
+
       if (!this.userBlocked) {
         let postRes = await fetch(
           'https://meliora-backend.herokuapp.com/api/posts/getPostsBy',
@@ -140,7 +139,10 @@ export class ProfileComponent implements OnInit {
             this.numThumbs += reactions.thumbs;
             this.numSmileys += reactions.smileys;
             this.numHugs += reactions.hugs;
-            if ((!postResBody[i].anonymous || this.belongsToUser) && !this.viewBookmarks) {
+            if (
+              (!postResBody[i].anonymous || this.belongsToUser) &&
+              !this.viewBookmarks
+            ) {
               this.posts.push(
                 new Post(
                   postResBody[i]._id,
@@ -205,93 +207,114 @@ export class ProfileComponent implements OnInit {
 
   async onFollowAddClicked() {
     // backend call
-    let res = await fetch('https://meliora-backend.herokuapp.com/api/users/follow', {
-      method: "PUT",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        followerID: this.loggedInUser,
-        followedID: this.viewedUserID
-      })
-    });
-    if (res.status == 200) {
-      this.followCheck = true;
-      this.followAdd = false;
-      window.location.reload();
-    }
-  }
-
-  async onUnfollowedClicked() {
-    if (confirm("Are you sure you want to unfollow " + this.viewedUsername + "?")) {
-      //backend call
-      let res = await fetch('https://meliora-backend.herokuapp.com/api/users/unfollow', {
-        method: "PUT",
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/users/follow',
+      {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           followerID: this.loggedInUser,
-          followedID: this.viewedUserID
-        })
-      });
-      if (res.status == 200) {
-        this.followCheck = false;
-        this.followAdd = true;
-        window.location.reload();
+          followedID: this.viewedUserID,
+        }),
       }
+    );
+    if (res.status == 200) {
+      this.followCheck = true;
+      this.followAdd = false;
+      this.numFollowers++;
+      // window.location.reload();
     }
   }
 
-  async onBlockClicked() {
-    if (confirm("Are you sure you want to block " + this.viewedUsername + "?")) {
-      // backend call
-      let res = await fetch('https://meliora-backend.herokuapp.com/api/users/block', {
-        method: "PUT",
+  async onUnfollowedClicked() {
+    // if (
+    //   confirm('Are you sure you want to unfollow ' + this.viewedUsername + '?')
+    // ) {
+    //backend call
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/users/unfollow',
+      {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          blockerID: this.loggedInUser,
-          blockedID: this.viewedUserID
-        })
-      });
-      if (res.status == 200) {
-        this.block = false;
-        this.unblock = true;
-        await this.onUnfollowedClicked();
-        res = await fetch('https://meliora-backend.herokuapp.com/api/users/unfollow', {
-          method: "PUT",
+          followerID: this.loggedInUser,
+          followedID: this.viewedUserID,
+        }),
+      }
+    );
+    if (res.status == 200) {
+      this.followCheck = false;
+      this.followAdd = true;
+      this.numFollowers--;
+    }
+    // }
+  }
+
+  async onBlockClicked() {
+    if (
+      confirm('Are you sure you want to block ' + this.viewedUsername + '?')
+    ) {
+      // backend call
+      let res = await fetch(
+        'https://meliora-backend.herokuapp.com/api/users/block',
+        {
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            followerID: this.viewedUserID,
-            followedID: this.loggedInUser
-          })
-        });
+            blockerID: this.loggedInUser,
+            blockedID: this.viewedUserID,
+          }),
+        }
+      );
+      if (res.status == 200) {
+        this.block = false;
+        this.unblock = true;
+        await this.onUnfollowedClicked();
+        res = await fetch(
+          'https://meliora-backend.herokuapp.com/api/users/unfollow',
+          {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              followerID: this.viewedUserID,
+              followedID: this.loggedInUser,
+            }),
+          }
+        );
       }
     }
   }
 
   async onUnblockClicked() {
-    if (confirm("Are you sure you want to unblock " + this.viewedUsername + "?")) {
+    if (
+      confirm('Are you sure you want to unblock ' + this.viewedUsername + '?')
+    ) {
       // backend call
-      let res = await fetch('https://meliora-backend.herokuapp.com/api/users/block', {
-        method: "PUT",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          blockerID: this.loggedInUser,
-          blockedID: this.viewedUserID
-        })
-      });
+      let res = await fetch(
+        'https://meliora-backend.herokuapp.com/api/users/block',
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            blockerID: this.loggedInUser,
+            blockedID: this.viewedUserID,
+          }),
+        }
+      );
       if (res.status == 200) {
         this.block = true;
         this.unblock = false;
       }
-
     }
   }
 
@@ -303,20 +326,22 @@ export class ProfileComponent implements OnInit {
   async onBookmarksClicked() {
     this.viewBookmarks = true;
     this.posts = this.bookmarkedPosts;
-
   }
 
   // this process is slow right now, we need to keep all current user information on hand
   async setFollowingVars() {
-    let res = await fetch('https://meliora-backend.herokuapp.com/api/users/getUser', {
-      method: "PUT",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        _id: this.loggedInUser
-      })
-    });
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/users/getUser',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          _id: this.loggedInUser,
+        }),
+      }
+    );
 
     if (res.status == 200) {
       let resBody = await res.json();
