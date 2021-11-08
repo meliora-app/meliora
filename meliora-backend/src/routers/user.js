@@ -4,6 +4,8 @@ import { User } from "../models/User.js";
 
 import { Post } from "../models/Post.js";
 
+import { notifyUserFollow } from "../util/notificationUtil.js";
+
 const userRouter = Router();
 
 /**

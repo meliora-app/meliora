@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { Reaction } from "../models/Reaction.js";
 import { Post } from "../models/Post.js";
+import { notifyUserReact } from "../util/notificationUtil.js";
 
 const reactionRouter = Router();
 
