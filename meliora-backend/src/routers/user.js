@@ -318,6 +318,8 @@ userRouter.put('/follow', async (req, res) => {
 
     await followingUser.save();
     await followedUser.save();
+
+    notifyUserFollow(followingUser.username, followedID);
   } catch (e) {
     console.error(e);
     res.status(500).send('An error occured on the backend.');

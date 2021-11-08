@@ -9,6 +9,7 @@ import cors from "cors";
 import { adminRouter } from "./routers/admin.js";
 import { commentRouter } from "./routers/comment.js";
 import { reactionRouter } from "./routers/reaction.js";
+import { notificationRouter } from "./routers/notification.js"
 
 config();
 
@@ -32,6 +33,7 @@ server.use("/api/users", userRouter);
 server.use("/api/categories", catRouter);
 server.use("/api/comment", commentRouter);
 server.use("/api/reaction", reactionRouter);
+server.use("/api/notifications", notificationRouter);
 
 server.use("/ping", pingRouter);
 server.use("/admin", adminRouter);

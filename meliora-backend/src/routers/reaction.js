@@ -58,6 +58,8 @@ reactionRouter.post("/add", async (req, res) => {
       existingData.reaction = reactionData.reaction;
       existingData.creationDate = Date.now();
       existingData.save();
+
+      notifyUserReact("placeholder", reactionData.reaction, reactionData.profileID);
     } else {
       const reaction = new Reaction(reactionData);
 
