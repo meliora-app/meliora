@@ -27,6 +27,7 @@ const postRouter = new Router();
  * Util Function to validate a new post
  */
 const isValidPost = (post) => {
+  /*
   console.log("post:", post);
   console.log(
     "and result: ",
@@ -36,6 +37,7 @@ const isValidPost = (post) => {
       "anonymous" in post &&
       "hidden" in post
   );
+  */
   return (
     "author" in post &&
     "title" in post &&

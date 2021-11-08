@@ -196,10 +196,8 @@ describe('Unit Tests for Post Router:', () => {
 		expect(post.commentsAllowed).toBe(false);
 	});
 
-	test('SP-2, US-6:', async () => {});
-
-	test('SP-2, US-6:', async () => {});
-
+	test('SP-2, US-6: Server should respond 200 if server is up and running.', async () => {});
+	
 	test('SP-2, US-9: Server should respond with 400 when the post/user does not exist.', async () => {
 		let res = await request(server)
 			.put('/api/posts/bookmark')
@@ -223,9 +221,9 @@ describe('Unit Tests for Post Router:', () => {
 		expect(res.status).toBe(200);
 	});
 
-	test('SP-2, US-10:', async () => {});
+	test('SP-2, US-10: Server should respond with 400 when no foreign user ID is provided.', async () => {});
 
-	test('SP-2, US-10:', async () => {});
+	test('SP-2, US-10: Server should respond with 200 when a correct user ID is provided.', async () => {});
 
 	test('SP-2, US-13: Server should respond 400 when invalid postID sent', async () => {
 		let res = await request(server)
@@ -235,6 +233,13 @@ describe('Unit Tests for Post Router:', () => {
 				profileID: process.env.TEST_USER_ID,
 				postID: process.env.TEST_BOGUS_POST_ID
 			});		
+		expect(res.status).toBe(400);
+	});
+
+	test('SP-2, US-13: Server should respond 400 when no request body is sent in.', async () => {
+		let res = await request(server)
+			.post('/api/reaction/add')
+			.set('Content-Type', 'application/json');		
 		expect(res.status).toBe(400);
 	});
 
@@ -250,13 +255,13 @@ describe('Unit Tests for Post Router:', () => {
 		expect(res.status).toBe(200);*/
 	});
 
-	test('SP-2, US-14:', async () => {});
+	test('SP-2, US-14: Server should respond with 400 when an ID is provided for a category that doesn\'t exist.', async () => {});
 
-	test('SP-2, US-14:', async () => {});
+	test('SP-2, US-14: Server should respond with 200 when a correct category ID is provided.', async () => {});
 
-	test('SP-2, US-15:', async () => {});
+	test('SP-2, US-15: Server should respond with 400 when no category ID is provided.', async () => {});
 
-	test('SP-2, US-15:', async () => {});
+	test('SP-2, US-15: Server should respond with 200 when a correct request body is provided.', async () => {});
 
 	afterAll(async () => {
 		await Post.deleteMany({title: 'Test2 Title'});
