@@ -59,6 +59,7 @@ describe('Unit Tests for Admin Functionality', () => {
 	test('SP-2, US-16: Upon manual setting of flags on an existing test post, server should return 200 and a populated list.', async () => {
 		let post = await Post.findById(process.env.TEST_POST_ID).exec();
 		post.flags = 10;
+		post.delinquent = true;
 		await post.save();
 
 		let res = await request(server)

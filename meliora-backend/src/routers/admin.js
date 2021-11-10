@@ -74,7 +74,7 @@ adminRouter.put('/eval', async (req, res) => {
 		if (decision) {
 			await Post.findByIdAndDelete(postID).exec();
 		} else {
-			await Post.findByIdAndUpdate(postID, { flags: 0 }).exec();
+			await Post.findByIdAndUpdate(postID, { flags: 0, delinquent: false }).exec();
 		}
 
 	} catch (e) {

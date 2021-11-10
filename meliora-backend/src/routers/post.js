@@ -27,6 +27,7 @@ const postRouter = new Router();
  * Util Function to validate a new post
  */
 const isValidPost = (post) => {
+  /*
   console.log("post:", post);
   console.log(
     "and result: ",
@@ -36,6 +37,7 @@ const isValidPost = (post) => {
       "anonymous" in post &&
       "hidden" in post
   );
+  */
   return (
     "author" in post &&
     "title" in post &&
@@ -259,7 +261,7 @@ postRouter.put("/bookmark", async (req, res) => {
       return;
     }
 
-    if (!user.boomarks) user.bookmarks = [];
+    if (!user.bookmarks) user.bookmarks = [];
 
     if (user.bookmarks.includes(post)) {
       res.status(400).send("You have already bookmarked this post.");
