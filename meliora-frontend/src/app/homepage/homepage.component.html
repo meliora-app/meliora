@@ -74,7 +74,27 @@
           </div>
         </div>
         <div id="post-container" class="general">
-          <h2>My Feed</h2>
+          <h2>My Feed
+            <mat-menu #filterMenu="matMenu">
+              <label
+                mat-menu-item
+              >
+                Sort by Number of Likes
+              </label>
+              <label
+                mat-menu-item
+              >
+                Sort by Number of Comments
+              </label>
+            </mat-menu>
+            <button
+                [mat-menu-trigger-for]="filterMenu"
+                mat-icon-button
+                class="btn btn-login"
+              >
+                <mat-icon>filter_list</mat-icon>
+              </button>
+          </h2>
           <ng-container *ngIf="posts.length > 0">
             <app-post-card
               *ngFor="let post of posts"
@@ -87,6 +107,7 @@
             ><app-no-posts-card></app-no-posts-card
           ></ng-container>
         </div>
+        
         <div class="general">
           <h2>Discover</h2>
           <div
