@@ -145,7 +145,9 @@ catRouter.get("/getPostsByCatFol", async (req, res) => {
 
 //helpers
 const isValidCategory = (category) => {
-  return "name" in category && "description" in category;
+  return (
+    "name" in category && "description" in category && "creator" in category
+  );
 };
 
 export { catRouter };

@@ -20,6 +20,14 @@ const CategorySchema = new Schema({
     type: [SchemaTypes.ObjectId],
     default: [],
   },
+  creator: {
+    type: SchemaTypes.ObjectId,
+    required: true,
+  },
+  creation_date: {
+    type: SchemaTypes.Date,
+    default: Date.now(),
+  },
 });
 
 const Category = new model("Category", CategorySchema);
