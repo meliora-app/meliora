@@ -112,6 +112,33 @@ catRouter.get("/getTrending", async (req, res) => {
   }
 });
 
+catRouter.get("/getPostsByCatFol", async (req, res) => {
+  var posts = [];
+  var userID = req.query.userID;
+
+  if (!userID) {
+    return res.status(400).send("Please pass a valid userID as query param.");
+  }
+
+  try {
+    var categories = await Category.find({}).exec();
+    for (var i = 0; i < categories.length; i++) {
+      var followers = categories[i].followers;
+      if (followers.includes(userID)) {
+        var catPosts = categories[i].posts;
+        for (var j = 0; j < catPosts.length; j++) {
+          var post = await Post.findById(catPosts[i]).exec();
+          posts.push(post);
+        }
+      }
+    }
+
+    res.status(200).send(posts);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 //helpers
 const isValidCategory = (category) => {
   return "name" in category && "description" in category;
