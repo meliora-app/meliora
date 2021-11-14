@@ -124,10 +124,14 @@ catRouter.get("/getPostsByCatFol", async (req, res) => {
     var categories = await Category.find({}).exec();
     for (var i = 0; i < categories.length; i++) {
       var followers = categories[i].followers;
+      // console.log(followers.includes(userID));
+      // console.log(followers);
       if (followers.includes(userID)) {
         var catPosts = categories[i].posts;
+        // console.log(catPosts);
         for (var j = 0; j < catPosts.length; j++) {
-          var post = await Post.findById(catPosts[i]).exec();
+          var post = await Post.findOne({ _id: catPosts[j] });
+          // console.log(catPosts[j].toString);
           posts.push(post);
         }
       }
