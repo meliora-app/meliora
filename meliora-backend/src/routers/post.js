@@ -433,19 +433,24 @@ postRouter.put("/setPrivate", async (req, res) => {
 });
 
 postRouter.get("/getPostsByLoc", async (req, res) => {
-  var loc = req.query.loc;
+  // var loc = req.query.loc;
+  var lat = parseFloat(req.query.lat).toFixed(2).toString();
+  var long = parseFloat(req.query.long).toFixed(2).toString();
   var userID = req.query.userID;
 
+  var locationString = "location = (" + lat;
+
   var postsByLoc = [];
-  console.log("loc", loc);
 
   try {
     var user = await User.findById(userID).exec();
     for (var i = 0; i < user.following.length; i++) {
       var posts = await Post.find({ author: user.following[i] }).exec();
       for (var j = 0; j < posts.length; j++) {
-        if (posts[j].content.includes(loc)) {
-          postsByLoc.push(posts[j]);
+        if (posts[j].content.includes(locationString)) {
+          if (posts[j].content.includes(long)) {
+            postsByLoc.push(posts[j]);
+          }
         }
       }
     }
