@@ -39,7 +39,7 @@ export interface PostData {
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   async getAll() {
     return this.http
@@ -117,4 +117,28 @@ export class CategoryService {
         console.log(res);
       });
   }
+
+  getPostsByCategoryFollowed(userID: string) {
+    var url = 'https://meliora-backend.herokuapp.com/api/categories/getPostsByCatFol?userID=' + userID;
+    return this.http.get(
+      url
+    );
+  }
+
+  createCategory(name: string, description: string, creator: string) {
+    var url = 'https://meliora-backend.herokuapp.com/api/categories/create';
+    this.http.post(
+      url,
+      { name: name, description: description, creator: creator },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    ).subscribe((res) => {
+      console.log(res);
+    });
+  }
 }
+
+

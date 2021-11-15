@@ -1,0 +1,16 @@
+.header {
+    font-size: 200%;
+    margin-top: 2%;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    margin-left: 18%;
+    margin-bottom: 20px;
+    margin-top: 2%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-flow: row wrap;
+    align-items: center;
+}

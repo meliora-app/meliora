@@ -9,11 +9,13 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LoginComponent } from './login/login.component';
 import { MentalHealthComponent } from './mental-health/mental-health.component';
+import { PostsByCategoryComponent } from './posts-by-category/posts-by-category.component';
 import { ProfileComponent } from './profile/profile.component';
 import { QuotePageComponent } from './quote-page/quote-page.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SignupComponent } from './signup/signup.component';
 import { TrendingComponent } from './trending/trending.component';
+import { CreateCategoryComponent } from './create-category/create-category.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing-page', pathMatch: 'full' },
@@ -30,6 +32,8 @@ const routes: Routes = [
   { path: 'mental-health', component: MentalHealthComponent },
   { path: 'expanded-post', component: ExpandedPostCardComponent },
   { path: 'trending', component: TrendingComponent },
+  { path: 'post-by-category', component: PostsByCategoryComponent },
+  { path: 'create-category', component: CreateCategoryComponent },
   { path: 'category/:id', component: CategoryPageComponent },
 ];
 
@@ -37,4 +41,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { anchorScrolling: 'enabled' })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

@@ -40,6 +40,8 @@ import { CommentCardComponent } from './comment-card/comment-card.component';
 import { NoProfileComponent } from './no-profile/no-profile.component';
 import { TrendingComponent } from './trending/trending.component';
 import { CategoryPageComponent } from './category-page/category-page.component';
+import { PostsByCategoryComponent } from './posts-by-category/posts-by-category.component';
+import { CreateCategoryComponent } from './create-category/create-category.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import { CategoryPageComponent } from './category-page/category-page.component';
     NoProfileComponent,
     TrendingComponent,
     CategoryPageComponent,
+    PostsByCategoryComponent,
+    CreateCategoryComponent,
   ],
   imports: [
     BrowserModule,

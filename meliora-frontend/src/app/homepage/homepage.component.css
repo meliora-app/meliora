@@ -42,7 +42,27 @@ body {
   border-radius: 30px;
   background-color: lightblue;
 }
+.category-button {
+  margin-top: 5%;
+  margin-left: 20%;
+  width: 38%;
+  height: 20%;
+  border-radius: 30px;
+  color: rgb(2, 114, 193);
+}
+
 
 .small-card:hover {
   cursor: pointer;
+}
+
+#post-by-category {
+  background-color: #76b2f6;
+  color: white;
+  margin-left: 3%;
+  border-radius: 40px;
+}
+
+.add{
+  margin-top: 0px;
 }

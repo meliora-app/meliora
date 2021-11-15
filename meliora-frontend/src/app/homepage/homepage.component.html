@@ -1,144 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../../assets/lotus.png" />
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
 
-    <!-- Learned Bootstrap From -->
-    <!-- https://getbootstrap.com/-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../../assets/lotus.png" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
-    <!-- Font Awesome -->
-    <script
-      src="https://kit.fontawesome.com/25ed10730a.js"
-      crossorigin="anonymous"
-    ></script>
+  <!-- Learned Bootstrap From -->
+  <!-- https://getbootstrap.com/-->
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Raleway&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/25ed10730a.js" crossorigin="anonymous"></script>
 
-    <!-- Animate.css -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" />
 
-    <title>Meliora</title>
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
-    <script type="text/javascript" src="./loading/loading.js"></script>
-  </head>
-  <body [ngClass]="darkModeStatus ? 'dark-mode' : ''">
-    <div>
-      <!-- Navbar Component -->
-      <app-home-navbar></app-home-navbar>
+  <title>Meliora</title>
 
-      <div class="wrapper column justify-content-between mt-3 pl-5">
-        <div class="general">
-          <h2>Your Favorites</h2>
-          <div class="category-grid">
-            <app-category-pill
-              class="mt-3"
-              *ngFor="let category of categories"
-              [categoryName]="category"
-            ></app-category-pill>
-          </div>
+  <script type="text/javascript" src="./loading/loading.js"></script>
+</head>
+
+<body [ngClass]="darkModeStatus ? 'dark-mode' : ''">
+  <div>
+    <!-- Navbar Component -->
+    <app-home-navbar></app-home-navbar>
+
+    <div class="wrapper column justify-content-between mt-3 pl-5">
+      <div class="general">
+        <h2>Your Favorites</h2>
+        <div class="category-grid">
+          <app-category-pill class="mt-3" *ngFor="let category of categories" [categoryName]="category">
+          </app-category-pill>
         </div>
-        <div id="post-container" class="general">
-          <h2>My Feed
-            <mat-menu #filterMenu="matMenu">
-              <label
-                mat-menu-item
-              >
-                Sort by Number of Likes
-              </label>
-              <label
-                mat-menu-item
-              >
-                Sort by Number of Comments
-              </label>
-            </mat-menu>
-            <button
-                [mat-menu-trigger-for]="filterMenu"
-                mat-icon-button
-                class="btn btn-login"
-              >
-                <mat-icon>filter_list</mat-icon>
-              </button>
-          </h2>
-          <ng-container *ngIf="posts.length > 0">
-            <app-post-card
-              *ngFor="let post of posts"
-              [post]="post"
-              [isExpanded]="false"
-              style="margin: 10px"
-            ></app-post-card>
-          </ng-container>
-          <ng-container *ngIf="posts.length == 0"
-            ><app-no-posts-card></app-no-posts-card
-          ></ng-container>
+      </div>
+      <div id="post-container" class="general">
+        <h2>My Feed
+          <mat-menu #filterMenu="matMenu">
+            <label mat-menu-item>
+              Sort by Number of Likes
+            </label>
+            <label mat-menu-item>
+              Sort by Number of Comments
+            </label>
+          </mat-menu>
+          <button [mat-menu-trigger-for]="filterMenu" mat-icon-button class="btn btn-login">
+            <mat-icon>filter_list</mat-icon>
+          </button>
+          <button class="btn btn-lg" id="post-by-category" routerLink="/post-by-category">
+            My Categories
+          </button>
+        </h2>
+
+        <ng-container *ngIf="posts.length > 0">
+          <app-post-card *ngFor="let post of posts" [post]="post" [isExpanded]="false" style="margin: 10px">
+          </app-post-card>
+        </ng-container>
+        <ng-container *ngIf="posts.length == 0">
+          <app-no-posts-card></app-no-posts-card>
+        </ng-container>
+      </div>
+
+      <div class="general">
+        <h2>Discover</h2>
+        <div class="big-card text-center" [routerLink]="'/category/' + trendingCategories[0].id">
+          {{
+          trendingCategories[0] != undefined
+          ? trendingCategories[0].name
+          : ""
+          }}
         </div>
-        
-        <div class="general">
-          <h2>Discover</h2>
-          <div
-            class="big-card text-center"
-            [routerLink]="'/category/' + trendingCategories[0].id"
-          >
-            {{
-              trendingCategories[0] != undefined
-                ? trendingCategories[0].name
-                : ""
-            }}
-          </div>
-          <div class="wrapper text-center mt-3">
-            <div
-              class="small-card mr-3"
-              [routerLink]="
+        <div class="wrapper text-center mt-3">
+          <div class="small-card mr-3" [routerLink]="
                 trendingCategories != undefined
                   ? '/category/' + trendingCategories[1].id
                   : ''
-              "
-            >
-              {{
-                trendingCategories != undefined
-                  ? trendingCategories[1].name
-                  : ""
-              }}
-            </div>
-            <div class="small-card">Travel</div>
+              ">
+            {{
+            trendingCategories != undefined
+            ? trendingCategories[1].name
+            : ""
+            }}
           </div>
+          <div class="small-card">Travel</div>
+
         </div>
+
+        <button class="text-center justify-content-center btn btn-lg category-button" routerLink="/create-category/">
+          <i class="fas fa-plus add"></i>Create a Category
+        </button>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
