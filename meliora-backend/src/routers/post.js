@@ -404,34 +404,56 @@ postRouter.get("/getTrending", async (req, res) => {
   }
 });
 
-postRouter.put('/setPrivate', async (req, res) => {
+postRouter.put("/setPrivate", async (req, res) => {
   let { postID } = req.body;
 
   if (!postID) {
-    res.status(400).send('You must send in a post ID!');
+    res.status(400).send("You must send in a post ID!");
     return;
   }
 
   try {
-
     let post = await Post.findById(postID).exec();
 
     if (!post) {
-      res.status(400).send('This post doesn\'t exist!');
+      res.status(400).send("This post doesn't exist!");
       return;
     }
 
     post.hidden = !post.hidden;
 
     await post.save();
-
   } catch (e) {
     console.error(e);
-    res.status(500).send('An error occured on the backend.');
+    res.status(500).send("An error occured on the backend.");
     return;
   }
 
   res.status(200).send(true);
+});
+
+postRouter.get("/getPostsByLoc", async (req, res) => {
+  var loc = req.query.loc;
+  var userID = req.query.userID;
+
+  var postsByLoc = [];
+  console.log("loc", loc);
+
+  try {
+    var user = await User.findById(userID).exec();
+    for (var i = 0; i < user.following.length; i++) {
+      var posts = await Post.find({ author: user.following[i] }).exec();
+      for (var j = 0; j < posts.length; j++) {
+        if (posts[j].content.includes(loc)) {
+          postsByLoc.push(posts[j]);
+        }
+      }
+    }
+
+    res.status(200).send(postsByLoc);
+  } catch (err) {
+    res.status(500).send("DB error: " + err.toString());
+  }
 });
 
 export { postRouter };
