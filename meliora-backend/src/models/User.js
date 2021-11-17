@@ -75,8 +75,50 @@ const UserSchema = new Schema({
 	shareURL: {
 		type: SchemaTypes.String,
 		required: false
+	},
+	eq: { /* Points earned for actions taken on app */
+		type: SchemaTypes.Number,
+		default: 0
 	}
 });
+
+
+/**
+ * Add to this method when new fields are added to schema
+ */
+UserSchema.methods.checkUndefined = () => {
+	if (typeof(this.eq) == 'undefined')
+		this.eq = 0;
+
+	if (typeof(this.notificationPreference) == 'undefined')
+		this.notificationPreference = 3;
+	
+	if (typeof(this.shareURL) == 'undefined')
+		this.shareURL = "";
+}
+
+/**
+ * Check for a bookmark
+ */
+UserSchema.methods.checkForBookmark = postID => {
+	var i = 0;
+
+	while (i < this.bookmarks.length) {
+		if (this.bookmarks[i]._id == postID)
+			return true;
+	}
+
+	return false;
+};
+
+/**
+ * Remove a bookmark
+ */
+UserSchema.methods.removeBookmark = (postID) => {
+	this.bookmarks.filter(post => {
+		return post._id != postID;
+	});
+};
 
 const User = new model("User", UserSchema);
 

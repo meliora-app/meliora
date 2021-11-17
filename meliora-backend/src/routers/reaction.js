@@ -2,6 +2,7 @@ import { Router } from "express";
 import { Reaction } from "../models/Reaction.js";
 import { Post } from "../models/Post.js";
 import { notifyUserReact } from "../util/notificationUtil.js";
+import { User } from "../models/User.js";
 
 const reactionRouter = Router();
 
@@ -24,6 +25,7 @@ reactionRouter.post("/add", async (req, res) => {
         { postID: reactionData.postID },
       ],
     }).exec();
+    const sender = await User.findById(reactionData.senderID).exec();
 
     if (existingData) {
       var currReaction;
@@ -35,6 +37,7 @@ reactionRouter.post("/add", async (req, res) => {
           ],
         }).exec();
         currReaction = reactionData.reaction;
+        sender.eq = sender.eq - 1;
       } else {
         currReaction = existingData.reaction;
       }
@@ -59,9 +62,15 @@ reactionRouter.post("/add", async (req, res) => {
       existingData.creationDate = Date.now();
       existingData.save();
 
-      notifyUserReact("placeholder", reactionData.reaction, reactionData.profileID);
+      notifyUserReact(sender.username, reactionData.reaction, reactionData.profileID);
     } else {
       const reaction = new Reaction(reactionData);
+
+      sender.eq = sender.eq + 1;
+
+      await sender.save();
+
+      notifyUserReact(sender.username, reactionData.reaction, reactionData.profileID);
 
       await reaction.save();
     }
@@ -94,7 +103,8 @@ const isValidReaction = (reactionData) => {
       reactionData.reaction === "hug") &&
     "profileID" in reactionData &&
     "postID" in reactionData &&
-    "flag" in reactionData
+    "flag" in reactionData &&
+    "senderID" in reactionData
   );
 };
 

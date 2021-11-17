@@ -79,6 +79,10 @@ userRouter.put("/login", async (req, res) => {
       res.status(400).send("This user does not exist!");
       return;
     }
+
+    userDoc.checkUndefined();
+
+    await userDoc.save();
   } catch (e) {
     console.error(e);
     res.status(500).send("An error occurred on the backend.");
