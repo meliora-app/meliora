@@ -67,6 +67,14 @@ const UserSchema = new Schema({
 	darkModeStatus: {
 		type: SchemaTypes.Boolean,
 		default: false
+	},
+	notificationPreference: {
+		type: SchemaTypes.Number,
+		default: 3 // 0 for none, 1 for 'follows only,' 2 for 'my posts and follows,', 3 for 'my posts, follows, comments on posts I interact with'
+	},
+	shareURL: {
+		type: SchemaTypes.String,
+		required: false
 	}
 });
 

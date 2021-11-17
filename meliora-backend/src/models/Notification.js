@@ -11,6 +11,10 @@ const NotificationSchema = new Schema({
 		type: SchemaTypes.String,
 		required: true
 	},
+	sender: {
+		type: SchemaTypes.ObjectId,
+		required: true
+	},
 	recipient: {
 		type: SchemaTypes.ObjectId,
 		required: true

@@ -6,7 +6,16 @@ import { Post } from "../models/Post.js";
 
 import { notifyUserFollow } from "../util/notificationUtil.js";
 
+import Shortener from '@studiohyperdrive/shortener';
+
 const userRouter = Router();
+
+const shortener = new Shortener({
+  target: 'https://short.er',
+  alphabet: 'alphanumeric'
+});
+
+const baseURL = 'http://localhost:4200/'
 
 /**
  * Util func to make sure input is correct format
@@ -443,6 +452,63 @@ userRouter.put('/setPrivate', async (req, res) => {
 
   res.status(200).send(true);
   return;
+});
+
+/**
+ * Update Notification Preferences
+ */
+userRouter.put('/setNotifications', async (req, res) => {
+  let { userID, preference } = req.body;
+
+  if (!userID || !preference) {
+    res.status(400).send('You must send in a user ID and a preference!');
+    return;
+  }
+
+  try {
+
+    let user = await User.findById(userID).exec();
+    user.notifcationPreference = preference;
+    await user.save();
+
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend!');
+    return;
+  }
+
+  res.status(200).send(true);
+});
+
+/**
+ * Route to generate and save unique URL
+ */
+userRouter.put('/share', async (req, res) => {
+  let { userID } = req.body;
+
+  if (!userID) {
+    res.status(400).send('You must send in a userID!');
+    return;
+  }
+  
+  let user;
+  try {
+
+    user = await User.findById(userID).exec();
+
+    if (!user.shareURL) {
+      user.shareURL = shortener.shorten(baseURL + 'profile?_id=' + userID);
+      console.log(user.shareURL);
+      await user.save();
+    }
+
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend.');
+    return;
+  }
+
+  res.status(200).send(user.shareURL);
 });
 
 export { userRouter };
