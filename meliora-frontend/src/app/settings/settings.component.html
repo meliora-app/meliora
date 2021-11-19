@@ -129,6 +129,18 @@
             <label class="form-check" for="flexCheckChecked">
               Private
         </label>
+        </div>
+        <div class="form-group row">
+          <label class="form-check" for="flexCheckChecked">
+            Post Notification Preferences:
+        </label>
+        <select class="ml-3">
+          <option [ngValue]="null">{{ notificationPreference }}</option>
+          <option>No Notifications</option>
+          <option>Notifications for posts I react to</option>
+          <option>Notifications for posts I comment to</option>
+          <option>Notifications for all posts</option>
+        </select>
       </div>
           <div class="text-center">
             <button type="submit" class="btn btn-lg signup-submit text-center" 

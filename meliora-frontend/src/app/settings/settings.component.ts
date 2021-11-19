@@ -40,6 +40,7 @@ export class SettingsComponent implements OnInit {
   userID = localStorage.getItem('userID');
   settings: Settings;
   private: boolean = true;
+  notificationPreference: string = "Default";
 
   constructor(public authService: AuthService, public router: Router) {}
 
@@ -175,5 +176,9 @@ export class SettingsComponent implements OnInit {
         }),
       }
     );
+  }
+
+  async notificationChance(event: any) {
+    // TODO: Set notification preference
   }
 }
