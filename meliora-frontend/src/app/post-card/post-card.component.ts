@@ -30,6 +30,8 @@ export class PostCardComponent implements OnInit {
   isNotUser: boolean;
   category: Category = { id: '', name: '' };
   totalReactions: number = 0;
+  showHide: boolean = true;
+  expand: boolean = false;
 
   darkModeStatus: boolean = localStorage.getItem('darkModeStatus') == 'true';
   ref: AngularFireStorageReference;
@@ -225,6 +227,11 @@ export class PostCardComponent implements OnInit {
       flag
     );
     await this.calcTotalReactions();
+  }
+
+  async onEyeClicked() {
+    this.showHide = !this.showHide;
+    this.expand = !this.showHide;
   }
 
   async calcTotalReactions() {
