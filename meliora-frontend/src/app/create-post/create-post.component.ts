@@ -16,6 +16,7 @@ export class CreatePostComponent implements OnInit {
   visibilityClicked: boolean = false;
   imageClicked: boolean = false;
   commentClicked: boolean = false;
+  draftClicked: boolean = false;
   categories: Category[];
   words: number = 0;
   Lat: any = -1;
@@ -175,6 +176,10 @@ export class CreatePostComponent implements OnInit {
 
   onImageClicked() {
     this.imageClicked = !this.imageClicked;
+  }
+
+  onDraftClicked() {
+    this.draftClicked = !this.draftClicked;
   }
 
   recordLocation() {

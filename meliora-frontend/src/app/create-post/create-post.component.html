@@ -77,6 +77,10 @@
               [ngStyle]="{ color: commentClicked ? 'red' : '#0b3d77' }">
               <mat-icon>comment</mat-icon>
             </button>
+            <button mat-icon-button type="button" (click)="onDraftClicked()"
+              [ngStyle]="{ color: draftClicked ? 'green' : '#0b3d77' }">
+              <mat-icon>drafts</mat-icon>
+            </button>
           </div>
         </div>
         <div class="wcStyle">
