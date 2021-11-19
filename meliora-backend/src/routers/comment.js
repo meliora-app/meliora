@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { Comment } from "../models/Comment.js";
+import { Post } from "../models/Post.js";
 import { User } from "../models/User.js";
+import { notfiyUserComment, notfiyWatchlistComment, notifyWatchlistComment } from "../util/notificationUtil.js";
 
 const commentRouter = Router();
 
@@ -21,6 +23,10 @@ commentRouter.post("/add", async (req, res) => {
     
     const user = await User.findById(commentData.profileId).exec();
     user.eq = user.eq + 3;
+
+    notfiyUserComment(user, commentData.comment, await Post.findById(commentData.postID).exec().author);
+    notfiyWatchlistComment(user, commentData.comment, await Post.findById(commentData.postID).exec().watchlist);
+
     await user.save();
   } catch (e) {
     res.status(500).send(`Database error: ${err}`);
