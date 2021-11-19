@@ -34,6 +34,7 @@ export class ProfileComponent implements OnInit {
   numThumbs: any = '--';
   numSmileys: any = '--';
   numHugs: any = '--';
+  eqPoints: any = '--';
   belongsToUser: boolean;
   isNotUser: boolean;
   followAdd: boolean = true; // plus button to follow user
