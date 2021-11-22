@@ -29,6 +29,7 @@ export class PostService {
 
     console.log(postData);
 
+    /*
     this.http
       .post(
         'https://meliora-backend.herokuapp.com/api/posts/create',
@@ -42,6 +43,19 @@ export class PostService {
       .subscribe((responseData) => {
         console.log(responseData);
       });
+      */
+
+      let res = await fetch('https://meliora-backend.herokuapp.com/api/posts/create', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
+      });
+
+      let newPostData = await res.json();
+
+      return newPostData._id;
   }
 
   async getPostByID(id: string) {
@@ -112,6 +126,4 @@ export class PostService {
         console.log(responseData);
       });
   }
-
-  
 }

@@ -53,6 +53,7 @@ export class PostCardComponent implements OnInit {
     }
     this.getCategory();
     await this.getProfilePic();
+    await this.getPostPic();
     this.calcTotalReactions();
     this.belongsToUser = this.userID == this.post.authorID;
   }
@@ -127,6 +128,14 @@ export class PostCardComponent implements OnInit {
 
   getProfilePic() {
     this.ref = this.fireStorage.ref('profilePictures/' + this.post.authorID);
+    this.ref.getDownloadURL().subscribe((url) => {
+      this.downloadURL = url;
+      // this.timestamp = new Date().getTime();
+    });
+  }
+
+  getPostPic() {
+    this.ref = this.fireStorage.ref('postPictures/' + this.post.postID);
     this.ref.getDownloadURL().subscribe((url) => {
       this.downloadURL = url;
       // this.timestamp = new Date().getTime();

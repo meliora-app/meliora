@@ -65,7 +65,7 @@
             </select>
           </div>
           <div class="post-options mb-3">
-            <button type="button" mat-icon-button (click)="onImageClicked()"
+            <button type="button" mat-icon-button (click)="fileInput.click()"
               [ngStyle]="{ color: imageClicked ? 'red' : '#0b3d77' }">
               <mat-icon>image</mat-icon>
             </button>
@@ -81,6 +81,12 @@
               [ngStyle]="{ color: draftClicked ? 'green' : '#0b3d77' }">
               <mat-icon>drafts</mat-icon>
             </button>
+            <input
+            style="display: none"
+            type="file"
+            (change)="cacheImageForUpload($event)"
+            #fileInput
+            />
           </div>
         </div>
         <div class="wcStyle">
