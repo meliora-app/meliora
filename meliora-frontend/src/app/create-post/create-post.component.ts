@@ -5,6 +5,11 @@ import { CategoryService } from '../shared/services/category.service';
 import { PostService } from '../shared/services/post.service';
 import { ToastService } from '../shared/services/toast.service';
 import { Category } from '../shared/models/category.model';
+import { 
+  AngularFireStorage,
+  AngularFireStorageReference,
+  AngularFireUploadTask,
+ } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-create-post',
@@ -19,6 +24,10 @@ export class CreatePostComponent implements OnInit {
   draftClicked: boolean = false;
   categories: Category[];
   words: number = 0;
+  image = null;
+  postID = null;
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
   Lat: any = -1;
   Long: any = -1;
 
@@ -28,7 +37,8 @@ export class CreatePostComponent implements OnInit {
     private postService: PostService,
     private router: Router,
     private toast: ToastService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private fireStorage: AngularFireStorage
   ) { }
 
   ngOnInit(): void {
@@ -156,7 +166,7 @@ export class CreatePostComponent implements OnInit {
     console.log(this.categories);
     console.log(categoryIndex);
     console.log(categoryID);
-    await this.postService.createPost(
+    this.postID = await this.postService.createPost(
       form.value.title,
       form.value.content,
       categoryID,
@@ -164,6 +174,9 @@ export class CreatePostComponent implements OnInit {
       this.visibilityClicked,
       !this.commentClicked
     );
+
+    if (this.image != null)
+      this.uploadImage();
 
     this.router.navigate(['/home']);
     this.toast.showSuccessMessage('Post created successfully', 'Post');
@@ -193,5 +206,14 @@ export class CreatePostComponent implements OnInit {
 
   onCommentClicked() {
     this.commentClicked = !this.commentClicked;
+  }
+
+  cacheImageForUpload(event) {
+    this.image = event.target.files[0];
+  }
+
+  uploadImage() {
+    this.ref = this.fireStorage.ref('postPictures/' + this.postID);
+    this.task = this.ref.put(this.image);
   }
 }
