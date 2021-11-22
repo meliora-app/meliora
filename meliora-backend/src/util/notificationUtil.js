@@ -11,8 +11,6 @@ const watchlistReactBaseString = " has reacted to a post that engaged with, they
 
 const watchlistCommentBaseString = " has commented on a post that you engaged with, and said \"";
 
-const 
-
 const FOLLOW = 0;
 const REACT = 1;
 const INTERACTION = 2;
@@ -105,7 +103,7 @@ const notfiyWatchlistReact = async (sender, watchlist, reaction) => {
 
 };
 
-const notfiyWatchlistComment = async (sender, commentText, watchlist) => {
+const notifyWatchlistComment = async (sender, commentText, watchlist) => {
 	let newNotif = {
 		type: INTERACTION,
 		text: sender.username + watchlistCommentBaseString + commentText + "\"",
@@ -136,5 +134,5 @@ export {
 	notifyUserReact,
 	notfiyUserComment,
 	notfiyWatchlistReact,
-	notfiyWatchlistComment
+	notifyWatchlistComment
 };
