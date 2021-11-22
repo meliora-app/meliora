@@ -91,7 +91,7 @@ const notfiyWatchlistReact = async (sender, watchlist, reaction) => {
 		watchlist.forEach(async (id) => {
 			let user = await User.findById(id).exec();
 
-			if (user.notifcationPreference < 3)
+			if (user.notifcationPreference < 3 || user._id == sender._id)
 				return;
 
 			newNotif.recipientID = id;
@@ -118,7 +118,7 @@ const notfiyWatchlistComment = async (sender, commentText, watchlist) => {
 		watchlist.forEach(async (id) => {
 			let user = await User.findById(id).exec();
 
-			if (user.notifcationPreference < 3)
+			if (user.notifcationPreference < 3 || user._id == sender._id)
 				return;
 
 			newNotif.recipientID = id;

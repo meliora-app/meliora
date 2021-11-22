@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { Reaction } from "../models/Reaction.js";
 import { Post } from "../models/Post.js";
-import { notifyUserReact } from "../util/notificationUtil.js";
+import { notfiyWatchlistReact, notifyUserReact } from "../util/notificationUtil.js";
 import { User } from "../models/User.js";
 
 const reactionRouter = Router();
@@ -66,11 +66,11 @@ reactionRouter.post("/add", async (req, res) => {
     } else {
       const reaction = new Reaction(reactionData);
 
+      postData.watchlist.push(sender._id);
+
       sender.eq = sender.eq + 1;
 
       await sender.save();
-
-      notifyUserReact(sender.username, reactionData.reaction, reactionData.profileID);
 
       await reaction.save();
     }
@@ -88,6 +88,8 @@ reactionRouter.post("/add", async (req, res) => {
       postData.reactions.hugs = postData.reactions.hugs + 1;
     }
     await postData.save();
+    notifyUserReact(sender.username, reactionData.reaction, reactionData.profileID);
+    notfiyWatchlistReact(sender, reactionData.reaction,  postData.watchlist);
     res.status(200).send("Reaction added successfully!");
   } catch (err) {
     res.status(500).send(`Database error: ${err}`);
