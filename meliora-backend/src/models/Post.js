@@ -75,6 +75,10 @@ const PostSchema = new Schema({
       default: 0,
     },
   },
+  watchlist: {
+    type: [SchemaTypes.ObjectId],
+    default: []
+  }
 });
 
 const Post = new model("Post", PostSchema);

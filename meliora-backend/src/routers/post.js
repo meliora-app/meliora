@@ -113,6 +113,7 @@ postRouter.post("/create", async (req, res) => {
     let category = await Category.findById(newPost.category).exec();
 
     user.authorList.push(postDocument._id);
+    user.eq = user.eq += 5;
     category.posts.push(postDocument._id);
 
     await user.save();
@@ -263,12 +264,8 @@ postRouter.put("/bookmark", async (req, res) => {
 
     if (!user.bookmarks) user.bookmarks = [];
 
-    if (user.bookmarks.includes(post)) {
-      res.status(400).send("You have already bookmarked this post.");
-      return;
-    }
+    user.checkForBookmark(postID) ? user.removeBookmark(postID) : user.bookmarks.push(post);
 
-    user.bookmarks.push(post);
     await user.save();
   } catch (e) {
     res.status(500).send("An error occured on the backend.");

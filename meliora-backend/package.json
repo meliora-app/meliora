@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/meliora-app/meliora#readme",
   "dependencies": {
+    "@studiohyperdrive/shortener": "^1.0.2",
     "bcrypt": "^5.0.1",
     "core-js": "^3.17.3",
     "cors": "^2.8.5",

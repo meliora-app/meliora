@@ -1,11 +1,14 @@
 import { Router } from "express";
 import { Comment } from "../models/Comment.js";
+import { Post } from "../models/Post.js";
+import { User } from "../models/User.js";
+import { notfiyUserComment, notfiyWatchlistComment, notifyWatchlistComment } from "../util/notificationUtil.js";
 
 const commentRouter = Router();
 
 export { commentRouter };
 
-commentRouter.post("/add", (req, res) => {
+commentRouter.post("/add", async (req, res) => {
   var commentData = req.body;
   if (!isValidComment(commentData)) {
     res
@@ -14,15 +17,23 @@ commentRouter.post("/add", (req, res) => {
     return;
   }
 
-  const comment = new Comment(commentData);
-  comment
-    .save()
-    .then((result) => {
-      res.status(200).send("Comment created successfully!");
-    })
-    .catch((err) => {
-      res.status(500).send(`Database error: ${err}`);
-    });
+  try {
+    await new Comment(commentData).save();
+
+    
+    const user = await User.findById(commentData.profileId).exec();
+    user.eq = user.eq + 3;
+
+    notfiyUserComment(user, commentData.comment, await Post.findById(commentData.postID).exec().author);
+    notfiyWatchlistComment(user, commentData.comment, await Post.findById(commentData.postID).exec().watchlist);
+
+    await user.save();
+  } catch (e) {
+    res.status(500).send(`Database error: ${err}`);
+    return;
+  }
+
+  res.status(200).send("Comment created successfully!");
 });
 
 commentRouter.put("/getComments", async (req, res) => {
