@@ -6,8 +6,6 @@ import { Post } from "../models/Post.js";
 
 import { notifyUserFollow } from "../util/notificationUtil.js";
 
-import Shortener from '@studiohyperdrive/shortener';
-
 const userRouter = Router();
 
 /**
