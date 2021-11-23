@@ -17,7 +17,7 @@ notificationRouter.put('/', async (req, res) => {
 	let notifications = []
 	try {
 
-		notifications = await Notification.findMany({ recipient: userID }).exec();
+		notifications = await Notification.find({ recipient: userID }).exec();
 
 	} catch (e) {
 		console.error(e);

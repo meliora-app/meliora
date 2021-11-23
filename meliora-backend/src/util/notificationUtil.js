@@ -19,9 +19,11 @@ const notifyUserFollow = async (sender, recipientID) => {
 	let newNotif = {
 		type: FOLLOW,
 		text: sender.username + followNotificationBaseString,
-		recipientID,
-		senderID: sender._id
+		recipient: recipientID,
+		sender: sender._id
 	};
+
+	console.log(newNotif);
 
 	try {
 		let user = await User.findById(recipientID).exec();
