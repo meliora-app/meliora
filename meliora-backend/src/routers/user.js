@@ -10,13 +10,6 @@ import Shortener from '@studiohyperdrive/shortener';
 
 const userRouter = Router();
 
-const shortener = new Shortener({
-  target: 'https://short.er',
-  alphabet: 'alphanumeric'
-});
-
-const baseURL = 'http://localhost:4200/'
-
 /**
  * Util func to make sure input is correct format
  */
@@ -499,12 +492,6 @@ userRouter.put('/share', async (req, res) => {
   try {
 
     user = await User.findById(userID).exec();
-
-    if (!user.shareURL) {
-      user.shareURL = shortener.shorten(baseURL + 'profile?_id=' + userID);
-      console.log(user.shareURL);
-      await user.save();
-    }
 
   } catch (e) {
     console.error(e);
