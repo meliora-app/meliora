@@ -515,4 +515,55 @@ userRouter.put('/share', async (req, res) => {
   res.status(200).send(user.shareURL);
 });
 
+/**
+ * Update sort preference
+ */
+ userRouter.put('/sortPreference', async (req, res) => {
+  let { userID, newSortPreference } = req.body;
+
+  if (!userID) {
+    res.status(400).send('You must send in a userID!');
+    return;
+  }
+  
+  let user;
+  try {
+
+    user = await User.findById(userID).exec();
+    user.sortPreference = newSortPreference;
+    await user.save();
+
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend: ' + e);
+    return;
+  }
+
+  res.status(200).send(user.sortPreference);
+});
+
+/**
+ * Return search suggestions
+ */
+ userRouter.put('/searchSuggestion', async (req, res) => {
+  let input  = req.body.input;
+
+  if (!input) {
+    res.status(400).send('Invalid search, you must send in input');
+    return;
+  }
+  
+  let searchResults;
+  try {
+    searchResults = await User.find({ username: {$regex : new RegExp(input), $options:'i'}}).clone();
+
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend: ' + e);
+    return;
+  }
+
+  res.status(200).send(searchResults + " TEST");
+});
+
 export { userRouter };

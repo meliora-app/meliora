@@ -78,6 +78,9 @@ const PostSchema = new Schema({
   watchlist: {
     type: [SchemaTypes.ObjectId],
     default: []
+  },
+  draft: {
+    type: SchemaTypes.Boolean,
   }
 });
 

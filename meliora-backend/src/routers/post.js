@@ -11,6 +11,7 @@ import { User } from "../models/User.js";
 import mongoose from "mongoose";
 import { Category } from "../models/Category.js";
 import { Reaction } from "../models/Reaction.js";
+import {ShareLink} from "social-media-sharing";
 
 let { ObjectId } = mongoose.Types;
 
@@ -45,6 +46,12 @@ const isValidPost = (post) => {
     "anonymous" in post &&
     "hidden" in post &&
     "category" in post
+  );
+};
+
+const isValidDraft = (draft) => {
+  return (
+    "author" in post
   );
 };
 
@@ -337,6 +344,8 @@ postRouter.put("/react", async (req, res) => {
  * Get posts from followed users
  */
 postRouter.put("/getFollowingPosts", async (req, res) => {
+
+  // use sort preference
   let { userID } = req.body;
 
   if (!userID) {
@@ -347,8 +356,10 @@ postRouter.put("/getFollowingPosts", async (req, res) => {
   let posts = [];
   let userDoc;
   let followedUser;
+  let sortPreference;
   try {
     userDoc = await User.findById(userID).exec();
+    sortPreference = userDoc.sortPreference;
     for (let followedID of userDoc.following) {
       followedUser = await User.findById(followedID).exec();
       for (let postID of followedUser.authorList) {
@@ -457,5 +468,48 @@ postRouter.get("/getPostsByLoc", async (req, res) => {
     res.status(500).send("DB error: " + err.toString());
   }
 });
+
+/**
+ * save a draft of a post
+ */
+postRouter.post("/saveDraft", async (req, res) => {
+  let newDraft = req.body;
+
+  if (!isValidDraft(newDraft)) {
+    res.status(400).send("The object structure of this draft was invalid!");
+    return;
+  }
+
+  let postDocument;
+  try {
+    postDocument = await new Post(newDraft).save();
+
+    let user = await User.findById(newDraft.author).exec();
+
+    user.authorList.push(postDocument._id);
+
+    await user.save();
+  } catch (e) {
+    res.status(500).send("An error occurred on the backend.");
+    console.error(e);
+    return;
+  }
+
+  res.status(200).send({
+    _id: postDocument._id,
+    msg: "Draft Saved Successfully",
+  });
+  return;
+});
+
+/**
+ * Share a post on selected social media
+ */
+postRouter.put("/share", async (req, res) => {
+  var socialMediaLinks = new ShareLink('facebook');
+  var shareLink = socialMediaLinks.get({})
+  
+})
+
 
 export { postRouter };

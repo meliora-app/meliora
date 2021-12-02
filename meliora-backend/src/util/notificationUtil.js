@@ -11,8 +11,6 @@ const watchlistReactBaseString = " has reacted to a post that engaged with, they
 
 const watchlistCommentBaseString = " has commented on a post that you engaged with, and said \"";
 
-const 
-
 const FOLLOW = 0;
 const REACT = 1;
 const INTERACTION = 2;
@@ -129,7 +127,7 @@ const notfiyWatchlistComment = async (sender, commentText, watchlist) => {
 	} catch (e) {
 		console.error(e);
 	}
-}
+};
 
 export {
 	notifyUserFollow,
