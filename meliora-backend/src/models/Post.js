@@ -81,6 +81,7 @@ const PostSchema = new Schema({
   },
   draft: {
     type: SchemaTypes.Boolean,
+    default: false
   }
 });
 

@@ -12,6 +12,7 @@ import mongoose from "mongoose";
 import { Category } from "../models/Category.js";
 import { Reaction } from "../models/Reaction.js";
 import {ShareLink} from "social-media-sharing";
+import { Comment } from "../models/Comment.js"
 
 let { ObjectId } = mongoose.Types;
 
@@ -356,10 +357,8 @@ postRouter.put("/getFollowingPosts", async (req, res) => {
   let posts = [];
   let userDoc;
   let followedUser;
-  let sortPreference;
   try {
     userDoc = await User.findById(userID).exec();
-    sortPreference = userDoc.sortPreference;
     for (let followedID of userDoc.following) {
       followedUser = await User.findById(followedID).exec();
       for (let postID of followedUser.authorList) {
@@ -471,6 +470,7 @@ postRouter.get("/getPostsByLoc", async (req, res) => {
 
 /**
  * save a draft of a post
+ * TODO
  */
 postRouter.post("/saveDraft", async (req, res) => {
   let newDraft = req.body;
@@ -482,7 +482,9 @@ postRouter.post("/saveDraft", async (req, res) => {
 
   let postDocument;
   try {
-    postDocument = await new Post(newDraft).save();
+    postDocument = await new Post(newDraft);
+    postDocument.draft = true;
+    postDocument.save();
 
     let user = await User.findById(newDraft.author).exec();
 
@@ -504,12 +506,134 @@ postRouter.post("/saveDraft", async (req, res) => {
 
 /**
  * Share a post on selected social media
+ * TODO
  */
 postRouter.put("/share", async (req, res) => {
   var socialMediaLinks = new ShareLink('facebook');
   var shareLink = socialMediaLinks.get({})
   
 })
+
+/**
+ * sort by likes
+ */
+postRouter.put("/getFollowingPostsByLikes", async (req, res) => {
+
+  let { userID } = req.body;
+
+  if (!userID) {
+    res.status(400).send("You need to send in a user ID!");
+    return;
+  }
+
+  let posts = [];
+  let sortedPosts = [];
+  let userDoc;
+  let followedUser;
+  try {
+    userDoc = await User.findById(userID).exec();
+    for (let followedID of userDoc.following) {
+      followedUser = await User.findById(followedID).exec();
+      for (let postID of followedUser.authorList) {
+        let newPost = await Post.findById(postID).exec();
+        if (newPost != null) {
+          posts.push(newPost);
+        }
+      }
+    }
+
+
+    // brute force sorting
+    while (posts.length > 0) {
+      var highestIndex = 0;
+      var highestReactions = -1;
+      for (var i = 0; i < posts.length; i++) {
+        
+        var totalReactions = 0;
+        totalReactions += posts[i].reactions.thumbs;
+        totalReactions += posts[i].reactions.hearts;
+        totalReactions += posts[i].reactions.hugs;
+        totalReactions += posts[i].reactions.smileys;
+        if (totalReactions >= highestReactions) {
+          highestIndex = i;
+          highestReactions = totalReactions;
+        }
+      }
+      sortedPosts.push(posts[highestIndex]);
+      posts.splice(highestIndex);
+    }
+
+    if (!sortedPosts || sortedPosts.length == 0) {
+      res.status(400).send("No posts available to return");
+      return;
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("An error occurred on the backend: " + e);
+    return;
+  }
+
+  res.status(200).send(sortedPosts);
+  return;
+});
+
+/**
+ * sort by comments
+ */
+ postRouter.put("/getFollowingPostsByComments", async (req, res) => {
+
+  let { userID } = req.body;
+
+  if (!userID) {
+    res.status(400).send("You need to send in a user ID!");
+    return;
+  }
+
+  let posts = [];
+  let sortedPosts = [];
+  let userDoc;
+  let followedUser;
+  try {
+    userDoc = await User.findById(userID).exec();
+    for (let followedID of userDoc.following) {
+      followedUser = await User.findById(followedID).exec();
+      for (let postID of followedUser.authorList) {
+        let newPost = await Post.findById(postID).exec();
+        if (newPost != null) {
+          posts.push(newPost);
+        }
+      }
+    }
+
+
+    // brute force sorting
+    while (posts.length > 0) {
+      var highestIndex = 0;
+      var highestComments = -1;
+      for (var i = 0; i < posts.length; i++) {
+        var comments =  await Comment.find({ postID: posts[i]._id }).exec();
+        if (comments.length >= highestComments) {
+          highestIndex = i;
+          highestComments = comments.length;
+        }
+      }
+      sortedPosts.push(posts[highestIndex]);
+      posts.splice(highestIndex);
+    }
+
+    if (!sortedPosts || sortedPosts.length == 0) {
+      res.status(400).send("No posts available to return");
+      return;
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("An error occurred on the backend: " + e);
+    return;
+  }
+
+  res.status(200).send(sortedPosts);
+  return;
+});
 
 
 export { postRouter };

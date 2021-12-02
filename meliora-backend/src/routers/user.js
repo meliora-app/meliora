@@ -540,7 +540,7 @@ userRouter.put('/share', async (req, res) => {
   
   let searchResults;
   try {
-    searchResults = await User.find({ username: {$regex : new RegExp(input), $options:'i'}}).clone();
+    searchResults = await User.find({ username: {$regex : new RegExp("^" + input), $options:'i'}}).clone();
 
   } catch (e) {
     console.error(e);
