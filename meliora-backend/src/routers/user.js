@@ -6,16 +6,7 @@ import { Post } from "../models/Post.js";
 
 import { notifyUserFollow } from "../util/notificationUtil.js";
 
-import Shortener from '@studiohyperdrive/shortener';
-
 const userRouter = Router();
-
-const shortener = new Shortener({
-  target: 'https://short.er',
-  alphabet: 'alphanumeric'
-});
-
-const baseURL = 'http://localhost:4200/'
 
 /**
  * Util func to make sure input is correct format
@@ -332,7 +323,7 @@ userRouter.put('/follow', async (req, res) => {
     await followingUser.save();
     await followedUser.save();
 
-    notifyUserFollow(followingUser.username, followedID);
+    notifyUserFollow(followingUser, followedID);
   } catch (e) {
     console.error(e);
     res.status(500).send('An error occured on the backend.');
@@ -499,12 +490,6 @@ userRouter.put('/share', async (req, res) => {
   try {
 
     user = await User.findById(userID).exec();
-
-    if (!user.shareURL) {
-      user.shareURL = shortener.shorten(baseURL + 'profile?_id=' + userID);
-      console.log(user.shareURL);
-      await user.save();
-    }
 
   } catch (e) {
     console.error(e);

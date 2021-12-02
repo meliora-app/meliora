@@ -19,9 +19,11 @@ const notifyUserFollow = async (sender, recipientID) => {
 	let newNotif = {
 		type: FOLLOW,
 		text: sender.username + followNotificationBaseString,
-		recipientID,
-		senderID: sender._id
+		recipient: recipientID,
+		sender: sender._id
 	};
+
+	console.log(newNotif);
 
 	try {
 		let user = await User.findById(recipientID).exec();
@@ -103,7 +105,7 @@ const notfiyWatchlistReact = async (sender, watchlist, reaction) => {
 
 };
 
-const notfiyWatchlistComment = async (sender, commentText, watchlist) => {
+const notifyWatchlistComment = async (sender, commentText, watchlist) => {
 	let newNotif = {
 		type: INTERACTION,
 		text: sender.username + watchlistCommentBaseString + commentText + "\"",
@@ -134,5 +136,5 @@ export {
 	notifyUserReact,
 	notfiyUserComment,
 	notfiyWatchlistReact,
-	notfiyWatchlistComment
+	notifyWatchlistComment
 };

@@ -2,7 +2,11 @@ import { Router } from "express";
 import { Comment } from "../models/Comment.js";
 import { Post } from "../models/Post.js";
 import { User } from "../models/User.js";
+<<<<<<< HEAD
 import { notfiyUserComment, notfiyWatchlistComment } from "../util/notificationUtil.js";
+=======
+import { notfiyUserComment, notifyWatchlistComment } from "../util/notificationUtil.js";
+>>>>>>> 0a2e3b9ddf6fea653c869498e151af75d9fcfb81
 
 const commentRouter = Router();
 
