@@ -28,8 +28,7 @@
     "firebase": "^9.0.2",
     "firebase-admin": "^9.11.1",
     "mongoose": "^6.0.5",
-    "nodemon": "^2.0.14",
-    "social-media-sharing": "^1.0.2"
+    "nodemon": "^2.0.14"
   },
   "jest": {
     "testEnvironment": "node",

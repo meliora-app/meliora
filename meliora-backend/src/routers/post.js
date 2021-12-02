@@ -11,7 +11,7 @@ import { User } from "../models/User.js";
 import mongoose from "mongoose";
 import { Category } from "../models/Category.js";
 import { Reaction } from "../models/Reaction.js";
-import {ShareLink} from "social-media-sharing";
+//fimport {ShareLink} from "social-media-sharing";
 import { Comment } from "../models/Comment.js"
 
 let { ObjectId } = mongoose.Types;
@@ -507,12 +507,13 @@ postRouter.post("/saveDraft", async (req, res) => {
 /**
  * Share a post on selected social media
  * TODO
- */
+ 
 postRouter.put("/share", async (req, res) => {
   var socialMediaLinks = new ShareLink('facebook');
   var shareLink = socialMediaLinks.get({})
   
 })
+*/
 
 /**
  * sort by likes
