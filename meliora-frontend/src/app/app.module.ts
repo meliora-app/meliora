@@ -42,6 +42,10 @@ import { TrendingComponent } from './trending/trending.component';
 import { CategoryPageComponent } from './category-page/category-page.component';
 import { PostsByCategoryComponent } from './posts-by-category/posts-by-category.component';
 import { CreateCategoryComponent } from './create-category/create-category.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -84,6 +88,7 @@ import { CreateCategoryComponent } from './create-category/create-category.compo
     MatButtonModule,
     MatMenuModule,
     ToastrModule.forRoot(),
+    MatFormFieldModule,MatAutocompleteModule,MatInputModule, ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
