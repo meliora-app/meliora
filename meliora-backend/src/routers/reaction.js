@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { Reaction } from "../models/Reaction.js";
 import { Post } from "../models/Post.js";
-import { notfiyWatchlistReact, notifyUserReact } from "../util/notificationUtil.js";
+import { notifyWatchlistReact, notifyUserReact } from "../util/notificationUtil.js";
 import { User } from "../models/User.js";
 
 const reactionRouter = Router();
@@ -89,7 +89,7 @@ reactionRouter.post("/add", async (req, res) => {
     }
     await postData.save();
     notifyUserReact(sender.username, reactionData.reaction, reactionData.profileID);
-    notfiyWatchlistReact(sender, reactionData.reaction,  postData.watchlist);
+    notifyWatchlistReact(sender, reactionData.reaction,  postData.watchlist);
     res.status(200).send("Reaction added successfully!");
   } catch (err) {
     res.status(500).send(`Database error: ${err}`);

@@ -5,11 +5,11 @@ const followNotificationBaseString = " has started following you!";
 
 const reactNotificationBaseString = " has reacted to your post with a ";
 
-const commentNotificationBaseString = " has commented on your post and said \"";
+const commentNotificationBaseString = " has commented on your post: \"";
 
 const watchlistReactBaseString = " has reacted to a post that engaged with, they sent a ";
 
-const watchlistCommentBaseString = " has commented on a post that you engaged with, and said \"";
+const watchlistCommentBaseString = " has commented on a post that you engaged with: \"";
 
 const FOLLOW = 0;
 const REACT = 1;
@@ -55,7 +55,7 @@ const notifyUserReact = async (sender, reaction, recipient) => {
 	catch(e) { console.error(e); }
 };
 
-const notfiyUserComment = async (sender, commentText, recipient) => {
+const notifyUserComment = async (sender, commentText, recipient) => {
 	let newNotif = {
 		type: INTERACTION,
 		text: sender.username + commentNotificationBaseString + commentText + "\"",
@@ -65,7 +65,7 @@ const notfiyUserComment = async (sender, commentText, recipient) => {
 
 	try {
 
-		let user = await User.findById(recipientID).exec();
+		let user = await User.findById(recipient).exec();
 
 		if (user.notifcationPreference < 2)
 			return;
@@ -78,7 +78,7 @@ const notfiyUserComment = async (sender, commentText, recipient) => {
 
 };
 
-const notfiyWatchlistReact = async (sender, watchlist, reaction) => {
+const notifyWatchlistReact = async (sender, watchlist, reaction) => {
 	let newNotif = {
 		type: INTERACTION,
 		text: sender.username + watchlistReactBaseString + reaction + "!",
@@ -94,7 +94,7 @@ const notfiyWatchlistReact = async (sender, watchlist, reaction) => {
 			if (user.notifcationPreference < 3 || user._id == sender._id)
 				return;
 
-			newNotif.recipientID = id;
+			newNotif.recipient = id;
 
 			await new Notification(newNotif).save();
 		});
@@ -121,7 +121,7 @@ const notifyWatchlistComment = async (sender, commentText, watchlist) => {
 			if (user.notifcationPreference < 3 || user._id == sender._id)
 				return;
 
-			newNotif.recipientID = id;
+			newNotif.recipient = id;
 
 			await new Notification(newNotif).save();
 		});
@@ -134,7 +134,7 @@ const notifyWatchlistComment = async (sender, commentText, watchlist) => {
 export {
 	notifyUserFollow,
 	notifyUserReact,
-	notfiyUserComment,
-	notfiyWatchlistReact,
+	notifyUserComment,
+	notifyWatchlistReact,
 	notifyWatchlistComment
 };
