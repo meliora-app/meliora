@@ -20,12 +20,12 @@ commentRouter.post("/add", async (req, res) => {
   try {
     await new Comment(commentData).save();
 
-    
-    const user = await User.findById(commentData.profileId).exec();
+    const post = await Post.findById(commentData.postID).exec();
+    const user = await User.findById(post.author).exec();
     user.eq = user.eq + 3;
 
-    notfiyUserComment(user, commentData.comment, await Post.findById(commentData.postID).exec().author);
-    notfiyWatchlistComment(user, commentData.comment, await Post.findById(commentData.postID).exec().watchlist);
+    notfiyUserComment(user, commentData.comment, post.author);
+    notfiyWatchlistComment(user, commentData.comment, post.watchlist);
 
     await user.save();
   } catch (e) {
