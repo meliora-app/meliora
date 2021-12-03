@@ -21,10 +21,10 @@ commentRouter.post("/add", async (req, res) => {
     await new Comment(commentData).save();
 
     const post = await Post.findById(commentData.postID).exec();
-    const user = await User.findById(post.author).exec();
+    const user = await User.findById(commentData.profileID).exec();
     user.eq = user.eq + 3;
 
-    notifyUserComment(user, commentData.comment, commentData.profileID);
+    notifyUserComment(user, commentData.comment, post.author);
     notifyWatchlistComment(user, commentData.comment, post.watchlist);
 
     await user.save();
