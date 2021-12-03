@@ -36,12 +36,12 @@ const notifyUserFollow = async (sender, recipientID) => {
 	catch(e) { console.error(e); }
 };
 
-const notifyUserReact = async (sender, reaction, recipientID) => {
+const notifyUserReact = async (sender, reaction, recipient) => {
 	let newNotif = {
 		type: REACT,
 		text: sender.username + reactNotificationBaseString + reaction + "!",
-		recipientID,
-		senderID: sender._id
+		recipient,
+		sender: sender._id
 	}
 
 	try {
@@ -55,12 +55,12 @@ const notifyUserReact = async (sender, reaction, recipientID) => {
 	catch(e) { console.error(e); }
 };
 
-const notfiyUserComment = async (sender, commentText, recipientID) => {
+const notfiyUserComment = async (sender, commentText, recipient) => {
 	let newNotif = {
 		type: INTERACTION,
 		text: sender.username + commentNotificationBaseString + commentText + "\"",
-		recipientID,
-		senderID: sender._id
+		recipient,
+		sender: sender._id
 	}
 
 	try {
@@ -82,8 +82,8 @@ const notfiyWatchlistReact = async (sender, watchlist, reaction) => {
 	let newNotif = {
 		type: INTERACTION,
 		text: sender.username + watchlistReactBaseString + reaction + "!",
-		recipientID: '',
-		senderID: sender._id
+		recipient: '',
+		sender: sender._id
 	}
 
 	try {
@@ -109,8 +109,8 @@ const notifyWatchlistComment = async (sender, commentText, watchlist) => {
 	let newNotif = {
 		type: INTERACTION,
 		text: sender.username + watchlistCommentBaseString + commentText + "\"",
-		recipientID: '',
-		senderID: sender._id
+		recipient: '',
+		sender: sender._id
 	}
 
 	try {
