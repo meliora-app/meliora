@@ -71,8 +71,6 @@ userRouter.put("/login", async (req, res) => {
       return;
     }
 
-    userDoc.checkUndefined();
-
     await userDoc.save();
   } catch (e) {
     console.error(e);

@@ -82,21 +82,6 @@ const UserSchema = new Schema({
 	}
 });
 
-
-/**
- * Add to this method when new fields are added to schema
- */
-UserSchema.methods.checkUndefined = () => {
-	if (typeof(this.eq) == 'undefined')
-		this.eq = 0;
-
-	if (typeof(this.notificationPreference) == 'undefined')
-		this.notificationPreference = 3;
-	
-	if (typeof(this.shareURL) == 'undefined')
-		this.shareURL = "";
-}
-
 /**
  * Check for a bookmark
  */

@@ -6,6 +6,7 @@ import request from 'supertest';
 import { Post } from '../src/models/Post.js';
 import { server } from '../src/server.js';
 import { connectToDB } from '../src/util/db.js';
+import { User } from '../src/models/User.js';
 
 describe('Unit Tests for Post Router:', () => {
 	let testPostID;
@@ -262,6 +263,47 @@ describe('Unit Tests for Post Router:', () => {
 	test('SP-2, US-15: Server should respond with 400 when no category ID is provided.', async () => {});
 
 	test('SP-2, US-15: Server should respond with 200 when a correct request body is provided.', async () => {});
+
+	test('SP-3, US-14: Bookmark Endpoint should now work as a toggle', async () => {
+
+		let res = await request(server)
+			.put('/api/posts/bookmark')
+			.set('Content-Type', 'application/json')
+			.send({
+				userID: process.env.TEST_USER_ID,
+				postID: process.env.TEST_POST_ID
+			});
+		
+		let user = await User.findById(process.env.TEST_USER_ID).exec();
+		
+		expect(user.bookmarks.length).toBe(0);
+	});
+
+	test('SP-3, US-14: Bookmark Endpoint should now work as a toggle', async () => {
+		await request(server)
+			.put('/api/posts/bookmark')
+			.set('Content-Type', 'application/json')
+			.send({
+				userID: process.env.TEST_USER_ID,
+				postID: process.env.TEST_POST_ID
+			});
+		
+		let user = await User.findById(process.env.TEST_USER_ID).exec();
+		let a = user.bookmarks.length;
+
+		await request(server)
+			.put('/api/posts/bookmark')
+			.set('Content-Type', 'application/json')
+			.send({
+				userID: process.env.TEST_USER_ID,
+				postID: process.env.TEST_POST_ID
+			});
+		
+		user = await User.findById(process.env.TEST_USER_ID).exec();
+		let b = user.bookmarks.length;
+
+		expect(b < a).toBe(true);
+	});
 
 	afterAll(async () => {
 		await Post.deleteMany({title: 'Test2 Title'});
