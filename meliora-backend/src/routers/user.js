@@ -548,7 +548,7 @@ userRouter.put('/share', async (req, res) => {
     return;
   }
 
-  res.status(200).send(searchResults + " TEST");
+  res.status(200).send(searchResults);
 });
 
 export { userRouter };
