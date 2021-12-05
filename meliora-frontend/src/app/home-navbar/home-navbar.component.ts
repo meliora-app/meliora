@@ -56,7 +56,7 @@ export class HomeNavbarComponent implements OnInit {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        username:  (<HTMLInputElement>document.getElementById("search")).value
+        username:  this.formControl.value
 
       })
     });
@@ -88,7 +88,7 @@ export class HomeNavbarComponent implements OnInit {
   }
   */
   async searchUpdate() {
-    alert(this.formControl.value)
+    this.searchOptions = [];
     let res = await fetch('https://meliora-backend.herokuapp.com/api/users/searchSuggestion', {
       method: "PUT",
       headers: {
@@ -103,7 +103,6 @@ export class HomeNavbarComponent implements OnInit {
       let results = await res.json();
       for (let user of results) {
         this.searchOptions.push(user.username);
-        alert(user.username);
       }
     }
   }

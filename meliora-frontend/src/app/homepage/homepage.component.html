@@ -59,10 +59,10 @@
             <button (click)="toggleLocation();" mat-menu-item>
               Sort by Location
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="sortByLikes()">
               Sort by Number of Likes
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="sortByComments()">
               Sort by Number of Comments
             </button>
           </mat-menu>

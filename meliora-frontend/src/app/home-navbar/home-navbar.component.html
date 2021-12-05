@@ -43,14 +43,17 @@
           </div>
         </div>
       -->
-      <form class="example-form">
+      <form id="searchGroup">
         <mat-form-field class="example-full-width">
-          <input type="text" placeholder="search" aria-label="Number" matInput [formControl]="formControl" [matAutocomplete]="auto" (keyup)="searchUpdate()" [(ngModel)]="data">
+          <input type="text" placeholder="search" aria-label="Number" matInput [formControl]="formControl" [matAutocomplete]="auto" (keyup)="searchUpdate()" [(ngModel)]="data" >
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let searchOption of searchOptions" [value]="searchOption">
               {{searchOption}}
             </mat-option>
           </mat-autocomplete>
+          <button id="searchButton" mat-button matSuffix mat-stroked-button aria-label="search" (click)="onSearchClicked()">
+            <mat-icon>search</mat-icon>
+        </button>
         </mat-form-field>
       </form>
       </li>
