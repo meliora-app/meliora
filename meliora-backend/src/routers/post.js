@@ -546,6 +546,7 @@ postRouter.put("/getFollowingPostsByLikes", async (req, res) => {
 
     // brute force sorting
     while (posts.length > 0) {
+      console.log("LENGTH: " + posts.length);
       var highestIndex = 0;
       var highestReactions = -1;
       for (var i = 0; i < posts.length; i++) {
@@ -561,7 +562,7 @@ postRouter.put("/getFollowingPostsByLikes", async (req, res) => {
         }
       }
       sortedPosts.push(posts[highestIndex]);
-      posts.splice(highestIndex);
+      posts.splice(highestIndex, 1);
     }
 
     if (!sortedPosts || sortedPosts.length == 0) {
@@ -619,7 +620,7 @@ postRouter.put("/getFollowingPostsByLikes", async (req, res) => {
         }
       }
       sortedPosts.push(posts[highestIndex]);
-      posts.splice(highestIndex);
+      posts.splice(highestIndex, 1);
     }
 
     if (!sortedPosts || sortedPosts.length == 0) {
