@@ -46,7 +46,8 @@ const isValidPost = (post) => {
     "content" in post &&
     "anonymous" in post &&
     "hidden" in post &&
-    "category" in post
+    "category" in post &&
+    "hasPhoto" in post
   );
 };
 

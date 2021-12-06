@@ -82,6 +82,10 @@ const PostSchema = new Schema({
   draft: {
     type: SchemaTypes.Boolean,
     default: false
+  },
+  hasPhoto: {
+    type: SchemaTypes.Boolean,
+    default: false
   }
 });
 
