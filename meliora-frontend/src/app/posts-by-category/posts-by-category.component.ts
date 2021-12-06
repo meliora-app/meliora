@@ -49,7 +49,8 @@ export class PostsByCategoryComponent implements OnInit {
               postData[i].category,
               postData[i].anonymous,
               resUserBody.username,
-              postData[i].commentsAllowed
+              postData[i].commentsAllowed,
+              postData[i].hasPhoto
             ));
           }
         }

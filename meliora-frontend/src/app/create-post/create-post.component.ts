@@ -30,6 +30,7 @@ export class CreatePostComponent implements OnInit {
   task: AngularFireUploadTask;
   Lat: any = -1;
   Long: any = -1;
+  hasPhoto: boolean = false;
 
   @ViewChild("post-content") postArea: ElementRef;
 
@@ -172,7 +173,8 @@ export class CreatePostComponent implements OnInit {
       categoryID,
       localStorage.getItem('userID'),
       this.visibilityClicked,
-      !this.commentClicked
+      !this.commentClicked,
+      this.hasPhoto
     );
 
     if (this.image != null)
@@ -210,6 +212,7 @@ export class CreatePostComponent implements OnInit {
 
   cacheImageForUpload(event) {
     this.image = event.target.files[0];
+    this.hasPhoto = true;
   }
 
   uploadImage() {

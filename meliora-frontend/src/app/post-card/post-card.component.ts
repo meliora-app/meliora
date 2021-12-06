@@ -37,6 +37,7 @@ export class PostCardComponent implements OnInit {
   ref: AngularFireStorageReference;
   // timestamp;
   downloadURL: string;
+  postDownloadURL: string;
   belongsToUser: boolean;
   constructor(
     private route: Router,
@@ -53,7 +54,8 @@ export class PostCardComponent implements OnInit {
     }
     this.getCategory();
     await this.getProfilePic();
-    await this.getPostPic();
+    if (this.post.hasPhoto)
+      await this.getPostPic();
     this.calcTotalReactions();
     this.belongsToUser = this.userID == this.post.authorID;
   }
@@ -137,7 +139,7 @@ export class PostCardComponent implements OnInit {
   getPostPic() {
     this.ref = this.fireStorage.ref('postPictures/' + this.post.postID);
     this.ref.getDownloadURL().subscribe((url) => {
-      this.downloadURL = url;
+      this.postDownloadURL = url;
       // this.timestamp = new Date().getTime();
     });
   }

@@ -7,6 +7,7 @@ export class Post {
   public postID: string;
   public anon: boolean;
   public commentsAllowed: boolean;
+  public hasPhoto: boolean;
 
   constructor(
     postID: string,
@@ -16,7 +17,8 @@ export class Post {
     categoryID: string,
     anon: boolean,
     authorUsername: string,
-    commentsAllowed: boolean
+    commentsAllowed: boolean,
+    hasPhoto: boolean
   ) {
     this.postID = postID;
     this.title = title;
@@ -26,5 +28,6 @@ export class Post {
     this.authorID = authorID;
     this.anon = anon;
     this.commentsAllowed = commentsAllowed;
+    this.hasPhoto = hasPhoto;
   }
 }

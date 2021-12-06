@@ -39,6 +39,7 @@ interface DbPost {
     hidden: boolean;
     commentsAllowed: boolean;
     timeStamp: Date;
+    hasPhoto: boolean;
     __v: number;
   };
   count: number;
@@ -70,7 +71,8 @@ export class TrendingService {
               categoryID: post.post.category,
               anon: post.post.anonymous,
               authorUsername: post.post.authorName,
-              commentsAllowed: post.post.commentsAllowed
+              commentsAllowed: post.post.commentsAllowed,
+              hasPhoto: post.post.hasPhoto
             };
           });
           return transformedPostData;

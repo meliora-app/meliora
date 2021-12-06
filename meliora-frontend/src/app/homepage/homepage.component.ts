@@ -156,8 +156,8 @@ export class HomepageComponent implements OnInit {
                 resBody[i].category,
                 resBody[i].anonymous,
                 resUserBody.username,
-                resBody[i].commentsAllowed
-
+                resBody[i].commentsAllowed,
+                resBody[i].hasPhoto
               )
             );
           }
@@ -227,8 +227,8 @@ export class HomepageComponent implements OnInit {
                 resBody[i].category,
                 resBody[i].anonymous,
                 resUserBody.username,
-                resBody[i].commentsAllowed
-
+                resBody[i].commentsAllowed,
+                resBody[i].hasPhoto
               )
             );
           }
