@@ -53,7 +53,7 @@ const isValidPost = (post) => {
 
 const isValidDraft = (draft) => {
   return (
-    "author" in post
+    "author" in draft
   );
 };
 
@@ -473,7 +473,7 @@ postRouter.get("/getPostsByLoc", async (req, res) => {
  * save a draft of a post
  * TODO
  */
-postRouter.post("/saveDraft", async (req, res) => {
+postRouter.put("/saveDraft", async (req, res) => {
   let newDraft = req.body;
 
   if (!isValidDraft(newDraft)) {
