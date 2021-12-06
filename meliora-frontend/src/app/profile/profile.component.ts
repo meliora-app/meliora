@@ -332,6 +332,22 @@ export class ProfileComponent implements OnInit {
     this.posts = this.bookmarkedPosts;
   }
 
+  async unbookmark(postID) {
+    let res = await fetch('https://meliora-backend.herokuapp.com/api/posts/bookmark', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userID: this.userId,
+        postID: postID
+      })
+    });
+
+    if (res.status != 200)
+      console.log('An error occured unbookmarking the post.');
+  }
+
   // this process is slow right now, we need to keep all current user information on hand
   async setFollowingVars() {
     let res = await fetch(
