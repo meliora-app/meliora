@@ -250,7 +250,9 @@
           </div>
         </div>
       </div>
-      <img [src]="downloadURL" alt="" />
+      <div *ngIf="this.post.hasPhoto">
+        <img [src]="postDownloadURL" alt="" />
+      </div>
     </div>
   </body>
 </html>

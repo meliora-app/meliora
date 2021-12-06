@@ -107,7 +107,8 @@ export class ProfileComponent implements OnInit {
             resBody.bookmarks[i].category,
             resBody.bookmarks[i].anonymous,
             await this.userService.getUsername(resBody.bookmarks[i].author),
-            resBody.bookmarks[i].commentsAllowed
+            resBody.bookmarks[i].commentsAllowed,
+            resBody.bookmarks[i].hasPhoto
           )
         );
       }
@@ -153,7 +154,8 @@ export class ProfileComponent implements OnInit {
                   postResBody[i].category,
                   postResBody[i].anonymous,
                   this.viewedUsername,
-                  postResBody[i].commentsAllowed
+                  postResBody[i].commentsAllowed,
+                  postResBody[i].hasPhoto
                 )
               );
               this.userPosts.push(
@@ -165,7 +167,8 @@ export class ProfileComponent implements OnInit {
                   postResBody[i].category,
                   postResBody[i].anonymous,
                   this.viewedUsername,
-                  postResBody[i].commentsAllowed
+                  postResBody[i].commentsAllowed,
+                  postResBody[i].hasPhoto
                 )
               );
             }
