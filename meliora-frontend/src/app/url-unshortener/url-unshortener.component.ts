@@ -42,7 +42,14 @@ export class UrlUnshortenerComponent implements OnInit {
       })
     });
 
+    if (res.status != 200) {
+      this.router.navigate(['/home']);
+      return;
+    }
+
     let resBody = await res.json();
+
+    console.log(resBody);
 
     return resBody;
   }
