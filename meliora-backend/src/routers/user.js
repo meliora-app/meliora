@@ -505,7 +505,7 @@ userRouter.put('/share', async (req, res) => {
   res.status(200).send(user.shareURL);
 });
 
-userRouter.put('getLongID', async (req, res) => {
+userRouter.put('/getLongID', async (req, res) => {
   let { shortID } = req.body;
   let user;
   try {
