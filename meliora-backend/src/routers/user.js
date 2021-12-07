@@ -520,10 +520,8 @@ userRouter.put('/getLongID', async (req, res) => {
     res.status(500).send('An error occured on the backend');
     return;
   }
-  
-  res.status(200).send({
-    _id: user[0]._id
-  });
+
+  res.status(200).send(user[0]._id);
 });
 
 /**
