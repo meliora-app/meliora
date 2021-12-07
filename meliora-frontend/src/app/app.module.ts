@@ -42,6 +42,7 @@ import { TrendingComponent } from './trending/trending.component';
 import { CategoryPageComponent } from './category-page/category-page.component';
 import { PostsByCategoryComponent } from './posts-by-category/posts-by-category.component';
 import { CreateCategoryComponent } from './create-category/create-category.component';
+import { UrlUnshortenerComponent } from './url-unshortener/url-unshortener.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { CreateCategoryComponent } from './create-category/create-category.compo
     CategoryPageComponent,
     PostsByCategoryComponent,
     CreateCategoryComponent,
+    UrlUnshortenerComponent,
   ],
   imports: [
     BrowserModule,
