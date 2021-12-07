@@ -23,12 +23,7 @@ export class UrlUnshortenerComponent implements OnInit {
       this.shortID = params.id;
     });
 
-    let longID = this.findLongID();
-    this.router.navigate(['/profile'], {
-      queryParams: {
-        _id: longID
-      },
-    });
+    this.findLongID();
   }
 
   async findLongID() {
@@ -47,11 +42,13 @@ export class UrlUnshortenerComponent implements OnInit {
       return;
     }
 
-    let resBody = await res.json();
+    let _id = (await res.json())._id;
 
-    console.log(resBody);
-
-    return resBody;
+    this.router.navigate(['/profile'], {
+      queryParams: {
+        _id
+      },
+    });
   }
 
 }
