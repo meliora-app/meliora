@@ -16,6 +16,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { SignupComponent } from './signup/signup.component';
 import { TrendingComponent } from './trending/trending.component';
 import { CreateCategoryComponent } from './create-category/create-category.component';
+import { UrlUnshortenerComponent } from './url-unshortener/url-unshortener.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing-page', pathMatch: 'full' },
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'post-by-category', component: PostsByCategoryComponent },
   { path: 'create-category', component: CreateCategoryComponent },
   { path: 'category/:id', component: CategoryPageComponent },
+  { path: 'u/:id', component: UrlUnshortenerComponent }
 ];
 
 @NgModule({

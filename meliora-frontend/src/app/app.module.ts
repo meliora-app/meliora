@@ -42,10 +42,14 @@ import { TrendingComponent } from './trending/trending.component';
 import { CategoryPageComponent } from './category-page/category-page.component';
 import { PostsByCategoryComponent } from './posts-by-category/posts-by-category.component';
 import { CreateCategoryComponent } from './create-category/create-category.component';
+<<<<<<< HEAD
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+=======
+import { UrlUnshortenerComponent } from './url-unshortener/url-unshortener.component';
+>>>>>>> 1db1d319e68caab2e7ccef7ed6e1000e81d3bf9c
 
 @NgModule({
   declarations: [
@@ -73,6 +77,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CategoryPageComponent,
     PostsByCategoryComponent,
     CreateCategoryComponent,
+    UrlUnshortenerComponent,
   ],
   imports: [
     BrowserModule,
