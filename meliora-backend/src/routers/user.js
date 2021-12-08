@@ -503,7 +503,10 @@ userRouter.put('/share', async (req, res) => {
     return;
   }
 
-  res.status(200).send(user.shareURL);
+  res.status(200).send({
+    shareURL: user.shareURL,
+    msg: "url generated",
+  });;
 });
 
 userRouter.put('/getLongID', async (req, res) => {

@@ -476,7 +476,7 @@ postRouter.get("/getPostsByLoc", async (req, res) => {
 postRouter.put("/saveDraft", async (req, res) => {
   let newDraft = req.body;
 
-  if (!isValidDraft(newDraft)) {
+  if (!isValidPost(newDraft)) {
     res.status(400).send("The object structure of this draft was invalid!");
     return;
   }
@@ -485,6 +485,7 @@ postRouter.put("/saveDraft", async (req, res) => {
   try {
     postDocument = await new Post(newDraft);
     postDocument.draft = true;
+    postDocument.hidden = true;
     postDocument.save();
 
     let user = await User.findById(newDraft.author).exec();
@@ -504,6 +505,32 @@ postRouter.put("/saveDraft", async (req, res) => {
   });
   return;
 });
+
+postRouter.delete("/deleteDraft", async (req, res) => {
+  let draft = req.body;
+
+  if (!draft._id || !draft.author) {
+    res.status(400).send("Request needs draft ID and author ID");
+  }
+  try {
+    // remove post id from authorList of author
+    await User.findOneAndUpdate(
+      { _id: draft.author },
+      { $pull: { authorList: draft._id } }
+    ).exec();
+    // remaove post from database
+    await Post.deleteOne({ _id: draft._id }).exec();
+  } catch (e) {
+    res.status(500).send("Error deleting draft: ");
+    return;
+  }
+  res.status(200).send({
+    _id: post._id,
+    msg: "Draft Deletion Successful",
+  });
+  return;
+});
+
 
 /**
  * Share a post on selected social media
