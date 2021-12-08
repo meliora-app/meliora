@@ -189,7 +189,7 @@ userRouter.post("/updateSettings", async (req, res) => {
     if (user.dateOfBirth) userDoc.dateOfBirth = user.dateOfBirth;
     if (user.name) userDoc.name = user.name;
     if (user.phone) userDoc.phone = user.phone;
-    if (user.notifcationPreference) userDoc.notifcationPreference = user.notifcationPreference;
+    if (user.notificationPreference) userDoc.notificationPreference = user.notificationPreference;
     await userDoc.save();
 
   } catch (e) {
