@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CategoryService } from '../shared/services/category.service';
 import { PostService } from '../shared/services/post.service';
@@ -33,8 +33,9 @@ export class CreatePostComponent implements OnInit {
   Lat: any = -1;
   Long: any = -1;
   hasPhoto: boolean = false;
-  drafts: Post[] = [];
-  selectedDraft: Post;
+  drafts: any[] = [];
+  selectedDraft: any;
+  selectedIndex: any = '';
 
   @ViewChild("post-content") postArea: ElementRef;
 
@@ -179,7 +180,7 @@ export class CreatePostComponent implements OnInit {
     if (postRes.status == 200) {
       let results = await postRes.json();
       for (let post of results) {
-        if (post != null && !post.draft) {
+        if (post != null && post.draft) {
           this.drafts.push(post);
         }
       }
@@ -187,8 +188,17 @@ export class CreatePostComponent implements OnInit {
   }
 
   loadDraft(draft) {
-    (<HTMLInputElement> document.getElementById('title')).value = draft.title;
-    (<HTMLInputElement> document.getElementById('post-content')).value = draft.content;
+    if (draft != this.selectedDraft) {
+      this.selectedDraft = draft;
+      (<HTMLInputElement> document.getElementById('title')).value = draft.title;
+      (<HTMLTextAreaElement> document.getElementById('post-content')).value = draft.content;
+    } else {
+      this.selectedDraft = null;
+      (<HTMLInputElement> document.getElementById('title')).value = "";
+      (<HTMLTextAreaElement> document.getElementById('post-content')).value = "";
+    }
+    //this.contentFormControl.setValue(draft.content);
+
   }
 
   async onSubmitPost(form: NgForm) {
@@ -196,19 +206,53 @@ export class CreatePostComponent implements OnInit {
       (item) => item.name === form.value.category
     );
     var categoryID = this.categories[categoryIndex].id;
-    console.log(form.value.category);
-    console.log(this.categories);
-    console.log(categoryIndex);
-    console.log(categoryID);
-    this.postID = await this.postService.createPost(
-      form.value.title,
-      form.value.content,
-      categoryID,
-      localStorage.getItem('userID'),
-      this.visibilityClicked,
-      !this.commentClicked,
-      this.hasPhoto
-    );
+
+    // save as draft
+    if (this.draftClicked) {
+      this.postID = await this.postService.createPost(
+        (<HTMLInputElement> document.getElementById('title')).value,
+        (<HTMLTextAreaElement> document.getElementById('post-content')).value,
+        //form.value.title,
+        //form.value.content,
+        categoryID,
+        localStorage.getItem('userID'),
+        this.visibilityClicked,
+        !this.commentClicked,
+        this.hasPhoto,
+        true
+      );
+    }
+    else {
+      if (this.selectedDraft != null) {
+        // delete chosen draft
+        let postRes = await fetch(
+          'https://meliora-backend.herokuapp.com/api/posts/deletePost',
+          {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              _id: this.selectedDraft._id,
+              author: this.selectedDraft.author
+            }),
+          }
+        );
+      }
+      //alert(form.value.title);
+      this.postID = await this.postService.createPost(
+        (<HTMLInputElement> document.getElementById('title')).value,
+        (<HTMLTextAreaElement> document.getElementById('post-content')).value,
+        //form.value.title,
+        //form.value.content,
+        categoryID,
+        localStorage.getItem('userID'),
+        this.visibilityClicked,
+        !this.commentClicked,
+        this.hasPhoto,
+        false
+      );
+    }
 
     if (this.image != null)
       this.uploadImage();

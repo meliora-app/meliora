@@ -362,8 +362,8 @@ export class ProfileComponent implements OnInit {
       }
     );
     if (res.status == 200) {
-      console.log(res);
-      alert("Received URL: " + res);
+      let resBody = await res.json();
+      alert(resBody.shareURL);
     }
   
   }

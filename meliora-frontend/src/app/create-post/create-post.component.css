@@ -53,8 +53,12 @@ html {
 }
 
 .draft:hover {
-  background-color: lightblue;
+  background-color: darkblue;
   cursor: pointer;
+}
+
+.selected {
+  background-color: darkblue;
 }
 
 /* login Component Styles */

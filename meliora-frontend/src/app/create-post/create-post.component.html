@@ -50,12 +50,12 @@
     </h1>
     <div class="container1">
       <div class="post-form">
-        <form (ngSubmit)="onSubmitPost(f)" #f="ngForm">
+        <form id="postForm" (ngSubmit)="onSubmitPost(f)" #f="ngForm">
           <div>
             <div class="form-group">
               <label for="title">Title</label>
               <input type="text" id="title" class="form-control" required ngModel name="title"
-                placeholder="Enter title here" />
+                placeholder="Enter title here"/>
               <label for="post-content" class="mt-4">Your thoughts...</label>
               <textarea #postArea name="post-content" id="post-content" class="form-control" cols="30" rows="10"
                 name="content" ngModel (input)="wordCount($event)" placeholder="Enter text here"></textarea>
@@ -120,9 +120,9 @@
       </div>
       <div class="drafts-container">
         <h1>Drafts</h1>
-        <div *ngIf="drafts.length == 0">NO DRAFTS</div>
-        <div *ngFor="let draft of drafts">
-          <div (click)="loadDraft(draft)" class="draft">
+        <div *ngIf="drafts.length == 0">No Drafts</div>
+        <div *ngFor="let draft of drafts; let i = index">
+          <div (click)="loadDraft(draft); selectedIndex = selectedIndex === i ? -1 : i" [ngClass]="selectedIndex === i ? 'selected' : ''" class="draft">
             {{draft.title}}
           </div>
         </div>

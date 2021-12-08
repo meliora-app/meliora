@@ -17,6 +17,7 @@ export class PostService {
     anonymous: boolean,
     commentsAllowed: boolean,
     hasPhoto: boolean,
+    draft: boolean
   ) {
     var postData = {
       title: postTitle,
@@ -26,7 +27,8 @@ export class PostService {
       hidden: false,
       anonymous: anonymous,
       commentsAllowed: commentsAllowed,
-      hasPhoto: hasPhoto
+      hasPhoto: hasPhoto,
+      draft: draft
     };
 
     console.log(postData);
