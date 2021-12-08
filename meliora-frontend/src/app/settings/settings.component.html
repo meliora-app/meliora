@@ -134,12 +134,12 @@
           <label class="form-check" for="flexCheckChecked">
             Post Notification Preferences:
         </label>
-        <select class="ml-3">
-          <option [ngValue]="null">{{ notificationPreference }}</option>
-          <option>No Notifications</option>
-          <option>Notifications for posts I react to</option>
-          <option>Notifications for posts I comment to</option>
-          <option>Notifications for all posts</option>
+        <select id="notificationOptions" (change)="notificationChange()" class="ml-3">
+          <option [ngValue]="settings.notificationPreference"></option>
+          <option value="0">No Notifications</option>
+          <option value="1">Followers</option>
+          <option value="2">Posts and Followers</option>
+          <option value="3">Posts, Followers, and Comments</option>
         </select>
       </div>
           <div class="text-center">

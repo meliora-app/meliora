@@ -83,7 +83,7 @@
       </button>
 
       <mat-menu #shareProfile="matMenu">
-        <button mat-menu-item ><mat-icon>share</mat-icon> Generate URL
+        <button mat-menu-item (click)="copyURL()"><mat-icon>share</mat-icon> Generate URL
         </button>
       </mat-menu>
 

@@ -5,6 +5,8 @@ import { CategoryService } from '../shared/services/category.service';
 import { PostService } from '../shared/services/post.service';
 import { ToastService } from '../shared/services/toast.service';
 import { Category } from '../shared/models/category.model';
+import { Post } from '../shared/models/post.model';
+
 import { 
   AngularFireStorage,
   AngularFireStorageReference,
@@ -31,6 +33,8 @@ export class CreatePostComponent implements OnInit {
   Lat: any = -1;
   Long: any = -1;
   hasPhoto: boolean = false;
+  drafts: Post[] = [];
+  selectedDraft: Post;
 
   @ViewChild("post-content") postArea: ElementRef;
 
@@ -44,6 +48,7 @@ export class CreatePostComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCategories();
+    this.loadDrafts();
     console.log(localStorage.getItem('userID'));
     // this.getLocation();
     (this.getCoordintes());
@@ -156,6 +161,34 @@ export class CreatePostComponent implements OnInit {
     this.words = event.target.value
       ? event.target.value.split(/\s+/).length
       : 0;
+  }
+
+  async loadDrafts() {
+    let postRes = await fetch(
+      'https://meliora-backend.herokuapp.com/api/posts/getPostsBy',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userID: localStorage.getItem("userID"),
+        }),
+      }
+    );
+    if (postRes.status == 200) {
+      let results = await postRes.json();
+      for (let post of results) {
+        if (post != null && !post.draft) {
+          this.drafts.push(post);
+        }
+      }
+    }
+  }
+
+  loadDraft(draft) {
+    (<HTMLInputElement> document.getElementById('title')).value = draft.title;
+    (<HTMLInputElement> document.getElementById('post-content')).value = draft.content;
   }
 
   async onSubmitPost(form: NgForm) {

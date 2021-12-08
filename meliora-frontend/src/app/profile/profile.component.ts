@@ -348,6 +348,26 @@ export class ProfileComponent implements OnInit {
       console.log('An error occured unbookmarking the post.');
   }
 
+  async copyURL() {
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/users/share',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userID: localStorage.getItem("userID")
+        }),
+      }
+    );
+    if (res.status == 200) {
+      console.log(res);
+      alert("Received URL: " + res);
+    }
+  
+  }
+
   // this process is slow right now, we need to keep all current user information on hand
   async setFollowingVars() {
     let res = await fetch(
