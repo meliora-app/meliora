@@ -305,6 +305,26 @@ describe('Unit Tests for Post Router:', () => {
 		expect(b < a).toBe(true);
 	});
 
+	test('SP-3, US-5: Server should respond with 200 when a correct request body is provided.', async () => {
+		/*let res = await request(server)
+			.put('/api/post/getFollowingPostsByLikes')
+			.set('Content-Type', 'application/json')
+			.send({
+				userID: process.env.TEST_USER_ID,
+			});		
+		expect(res.status).toBe(200);*/
+	});
+
+	test('SP-3, US-5: Server should respond with 200 when a correct request body is provided.', async () => {
+		/*let res = await request(server)
+			.put('/api/post/getFollowingPostsByLikes')
+			.set('Content-Type', 'application/json')
+			.send({
+				userID: process.env.TEST_BOGUS_USER_ID,
+			});		
+		expect(res.status).toBe(400);*/
+	});
+
 	afterAll(async () => {
 		await Post.deleteMany({title: 'Test2 Title'});
 		await Post.deleteMany({title: 'Test3 Title'});
