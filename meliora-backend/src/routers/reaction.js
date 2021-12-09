@@ -67,15 +67,12 @@ reactionRouter.post("/add", async (req, res) => {
       existingData.creationDate = Date.now();
       existingData.save();
 
-      notifyUserReact(
-        sender.username,
-        reactionData.reaction,
-        reactionData.profileID
-      );
+      // notifyUserReact(sender, reactionData.reaction, reactionData.profileID);
     } else {
       const reaction = new Reaction(reactionData);
 
-      postData.watchlist.push(sender._id);
+      if (!postData.watchlist.includes(sender._id))
+        postData.watchlist.push(sender._id);
 
       sender.eq = sender.eq + 1;
 
@@ -98,12 +95,8 @@ reactionRouter.post("/add", async (req, res) => {
     }
     await postData.save();
     await user.save();
-    notifyUserReact(
-      sender.username,
-      reactionData.reaction,
-      reactionData.profileID
-    );
-    notifyWatchlistReact(sender, reactionData.reaction, postData.watchlist);
+    notifyUserReact(sender, reactionData.reaction, reactionData.profileID);
+    notifyWatchlistReact(sender, reactionData.reaction,  postData.watchlist);
     res.status(200).send("Reaction added successfully!");
   } catch (err) {
     res.status(500).send(`Database error: ${err}`);

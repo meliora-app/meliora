@@ -27,9 +27,13 @@ commentRouter.post("/add", async (req, res) => {
     const user = await User.findById(commentData.profileID).exec();
     user.eq = user.eq + 3;
 
+    if (!post.watchlist.includes(user._id))
+      post.watchlist.push(user._id);
+
     notifyUserComment(user, commentData.comment, post.author);
     notifyWatchlistComment(user, commentData.comment, post.watchlist);
 
+    await post.save();
     await user.save();
   } catch (e) {
     res.status(500).send(`Database error: ${e}`);

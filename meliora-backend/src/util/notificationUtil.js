@@ -45,7 +45,7 @@ const notifyUserReact = async (sender, reaction, recipient) => {
 	}
 
 	try {
-		let user = await User.findById(recipientID).exec();
+		let user = await User.findById(recipient).exec();
 
 		if (user.notifcationPreference < 2)
 			return; 
@@ -88,16 +88,19 @@ const notifyWatchlistReact = async (sender, watchlist, reaction) => {
 
 	try {
 
-		watchlist.forEach(async (id) => {
-			let user = await User.findById(id).exec();
+		var n = watchlist.length
+		var i = 0;
+
+		while (i < n) {
+			let user = await User.findById(watchlist[i]).exec();
 
 			if (user.notifcationPreference < 3 || user._id == sender._id)
-				return;
+				continue;
 
-			newNotif.recipient = id;
+			newNotif.recipient = user._id;
 
 			await new Notification(newNotif).save();
-		});
+		}
 
 	} catch (e) {
 		console.error(e);
