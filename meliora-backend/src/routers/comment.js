@@ -1,12 +1,11 @@
 import { Router } from "express";
 import { Comment } from "../models/Comment.js";
-<<<<<<< HEAD
-import { User } from "../models/User.js";
-=======
 import { Post } from "../models/Post.js";
 import { User } from "../models/User.js";
-import { notifyUserComment, notifyWatchlistComment } from "../util/notificationUtil.js";
->>>>>>> 6f7bdc4a51c5540c5199cdee1b374d5df55cae8e
+import {
+  notifyUserComment,
+  notifyWatchlistComment,
+} from "../util/notificationUtil.js";
 
 const commentRouter = Router();
 
