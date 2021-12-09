@@ -92,7 +92,8 @@ const notifyWatchlistReact = async (sender, watchlist, reaction) => {
 		var i = 0;
 
 		while (i < n) {
-			let user = await User.findById(watchlist[i]).exec();
+			let id = watchlist[i];
+			let user = await User.findById(id).exec();
 
 			if (user.notifcationPreference < 3 || user._id == sender._id)
 				continue;
@@ -100,6 +101,7 @@ const notifyWatchlistReact = async (sender, watchlist, reaction) => {
 			newNotif.recipient = user._id;
 
 			await new Notification(newNotif).save();
+			i++;
 		}
 
 	} catch (e) {
