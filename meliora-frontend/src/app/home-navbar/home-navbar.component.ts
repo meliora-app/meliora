@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/authServices/auth.service';
+import { NotificationsService } from '../shared/services/notification.service';
 
 @Component({
   selector: 'app-home-navbar',
@@ -9,26 +10,56 @@ import { AuthService } from '../shared/services/authServices/auth.service';
 })
 export class HomeNavbarComponent implements OnInit {
   username: string;
-  constructor(public authService: AuthService, private route: Router) {}
+  notificationsClicked: boolean = false;
+  userID: string = localStorage.getItem('userID');
+  notifications = [];
+  constructor(
+    public authService: AuthService,
+    private route: Router,
+    private notifService: NotificationsService
+  ) {}
 
   ngOnInit(): void {
     this.getUsername();
+    this.retrieveNotifications();
   }
 
   async getUsername() {
-    let res = await fetch('https://meliora-backend.herokuapp.com/api/users/getUser', {
-      method: "PUT",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        _id: localStorage.getItem("userID")
-      })
-    });
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/users/getUser',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          _id: localStorage.getItem('userID'),
+        }),
+      }
+    );
     if (res.status == 200) {
       let resBody = await res.json();
       this.username = resBody.username;
     }
+  }
+
+  async retrieveNotifications() {
+    this.notifService
+      .getAllNotifications(this.userID)
+      .subscribe((result: []) => {
+        this.notifications = result;
+        console.log(result);
+      });
+  }
+
+  async onClearNotifsClicked() {
+    this.notifService
+      .clearNotifications(this.userID)
+      .subscribe((result: any) => {
+        if (result === true) {
+          this.notifications = [];
+        }
+      });
   }
 
   async onLogoutClicked() {
@@ -38,24 +69,28 @@ export class HomeNavbarComponent implements OnInit {
   }
 
   onMyProfileClicked() {
-    this.route.navigate(['/profile'], { queryParams: {"_id": localStorage.getItem('userID')}});
+    this.route.navigate(['/profile'], {
+      queryParams: { _id: localStorage.getItem('userID') },
+    });
   }
 
   async onSearchClicked() {
-    let res = await fetch('https://meliora-backend.herokuapp.com/api/users/getUser', {
-      method: "PUT",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username:  (<HTMLInputElement>document.getElementById("search")).value
-
-      })
-    });
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/users/getUser',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: (<HTMLInputElement>document.getElementById('search')).value,
+        }),
+      }
+    );
 
     if (res.status == 200) {
       let resBody = await res.json();
-      this.route.navigate(['/profile'], { queryParams: {"_id": resBody._id}});
+      this.route.navigate(['/profile'], { queryParams: { _id: resBody._id } });
     }
   }
 }

@@ -25,20 +25,34 @@
     <ul class="navbar-nav ml-auto">
       <li
         class="
-        nav-item
-        navbar-center
-        form-inline
-        active
-        text-center
-        justify-content-left
+          nav-item
+          navbar-center
+          form-inline
+          active
+          text-center
+          justify-content-left
         "
         style="text-align: center"
       >
         <!-- <i class="fas fa-search"></i> -->
         <div id="searchGroup" class="input-group mb-3">
-          <input class="form-control" type="text" id="search" placeholder="Search" aria-label="Search" />
+          <input
+            class="form-control"
+            type="text"
+            id="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
           <div class="input-group-append">
-            <button id="searchButton" for="search" class="btn" type="button" (click)="onSearchClicked()"><mat-icon>search</mat-icon></button>
+            <button
+              id="searchButton"
+              for="search"
+              class="btn"
+              type="button"
+              (click)="onSearchClicked()"
+            >
+              <mat-icon>search</mat-icon>
+            </button>
           </div>
         </div>
       </li>
@@ -56,12 +70,42 @@
         >
       </li>
 
-      <li class="nav-item active">
-        <a class="nav-link btn"
-          ><mat-icon>notifications</mat-icon>
-          <span class="sr-only">(current)</span></a
+      <li class="nav-item active notifications">
+        <button
+          class="nav-link btn"
+          (click)="notificationsClicked = !notificationsClicked"
         >
+          <mat-icon>notifications</mat-icon>
+          <span class="sr-only">(current)</span>
+        </button>
       </li>
+      <div *ngIf="notificationsClicked" class="notification__content">
+        <div class="notif__header">
+          <p *ngIf="notifications.length > 0" class="notification__heading">
+            Notifications
+          </p>
+          <button
+            *ngIf="notifications.length > 0"
+            class="btn btn-primary"
+            type="button"
+            (click)="onClearNotifsClicked()"
+          >
+            Clear
+          </button>
+        </div>
+        <div *ngIf="notifications.length > 0" class="notification__item">
+          <p class="notif-text" *ngFor="let notif of notifications">
+            {{ notif.text }}
+          </p>
+        </div>
+        <p
+          *ngIf="notifications.length === 0"
+          class="notif-text"
+          style="margin: 2rem 1rem"
+        >
+          You don't have any new notifications yet!
+        </p>
+      </div>
 
       <li
         class="

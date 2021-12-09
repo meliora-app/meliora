@@ -32,6 +32,10 @@
   width: 100%;
 }
 
+.nav-item button {
+  background: none;
+}
+
 .btn-login {
   font-size: 16px;
   margin-left: 1em;
@@ -96,4 +100,44 @@
   display: flex;
   justify-content: center;
   width: 100%;
+}
+
+.notification__content {
+  position: absolute;
+  width: 20vw;
+  height: auto;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25), -2px -2px 4px rgba(0, 0, 0, 0.25);
+  top: 90%;
+  right: 7%;
+  /* bottom: 0%; */
+}
+
+.notification__content.inactive {
+  display: none;
+}
+
+.notification__heading {
+  padding: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.notif__header {
+  display: flex;
+}
+
+.notif__header button {
+  width: 5rem;
+  height: 2rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.notif-text {
+  padding-left: 0.25rem;
 }

@@ -24,7 +24,7 @@ export class PostService {
       author: author,
       hidden: false,
       anonymous: anonymous,
-      commentsAllowed: commentsAllowed
+      commentsAllowed: commentsAllowed,
     };
 
     console.log(postData);
@@ -45,17 +45,27 @@ export class PostService {
       });
       */
 
-      let res = await fetch('https://meliora-backend.herokuapp.com/api/posts/create', {
-        method: "POST",
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/posts/create',
+      {
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(postData)
-      });
+        body: JSON.stringify(postData),
+      }
+    );
 
-      let newPostData = await res.json();
+    console.log(res);
 
-      return newPostData._id;
+    let newPostData;
+    if (res.ok) {
+      newPostData = await res.json();
+    } else {
+      return res.statusText;
+    }
+
+    return newPostData._id;
   }
 
   async getPostByID(id: string) {
