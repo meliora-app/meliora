@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { Reaction } from "../models/Reaction.js";
 import { Post } from "../models/Post.js";
+import { User } from "../models/User.js";
 
 const reactionRouter = Router();
 
@@ -17,6 +18,8 @@ reactionRouter.post("/add", async (req, res) => {
 
   try {
     const postData = await Post.findById(reactionData.postID).exec();
+    let user = await User.findById(reactionData.profileID).exec();
+    user.eqPoints = (+user.eqPoints + 1).toString();
     const existingData = await Reaction.findOne({
       $and: [
         { profileID: reactionData.profileID },
@@ -76,6 +79,7 @@ reactionRouter.post("/add", async (req, res) => {
       postData.reactions.hugs = postData.reactions.hugs + 1;
     }
     await postData.save();
+    await user.save();
     res.status(200).send("Reaction added successfully!");
   } catch (err) {
     res.status(500).send(`Database error: ${err}`);

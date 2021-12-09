@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { Comment } from "../models/Comment.js";
+import { User } from "../models/User.js";
 
 const commentRouter = Router();
 
@@ -15,10 +16,13 @@ commentRouter.post("/add", (req, res) => {
   }
 
   const comment = new Comment(commentData);
+  let user = await User.findById(commentData.profileID).exec();
+  user.eqPoints = (+user.eqPoints + 3).toString();
   comment
     .save()
-    .then((result) => {
+    .then(async (result) => {
       res.status(200).send("Comment created successfully!");
+      await user.save();
     })
     .catch((err) => {
       res.status(500).send(`Database error: ${err}`);
@@ -49,7 +53,6 @@ commentRouter.put("/getComments", async (req, res) => {
 
   res.status(200).send(comments);
   return;
-
 });
 
 commentRouter.delete("/deleteComment", async (req, res) => {

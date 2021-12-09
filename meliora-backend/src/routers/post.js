@@ -115,6 +115,8 @@ postRouter.post("/create", async (req, res) => {
     user.authorList.push(postDocument._id);
     category.posts.push(postDocument._id);
 
+    user.eqPoints = (+user.eqPoints + 5).toString();
+
     await user.save();
     await category.save();
   } catch (e) {
