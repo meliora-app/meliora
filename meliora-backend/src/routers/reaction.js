@@ -1,6 +1,10 @@
 import { Router } from "express";
 import { Reaction } from "../models/Reaction.js";
 import { Post } from "../models/Post.js";
+<<<<<<< HEAD
+=======
+import { notifyWatchlistReact, notifyUserReact } from "../util/notificationUtil.js";
+>>>>>>> 6f7bdc4a51c5540c5199cdee1b374d5df55cae8e
 import { User } from "../models/User.js";
 
 const reactionRouter = Router();
@@ -26,6 +30,7 @@ reactionRouter.post("/add", async (req, res) => {
         { postID: reactionData.postID },
       ],
     }).exec();
+    const sender = await User.findById(reactionData.senderID).exec();
 
     if (existingData) {
       var currReaction;
@@ -37,6 +42,7 @@ reactionRouter.post("/add", async (req, res) => {
           ],
         }).exec();
         currReaction = reactionData.reaction;
+        sender.eq = sender.eq - 1;
       } else {
         currReaction = existingData.reaction;
       }
@@ -60,8 +66,16 @@ reactionRouter.post("/add", async (req, res) => {
       existingData.reaction = reactionData.reaction;
       existingData.creationDate = Date.now();
       existingData.save();
+
+      notifyUserReact(sender.username, reactionData.reaction, reactionData.profileID);
     } else {
       const reaction = new Reaction(reactionData);
+
+      postData.watchlist.push(sender._id);
+
+      sender.eq = sender.eq + 1;
+
+      await sender.save();
 
       await reaction.save();
     }
@@ -80,6 +94,8 @@ reactionRouter.post("/add", async (req, res) => {
     }
     await postData.save();
     await user.save();
+    notifyUserReact(sender.username, reactionData.reaction, reactionData.profileID);
+    notifyWatchlistReact(sender, reactionData.reaction,  postData.watchlist);
     res.status(200).send("Reaction added successfully!");
   } catch (err) {
     res.status(500).send(`Database error: ${err}`);
@@ -95,7 +111,8 @@ const isValidReaction = (reactionData) => {
       reactionData.reaction === "hug") &&
     "profileID" in reactionData &&
     "postID" in reactionData &&
-    "flag" in reactionData
+    "flag" in reactionData &&
+    "senderID" in reactionData
   );
 };
 

@@ -75,6 +75,18 @@ const PostSchema = new Schema({
       default: 0,
     },
   },
+  watchlist: {
+    type: [SchemaTypes.ObjectId],
+    default: []
+  },
+  draft: {
+    type: SchemaTypes.Boolean,
+    default: false
+  },
+  hasPhoto: {
+    type: SchemaTypes.Boolean,
+    default: false
+  }
 });
 
 const Post = new model("Post", PostSchema);

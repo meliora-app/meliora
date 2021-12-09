@@ -11,6 +11,8 @@ import { User } from "../models/User.js";
 import mongoose from "mongoose";
 import { Category } from "../models/Category.js";
 import { Reaction } from "../models/Reaction.js";
+//fimport {ShareLink} from "social-media-sharing";
+import { Comment } from "../models/Comment.js"
 
 let { ObjectId } = mongoose.Types;
 
@@ -44,7 +46,14 @@ const isValidPost = (post) => {
     "content" in post &&
     "anonymous" in post &&
     "hidden" in post &&
-    "category" in post
+    "category" in post &&
+    "hasPhoto" in post
+  );
+};
+
+const isValidDraft = (draft) => {
+  return (
+    "author" in draft
   );
 };
 
@@ -113,6 +122,7 @@ postRouter.post("/create", async (req, res) => {
     let category = await Category.findById(newPost.category).exec();
 
     user.authorList.push(postDocument._id);
+    user.eq = user.eq += 5;
     category.posts.push(postDocument._id);
 
     user.eqPoints = (+user.eqPoints + 5).toString();
@@ -265,12 +275,8 @@ postRouter.put("/bookmark", async (req, res) => {
 
     if (!user.bookmarks) user.bookmarks = [];
 
-    if (user.bookmarks.includes(post)) {
-      res.status(400).send("You have already bookmarked this post.");
-      return;
-    }
+    user.checkForBookmark(postID) ? user.removeBookmark(postID) : user.bookmarks.push(post);
 
-    user.bookmarks.push(post);
     await user.save();
   } catch (e) {
     res.status(500).send("An error occured on the backend.");
@@ -342,6 +348,8 @@ postRouter.put("/react", async (req, res) => {
  * Get posts from followed users
  */
 postRouter.put("/getFollowingPosts", async (req, res) => {
+
+  // use sort preference
   let { userID } = req.body;
 
   if (!userID) {
@@ -462,5 +470,202 @@ postRouter.get("/getPostsByLoc", async (req, res) => {
     res.status(500).send("DB error: " + err.toString());
   }
 });
+
+/**
+ * save a draft of a post
+ * TODO
+ */
+postRouter.put("/saveDraft", async (req, res) => {
+  let newDraft = req.body;
+
+  if (!isValidPost(newDraft)) {
+    res.status(400).send("The object structure of this draft was invalid!");
+    return;
+  }
+
+  let postDocument;
+  try {
+    postDocument = await new Post(newDraft);
+    postDocument.draft = true;
+    postDocument.hidden = true;
+    postDocument.save();
+
+    let user = await User.findById(newDraft.author).exec();
+
+    user.authorList.push(postDocument._id);
+
+    await user.save();
+  } catch (e) {
+    res.status(500).send("An error occurred on the backend.");
+    console.error(e);
+    return;
+  }
+
+  res.status(200).send({
+    _id: postDocument._id,
+    msg: "Draft Saved Successfully",
+  });
+  return;
+});
+
+postRouter.delete("/deleteDraft", async (req, res) => {
+  let draft = req.body;
+
+  if (!draft._id || !draft.author) {
+    res.status(400).send("Request needs draft ID and author ID");
+  }
+  try {
+    // remove post id from authorList of author
+    await User.findOneAndUpdate(
+      { _id: draft.author },
+      { $pull: { authorList: draft._id } }
+    ).exec();
+    // remaove post from database
+    await Post.deleteOne({ _id: draft._id }).exec();
+  } catch (e) {
+    res.status(500).send("Error deleting draft: ");
+    return;
+  }
+  res.status(200).send({
+    _id: post._id,
+    msg: "Draft Deletion Successful",
+  });
+  return;
+});
+
+
+/**
+ * Share a post on selected social media
+ * TODO
+ 
+postRouter.put("/share", async (req, res) => {
+  var socialMediaLinks = new ShareLink('facebook');
+  var shareLink = socialMediaLinks.get({})
+  
+})
+*/
+
+/**
+ * sort by likes
+ */
+postRouter.put("/getFollowingPostsByLikes", async (req, res) => {
+
+  let { userID } = req.body;
+
+  if (!userID) {
+    res.status(400).send("You need to send in a user ID!");
+    return;
+  }
+
+  let posts = [];
+  let sortedPosts = [];
+  let userDoc;
+  let followedUser;
+  try {
+    userDoc = await User.findById(userID).exec();
+    for (let followedID of userDoc.following) {
+      followedUser = await User.findById(followedID).exec();
+      for (let postID of followedUser.authorList) {
+        let newPost = await Post.findById(postID).exec();
+        if (newPost != null) {
+          posts.push(newPost);
+        }
+      }
+    }
+
+
+    // brute force sorting
+    while (posts.length > 0) {
+      console.log("LENGTH: " + posts.length);
+      var highestIndex = 0;
+      var highestReactions = -1;
+      for (var i = 0; i < posts.length; i++) {
+        
+        var totalReactions = 0;
+        totalReactions += posts[i].reactions.thumbs;
+        totalReactions += posts[i].reactions.hearts;
+        totalReactions += posts[i].reactions.hugs;
+        totalReactions += posts[i].reactions.smileys;
+        if (totalReactions >= highestReactions) {
+          highestIndex = i;
+          highestReactions = totalReactions;
+        }
+      }
+      sortedPosts.push(posts[highestIndex]);
+      posts.splice(highestIndex, 1);
+    }
+
+    if (!sortedPosts || sortedPosts.length == 0) {
+      res.status(400).send("No posts available to return");
+      return;
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("An error occurred on the backend: " + e);
+    return;
+  }
+
+  res.status(200).send(sortedPosts);
+  return;
+});
+
+/**
+ * sort by comments
+ */
+ postRouter.put("/getFollowingPostsByComments", async (req, res) => {
+
+  let { userID } = req.body;
+
+  if (!userID) {
+    res.status(400).send("You need to send in a user ID!");
+    return;
+  }
+
+  let posts = [];
+  let sortedPosts = [];
+  let userDoc;
+  let followedUser;
+  try {
+    userDoc = await User.findById(userID).exec();
+    for (let followedID of userDoc.following) {
+      followedUser = await User.findById(followedID).exec();
+      for (let postID of followedUser.authorList) {
+        let newPost = await Post.findById(postID).exec();
+        if (newPost != null) {
+          posts.push(newPost);
+        }
+      }
+    }
+
+
+    // brute force sorting
+    while (posts.length > 0) {
+      var highestIndex = 0;
+      var highestComments = -1;
+      for (var i = 0; i < posts.length; i++) {
+        var comments =  await Comment.find({ postID: posts[i]._id }).exec();
+        if (comments.length >= highestComments) {
+          highestIndex = i;
+          highestComments = comments.length;
+        }
+      }
+      sortedPosts.push(posts[highestIndex]);
+      posts.splice(highestIndex, 1);
+    }
+
+    if (!sortedPosts || sortedPosts.length == 0) {
+      res.status(400).send("No posts available to return");
+      return;
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("An error occurred on the backend: " + e);
+    return;
+  }
+
+  res.status(200).send(sortedPosts);
+  return;
+});
+
 
 export { postRouter };

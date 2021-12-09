@@ -4,6 +4,9 @@ import { User } from "../models/User.js";
 
 import { Post } from "../models/Post.js";
 
+import { notifyUserFollow } from "../util/notificationUtil.js";
+import { generateURLParam } from "../util/generateURLParam.js";
+
 const userRouter = Router();
 
 /**
@@ -68,6 +71,8 @@ userRouter.put("/login", async (req, res) => {
       res.status(400).send("This user does not exist!");
       return;
     }
+
+    await userDoc.save();
   } catch (e) {
     console.error(e);
     res.status(500).send("An error occurred on the backend.");
@@ -184,6 +189,7 @@ userRouter.post("/updateSettings", async (req, res) => {
     if (user.dateOfBirth) userDoc.dateOfBirth = user.dateOfBirth;
     if (user.name) userDoc.name = user.name;
     if (user.phone) userDoc.phone = user.phone;
+    if (user.notificationPreference) userDoc.notificationPreference = user.notificationPreference;
     await userDoc.save();
 
   } catch (e) {
@@ -316,6 +322,8 @@ userRouter.put('/follow', async (req, res) => {
 
     await followingUser.save();
     await followedUser.save();
+
+    notifyUserFollow(followingUser, followedID);
   } catch (e) {
     console.error(e);
     res.status(500).send('An error occured on the backend.');
@@ -439,6 +447,136 @@ userRouter.put('/setPrivate', async (req, res) => {
 
   res.status(200).send(true);
   return;
+});
+
+/**
+ * Update Notification Preferences
+ */
+userRouter.put('/setNotifications', async (req, res) => {
+  let { userID, preference } = req.body;
+
+  if (!userID || !preference) {
+    res.status(400).send('You must send in a user ID and a preference!');
+    return;
+  }
+
+  try {
+
+    let user = await User.findById(userID).exec();
+    user.notifcationPreference = preference;
+    await user.save();
+
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend!');
+    return;
+  }
+
+  res.status(200).send(true);
+});
+
+/**
+ * Route to generate and save unique URL
+ */
+userRouter.put('/share', async (req, res) => {
+  let { userID } = req.body;
+
+  if (!userID) {
+    res.status(400).send('You must send in a userID!');
+    return;
+  }
+  
+  let user;
+  try {
+
+    user = await User.findById(userID).exec();
+
+    if (!user.shareURL) {
+      user.shareURL = `http://localhost:4200/u/${generateURLParam()}`;
+    }
+
+    await user.save();
+
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend.');
+    return;
+  }
+
+  res.status(200).send({
+    shareURL: user.shareURL,
+    msg: "url generated",
+  });;
+});
+
+userRouter.put('/getLongID', async (req, res) => {
+  let { shortID } = req.body;
+  let user;
+  try {
+    user = await User.find({ shareURL: `http://localhost:4200/u/${shortID}` }).exec();
+
+    if (!user) {
+      res.status(400).send('No user with that short ID.');
+      return;
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend');
+    return;
+  }
+
+  res.status(200).send(user[0]._id);
+});
+
+/**
+ * Update sort preference
+ */
+ userRouter.put('/sortPreference', async (req, res) => {
+  let { userID, newSortPreference } = req.body;
+
+  if (!userID) {
+    res.status(400).send('You must send in a userID!');
+    return;
+  }
+  
+  let user;
+  try {
+
+    user = await User.findById(userID).exec();
+    user.sortPreference = newSortPreference;
+    await user.save();
+
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend: ' + e);
+    return;
+  }
+
+  res.status(200).send(user.sortPreference);
+});
+
+/**
+ * Return search suggestions
+ */
+ userRouter.put('/searchSuggestion', async (req, res) => {
+  let input  = req.body.input;
+
+  if (!input) {
+    res.status(400).send('Invalid search, you must send in input');
+    return;
+  }
+  
+  let searchResults;
+  try {
+    searchResults = await User.find({ username: {$regex : new RegExp("^" + input), $options:'i'}}).clone();
+
+  } catch (e) {
+    console.error(e);
+    res.status(500).send('An error occured on the backend: ' + e);
+    return;
+  }
+
+  res.status(200).send(searchResults);
 });
 
 export { userRouter };

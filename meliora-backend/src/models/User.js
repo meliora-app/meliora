@@ -68,11 +68,41 @@ const UserSchema = new Schema({
     type: SchemaTypes.Boolean,
     default: false,
   },
-  eqPoints: {
+  notificationPreference: {
+    type: SchemaTypes.Number,
+    default: 3, // 0 for none, 1 for 'follows only,' 2 for 'my posts and follows,', 3 for 'my posts, follows, comments on posts I interact with'
+  },
+  shareURL: {
     type: SchemaTypes.String,
+    required: false,
+  },
+  eq: {
+    /* Points earned for actions taken on app */ type: SchemaTypes.Number,
     default: 0,
   },
 });
+
+/**
+ * Check for a bookmark
+ */
+UserSchema.methods.checkForBookmark = (postID) => {
+  var i = 0;
+
+  while (i < this.bookmarks.length) {
+    if (this.bookmarks[i]._id == postID) return true;
+  }
+
+  return false;
+};
+
+/**
+ * Remove a bookmark
+ */
+UserSchema.methods.removeBookmark = (postID) => {
+  this.bookmarks.filter((post) => {
+    return post._id != postID;
+  });
+};
 
 const User = new model("User", UserSchema);
 
