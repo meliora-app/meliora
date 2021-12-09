@@ -47,7 +47,8 @@ export class ExpandedPostCardComponent implements OnInit {
         categoryID: queryParams.categoryID,
         postID: queryParams.postID,
         anon: queryParams.anon === 'true',
-        commentsAllowed: queryParams.commentsAllowed === 'true'
+        commentsAllowed: queryParams.commentsAllowed === 'true',
+        hasPhoto: queryParams.hasPhoto === 'true'
       };
       this.downloadURL = queryParams.downloadURL;
     });

@@ -48,74 +48,85 @@
     <h1 class="display-5 text-center heading section-head jumbotron-post">
       Tell the community about your unique experience...
     </h1>
-    <div class="post-form">
-      <form (ngSubmit)="onSubmitPost(f)" #f="ngForm">
-        <div>
-          <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" id="title" class="form-control" required ngModel name="title"
-              placeholder="Enter title here" />
-            <label for="post-content" class="mt-4">Your thoughts...</label>
-            <textarea #postArea name="post-content" id="post-content" class="form-control" cols="30" rows="10"
-              name="content" ngModel (input)="wordCount($event)" placeholder="Enter text here"></textarea>
-            <select id="category" name="category" class="form-control mt-3" ngModel>
-              <option *ngFor="let category of categories" [ngValue]="category.name">
-                {{ category.name }}
-              </option>
-            </select>
+    <div class="container1">
+      <div class="post-form">
+        <form id="postForm" (ngSubmit)="onSubmitPost(f)" #f="ngForm">
+          <div>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" id="title" class="form-control" required ngModel name="title"
+                placeholder="Enter title here"/>
+              <label for="post-content" class="mt-4">Your thoughts...</label>
+              <textarea #postArea name="post-content" id="post-content" class="form-control" cols="30" rows="10"
+                name="content" ngModel (input)="wordCount($event)" placeholder="Enter text here"></textarea>
+              <select id="category" name="category" class="form-control mt-3" ngModel>
+                <option *ngFor="let category of categories" [ngValue]="category.name">
+                  {{ category.name }}
+                </option>
+              </select>
+            </div>
+            <div class="post-options mb-3">
+              <button type="button" mat-icon-button (click)="fileInput.click()"
+                [ngStyle]="{ color: imageClicked ? 'red' : '#0b3d77' }">
+                <mat-icon>image</mat-icon>
+              </button>
+              <button mat-icon-button type="button" (click)="onVisibilityClicked()"
+                [ngStyle]="{ color: visibilityClicked ? 'red' : '#0b3d77' }">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button type="button" (click)="onCommentClicked()"
+                [ngStyle]="{ color: commentClicked ? 'red' : '#0b3d77' }">
+                <mat-icon>comment</mat-icon>
+              </button>
+              <button mat-icon-button type="button" (click)="onDraftClicked()"
+                [ngStyle]="{ color: draftClicked ? 'green' : '#0b3d77' }">
+                <mat-icon>drafts</mat-icon>
+              </button>
+              <input
+              style="display: none"
+              type="file"
+              (change)="cacheImageForUpload($event)"
+              #fileInput
+              />
+            </div>
           </div>
-          <div class="post-options mb-3">
-            <button type="button" mat-icon-button (click)="fileInput.click()"
-              [ngStyle]="{ color: imageClicked ? 'red' : '#0b3d77' }">
-              <mat-icon>image</mat-icon>
+          <div class="wcStyle">
+            Word Count: <span class="wcStyle" id="wordCount">{{ words }}</span>
+          </div>
+          <span class="text-left container">
+            <button type="button" (click)="
+              
+                postArea.value = (Lat != null) ? postArea.value + '\nlocation = (' + Lat + ',' + Long + ')' :
+                  postArea.value + '\nlocation = unknown';
+              
+            
+            " class="btn post-submit text-center" id="record-location">
+              Record Location
             </button>
-            <button mat-icon-button type="button" (click)="onVisibilityClicked()"
-              [ngStyle]="{ color: visibilityClicked ? 'red' : '#0b3d77' }">
-              <mat-icon>visibility</mat-icon>
+            <button type="button" (click)="
+              postArea.value = postArea.value.replace('\nlocation = (' + Lat + ',' + Long + ')', '');
+            
+            " class="btn post-submit text-center" id="remove-location">
+              Remove Location
             </button>
-            <button mat-icon-button type="button" (click)="onCommentClicked()"
-              [ngStyle]="{ color: commentClicked ? 'red' : '#0b3d77' }">
-              <mat-icon>comment</mat-icon>
+          </span>
+          <span class="text-right mt-10"> </span>
+          <div class="text-center mt-5">
+            <button type="submit" class="btn btn-lg post-submit text-center">
+              Post
             </button>
-            <button mat-icon-button type="button" (click)="onDraftClicked()"
-              [ngStyle]="{ color: draftClicked ? 'green' : '#0b3d77' }">
-              <mat-icon>drafts</mat-icon>
-            </button>
-            <input
-            style="display: none"
-            type="file"
-            (change)="cacheImageForUpload($event)"
-            #fileInput
-            />
+          </div>
+        </form>
+      </div>
+      <div class="drafts-container">
+        <h1>Drafts</h1>
+        <div *ngIf="drafts.length == 0">No Drafts</div>
+        <div *ngFor="let draft of drafts; let i = index">
+          <div (click)="loadDraft(draft); selectedIndex = selectedIndex === i ? -1 : i" [ngClass]="selectedIndex === i ? 'selected' : ''" class="draft">
+            {{draft.title}}
           </div>
         </div>
-        <div class="wcStyle">
-          Word Count: <span class="wcStyle" id="wordCount">{{ words }}</span>
-        </div>
-        <span class="text-left container">
-          <button type="button" (click)="
-            
-              postArea.value = (Lat != null) ? postArea.value + '\nlocation = (' + Lat + ',' + Long + ')' :
-                postArea.value + '\nlocation = unknown';
-            
-          
-          " class="btn post-submit text-center" id="record-location">
-            Record Location
-          </button>
-          <button type="button" (click)="
-            postArea.value = postArea.value.replace('\nlocation = (' + Lat + ',' + Long + ')', '');
-          
-          " class="btn post-submit text-center" id="remove-location">
-            Remove Location
-          </button>
-        </span>
-        <span class="text-right mt-10"> </span>
-        <div class="text-center mt-5">
-          <button type="submit" class="btn btn-lg post-submit text-center">
-            Post
-          </button>
-        </div>
-      </form>
+      </div>
     </div>
   </section>
 </body>

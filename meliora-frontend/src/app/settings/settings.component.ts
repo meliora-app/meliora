@@ -12,6 +12,7 @@ export class Settings {
   sex: string;
   darkModeStatus: boolean;
   private: boolean;
+  notificationPreference: number;
 
   constructor(
     username: string,
@@ -20,6 +21,7 @@ export class Settings {
     dateOfBirth: string,
     sex: string,
     darkModeStatus: boolean,
+    notificationPreference: number
   ) {
     this.username = username;
     this.email = email;
@@ -27,6 +29,7 @@ export class Settings {
     this.dateOfBirth = dateOfBirth;
     this.sex = sex;
     this.darkModeStatus = darkModeStatus;
+    this.notificationPreference = notificationPreference;
   }
 }
 @Component({
@@ -40,7 +43,6 @@ export class SettingsComponent implements OnInit {
   userID = localStorage.getItem('userID');
   settings: Settings;
   private: boolean = true;
-  notificationPreference: string = "Default";
 
   constructor(public authService: AuthService, public router: Router) {}
 
@@ -70,8 +72,11 @@ export class SettingsComponent implements OnInit {
         resBody.phone,
         resBody.dateOfBirth,
         resBody.sex,
-        resBody.darkModeStatus
+        resBody.darkModeStatus,
+        resBody.notificationPreference
       );
+      var notificationOptions = <HTMLSelectElement> document.getElementById("notificationOptions");
+      notificationOptions.value = this.settings.notificationPreference.toString();
     }
   }
   async onLogoutClicked() {
@@ -95,6 +100,7 @@ export class SettingsComponent implements OnInit {
           phone: this.settings.phone,
           dateOfBirth: this.settings.dateOfBirth,
           darkModeStatus: localStorage.getItem('darkModeStatus'),
+          notificationPreference: this.settings.notificationPreference
         }),
       }
     );
@@ -178,7 +184,8 @@ export class SettingsComponent implements OnInit {
     );
   }
 
-  async notificationChance(event: any) {
-    // TODO: Set notification preference
+  async notificationChange() {
+    var newSelection = <HTMLSelectElement> (document.getElementById("notificationOptions"));
+    this.settings.notificationPreference = parseInt(newSelection.value);
   }
 }
