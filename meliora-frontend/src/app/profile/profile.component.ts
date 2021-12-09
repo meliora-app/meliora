@@ -97,6 +97,7 @@ export class ProfileComponent implements OnInit {
       this.numFollowing = resBody.following.length;
       this.userBlocked = resBody.blocked.includes(this.loggedInUser);
       this.isPrivate = resBody.private;
+      this.eqPoints = resBody.eq;
       for (let i = 0; i < resBody.bookmarks.length; i++) {
         this.bookmarkedPosts.push(
           new Post(
@@ -333,16 +334,19 @@ export class ProfileComponent implements OnInit {
   }
 
   async unbookmark(postID) {
-    let res = await fetch('https://meliora-backend.herokuapp.com/api/posts/bookmark', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userID: this.userId,
-        postID: postID
-      })
-    });
+    let res = await fetch(
+      'https://meliora-backend.herokuapp.com/api/posts/bookmark',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userID: this.userId,
+          postID: postID,
+        }),
+      }
+    );
 
     if (res.status != 200)
       console.log('An error occured unbookmarking the post.');
@@ -357,7 +361,7 @@ export class ProfileComponent implements OnInit {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userID: localStorage.getItem("userID")
+          userID: localStorage.getItem('userID'),
         }),
       }
     );
@@ -365,7 +369,6 @@ export class ProfileComponent implements OnInit {
       let resBody = await res.json();
       alert(resBody.shareURL);
     }
-  
   }
 
   // this process is slow right now, we need to keep all current user information on hand
