@@ -278,7 +278,7 @@ postRouter.put("/bookmark", async (req, res) => {
     if (user.bookmarks.includes(postID)) {
       user.bookmarks = user.bookmarks.filter((thisPost) => {
         thisPost._id != postID;
-      })
+      });
     } else {
       user.bookmarks.push(post);
     }
