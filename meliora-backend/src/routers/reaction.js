@@ -95,7 +95,7 @@ reactionRouter.post("/add", async (req, res) => {
     }
     await postData.save();
     await user.save();
-    notifyUserReact(sender, reactionData.reaction, reactionData.profileID);
+    notifyUserReact(sender, reactionData.reaction, postData.author);
     notifyWatchlistReact(sender, postData.watchlist, reactionData.reaction);
     res.status(200).send("Reaction added successfully!");
   } catch (err) {
