@@ -275,7 +275,13 @@ postRouter.put("/bookmark", async (req, res) => {
 
     if (!user.bookmarks) user.bookmarks = [];
 
-    user.checkForBookmark(postID) ? user.removeBookmark(postID) : user.bookmarks.push(post);
+    if (user.bookmarks.includes(postID)) {
+      user.bookmarks = user.bookmarks.filter((thisPost) => {
+        thisPost._id != postID;
+      })
+    } else {
+      user.bookmarks.push(post);
+    }
 
     await user.save();
   } catch (e) {
